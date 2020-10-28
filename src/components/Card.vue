@@ -2,11 +2,11 @@
   <div class="box_container">
     <div class="box_wrapper">
       <h6>{{ datas.title }}</h6>
-      <p>{{ datas.desc }}</p>
+      <p>{{ datas.desc || '暂无描述' }}</p>
       <div class="user">
-        <img :src="datas.img" />
+        <img :src="datas.cover_img" />
         <span>
-          {{ datas.name }}
+          {{ datas.teachers_list[0].teacher_name }}
         </span>
       </div>
 
@@ -57,7 +57,9 @@ export default {
   h6 {
     font-size: 0.2rem;
     font-weight: normal;
-    height: 0.5rem;
+    height: 0.2rem;
+    padding-top: 0.1rem;
+    height: 0.4rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;

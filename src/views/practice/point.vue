@@ -4,23 +4,6 @@
     <!-- 搜索框 -->
     <van-search shape="round" background="#fff" placeholder="请输入题库名称关键词" />
     <!-- 拉下选择 -->
-    <!-- <div class="select-container">
-      <div class="left">
-        <div class="item active">求导题库</div>
-        <div class="item">极限题库</div>
-        <div class="item">生物</div>
-        <div class="item">化学</div>
-        <div class="item">数学</div>
-      </div>
-      <div class="right">
-        <div class="classify-name">洛必达法则</div>
-        <div class="bank-list">
-          <div class="bank-warp">
-            <span class="bank active">数学</span>
-          </div>
-        </div>
-      </div>
-    </div>-->
     <van-tree-select
       :items="items"
       :active-id.sync="activeId"
