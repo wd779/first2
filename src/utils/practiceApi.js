@@ -64,4 +64,4 @@ export function paper_package() {
 }
 
 // 习题收藏
-export const AjaxQues_collect = data => get("/api/app/ques", data);
+export const AjaxQues_collect = data => get("/api/app/courseClassify", data);
