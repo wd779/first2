@@ -164,6 +164,7 @@ export default {
 <style lang="scss" scoped >
 .box {
   width: 100%;
+  padding-bottom: 0.8rem;
 }
 .user_icon {
   width: 3.75rem;
