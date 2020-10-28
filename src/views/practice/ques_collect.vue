@@ -42,6 +42,11 @@ export default {
       ]
     };
   },
+    created() {
+     AjaxQues_collect().then(res=>{
+         console.log(res)
+     })
+  },
   // 计算属性
   computed: {},
   // 侦听器
