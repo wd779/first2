@@ -20,6 +20,7 @@ const routes = [
       { path: "ques_collect", name: "ques_collect", component: () => import("../views/practice/ques_collect.vue") },// 习题收藏
       { path: '/fudao', name: 'fudao', component: () => import('../views/Home/FuDao.vue') },// 一对一辅导页面,
       { path: '/study', name: 'study', component: () => import('../views/Home/Study.vue') },// 学习日历
+      { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue') },// 学习日历
     ]
   }, // 主页面
   { path: '/login', name: 'Login', component: () => import('../views/login/Login.vue') }, // 密码登录
