@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { AjaxLogin, AjaxSmsLogin } from "@/utils/api";
+import { AjaxLogin, AjaxSmsLogin } from "@/utils/myApi";
 export default {
   // 组件名称
   name: "",
