@@ -34,6 +34,6 @@ export function post(url, data) {
     });
 }
 // 登录
-export const AjaxLogin = data => post('/api/app/login',data) // 密码登录
+export const AjaxLogin = (data) => post('/api/app/login',data) // 密码登录
 export const AjaxSmsLogin = data => post('/api/app/smsCode',data) // 验证码登录 验证码
 export const AjaxPass = data => post('/api/app/password',data) // 修改密码

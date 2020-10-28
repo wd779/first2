@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import { AjaxQues_collect } from "@/utils/practiceApi";
 export default {
   // 组件名称
   name: "demo",
