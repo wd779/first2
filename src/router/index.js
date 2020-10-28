@@ -36,9 +36,9 @@ const routes = [
   { path: '/message', name: 'Message', component: () => import('../views/my/Message.vue') }, // 我的消息
   { path: '/feedback', name: 'Feedback', component: () => import('../views/my/Feedback.vue') }, // 意见反馈
   { path: '/options', name: 'Options', component: () => import('../views/my/Options.vue') }, // 设置
-
   { path: '/study', name: 'study', component: () => import('../views/Home/Study.vue') },// 学习日历
   { path: '/fudao', name: 'fudao', component: () => import('../views/Home/FuDao.vue') },// 一对一辅导页面,
+  { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue') },// 详情,
 ]
 const router = new VueRouter({
   routes
