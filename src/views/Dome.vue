@@ -1,10 +1,10 @@
 <template>
   <div>
     <router-view></router-view>
-    <van-tabbar v-model="active">
+    <van-tabbar v-model="active" class="tabBar">
       <van-tabbar-item icon="home-o" to="/">首页</van-tabbar-item>
       <van-tabbar-item icon="search" to="/Appointment">课程</van-tabbar-item>
-      <van-tabbar-item icon="friends-o" to="/">约课记录</van-tabbar-item>
+      <van-tabbar-item icon="friends-o" to="/order">约课记录</van-tabbar-item>
       <van-tabbar-item icon="setting-o" to="/practice">练习</van-tabbar-item>
       <van-tabbar-item icon="setting-o" to="/mine">我的</van-tabbar-item>
     </van-tabbar>
@@ -46,5 +46,9 @@ export default {
 };
 </script> 
 
-<style scoped lang="scss">
+<style scoped>
+.tabBar{
+  width: 100%;
+  height: 64px;
+}
 </style>
