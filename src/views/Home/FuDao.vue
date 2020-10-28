@@ -12,21 +12,48 @@
     </van-nav-bar>
 
     <!-- 下拉菜单 -->
-    <van-dropdown-menu>
+    <van-dropdown-menu @click="showPopup">
       <van-dropdown-item title="选择上课时间">
-        <van-cell is-link @click="showPopup">
-          <van-calendar
-            :poppable="false"
-            :show-confirm="false"
-            :style="{ height: '300px' }"
-          />
-           <div class="footer"></div>
-        </van-cell>
-
-       
+        <van-calendar
+          :poppable="false"
+          :show-confirm="false"
+          :style="{ height: '300px' }"
+        />
       </van-dropdown-item>
-        
-      <van-dropdown-item v-model="value2" :options="option2" />
+
+      <van-dropdown-item title="选择老师条件">
+        <div class="MM_con">
+          <div class="MM_warpper">
+            <!-- 老师类型部分 -->
+            <div class="MM_titile">
+              <h6>老师类型</h6>
+              <div class="MM_top">
+                <span v-for="(item, index) in lm" :key="index">{{ item }}</span>
+              </div>
+            </div>
+
+            <!-- 只看部分 -->
+            <div class="look_titile">
+              <h6>只看</h6>
+              <div class="look_checked">
+                <van-radio-group v-model="radio" direction="horizontal">
+                  <van-radio name="1">已关注</van-radio>
+                  <van-radio name="2">上过课的</van-radio>
+                </van-radio-group>
+              </div>
+            </div>
+
+            <!-- 性别部分 -->
+            <div class="sex_titile">
+              <h6>性别</h6>
+              <div class="sex_top">
+                <span>男</span>
+                <span>女</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </van-dropdown-item>
     </van-dropdown-menu>
 
     <!-- 一对一列表 -->
@@ -68,13 +95,30 @@ export default {
     return {
       value1: 0,
       value2: "a",
-      option1: [{ text: "选择上课时间", value: 0 }],
-      option2: [
-        { text: "选择老师条件", value: "a" },
-        { text: "好评排序", value: "b" },
-        { text: "销量排序", value: "c" },
+      lm: [
+        "M1",
+        "M2",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "M10",
+        "M11",
+        "M12",
+        "M13",
+        "M14",
+        "M15",
+        "M16",
+        "M17",
+        "M18",
+        "M19",
+        "M20",
       ],
       show: false,
+      radio: "",
     };
   },
   methods: {
@@ -83,9 +127,7 @@ export default {
       this.$router.go(-1);
     },
     // 跳进搜索页
-    onClickSearch() {
-        
-    },
+    onClickSearch() {},
     // 弹出层
     showPopup() {
       this.show = true;
@@ -123,13 +165,80 @@ export default {
 .fudao_content_right {
   width: 60%;
 }
-.van-icon::before {
-    display: none;
+.MM_con {
+  width: 100%;
+  height: 100%;
+  /* overflow: hidden; */
 }
-.footer{
-    width: 100%;
-    height: 500px;
-    background-color: #fff;
-    z-index: 9999;
+.MM_warpper {
+  width: 100%;
+  height: 90vh;
+}
+.MM_top {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 0px 5px;
+}
+.MM_top span {
+  width: 0.8rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  background-color: #f5f5f5;
+  text-align: center;
+}
+span:hover {
+  color: #eb6100;
+}
+h6 {
+  width: 100%;
+  height: 0.23rem;
+  background-color: #fff;
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.look_top {
+  width: 100%;
+  height: 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+  padding: 0px 5px;
+}
+.look_checked {
+  width: 100%;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0px 5px;
+}
+.sex_titile{
+  width: 100%;
+  height: 1rem;
+}
+.sex_top{
+  width: 100%;
+  height: 0.5rem;
+  display: flex;
+  justify-content: space-evenly;
+  box-sizing: border-box;
+  align-items: center;
+ 
+}
+.sex_top span{
+  width: 0.8rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  background-color: #f5f5f5;
+  text-align: center;
 }
 </style>

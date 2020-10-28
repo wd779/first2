@@ -45,8 +45,12 @@ export default {
         { Swiper: require("../assets/Swiper/2019LnKumseuhw1569839569.jpg") },
         { Swiper: require("../assets/Swiper/2019MGNW3BtiS91569839576.jpg") },
       ],
+
+      
     };
   },
+
+
 };
 </script>
 <style scoped>

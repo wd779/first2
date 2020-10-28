@@ -2,25 +2,28 @@
   <div>
     <div class="teacher_con">
       <div class="teacher_warpper">
-
         <div class="teacher_content">
-          <div class="teacher_content_warpper">
+          <div class="teacher_content_warpper" 
+          v-for="(item,index) in HomeLists[4].list" 
+          :key="index"
+           v-show="index < 3"
+          >
             <!-- 左侧图片盒子 -->
             <div class="teacher_content_left">
               <van-image
                 round
                 width="10rem"
                 height="10rem"
-                src="https://img.yzcdn.cn/vant/cat.jpeg"
+                :src="item.teacher_avatar"
                 style="width: 40px; height: 40px"
               />
             </div>
             <!-- 描述盒子 -->
             <div class="teacher_content_right">
-              <div class="right_title">杨德胜</div>
+              <div class="right_title">{{item.teacher_name}}</div>
 
               <div class="right_msg">
-                杨老师,特级教师,多次被中国数学会评为...
+                {{item.introduction}}
               </div>
             </div>
           </div>
@@ -31,7 +34,32 @@
 </template>
 
 <script>
-export default {};
+// 引入接口 api
+import { HomeList } from "../../utils/homeApi";
+export default {
+  props: {},
+  data() {
+    return {
+      HomeLists:[],
+    };
+  },
+
+  methods: {
+    async onHomeList() {
+      let { data: res } = await HomeList(
+          
+          
+      );
+      console.log(res);
+    this.HomeLists=res
+      // console.log(this.HomeLists);
+    },
+  },
+
+  mounted() {
+    this.onHomeList();
+  },
+};
 </script>
 
 <style scoped>
@@ -40,7 +68,7 @@ export default {};
 }
 .teacher_warpper {
   width: 100%;
-  /* height: 3.5rem; */
+  height: 2.5rem;
   /* border: 1px solid #000; */
 }
 
@@ -58,6 +86,7 @@ export default {};
   align-items: center;
 }
 .right_msg {
+  width: 3rem;
   color: #b7b7b7;
 }
 .right_title {
