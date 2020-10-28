@@ -36,7 +36,7 @@ export default {
     return {
       mobile: "",
       password: "",
-      type: 1
+      type: 1,
     };
   },
   // 计算属性
@@ -56,6 +56,7 @@ export default {
         sessionStorage.setItem("token", res.data.remember_token);
         this.$toast.success("登录成功");
         this.$router.push("/mine");
+        localStorage.setItem("loginArr", JSON.stringify(res));
       }
       console.log("submit", values);
       console.log(res);

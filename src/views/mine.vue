@@ -5,22 +5,18 @@
       <div class="user_icon">
         <!-- 登录 -->
         <div class="head">
-          <section>
-            <div v-show="!flag">
-              <img
-                src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1603795521&di=1416ed2b5c31f98b6443c31cacc2ce34&src=http://img2.woyaogexing.com/2018/04/10/4c1707466af6018b!360x360_big.jpg"
-              />
-              <span @click="toLogin">用户名</span>
-              <van-icon name="edit" />
-              <h4>去约课</h4>
-            </div>
+          <section @click="$router.push('/info')">
             <div v-show="flag">
-              <img
-                src="https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1603795521&di=1416ed2b5c31f98b6443c31cacc2ce34&src=http://img2.woyaogexing.com/2018/04/10/4c1707466af6018b!360x360_big.jpg"
-              />
-              <span @click="toLogin">登录/注册</span>
+              <img :src="list.avatar"/>
+              <span>{{list.nickname}}</span>
               <van-icon name="edit" />
-              <h4>去约课</h4>
+              <h4 @click="$router.push('/fudao')">去约课</h4>
+            </div>
+            <div v-show="!flag">
+              <img :src="list.avatar">
+              <span @click="$router.push('/login')">登录/注册</span>
+              <van-icon name="edit" />
+              <h4 @click="$router.push('/fudao')">去约课</h4>
             </div>
           </section>
           <div class="info">
@@ -30,12 +26,12 @@
                 <p>我的特色课</p>
                 <span>已购特色课程的学习</span>
               </li>
-              <li>
+              <li @click="$router.push('/fudao')">
                 <h3>0</h3>
                 <p>一对一辅导</p>
                 <span>我的一对一老师辅导</span>
               </li>
-              <li>
+              <li @click="$router.push('/my-currency')">
                 <h3>0.00</h3>
                 <p>剩余学习币</p>
                 <span>查看剩余学习币</span>
@@ -63,26 +59,68 @@
         <li>
           <p class="menu-title">课程相关</p>
           <div class="menu-box">
-            <div>
+            <div @click="$router.push('/concern')">
               <van-icon name="point-gift" />
               <p>关注的老师</p>
             </div>
-            <div>
+            <div @click="$router.push('/collect')">
               <van-icon name="point-gift" />
               <p>我的收藏</p>
             </div>
           </div>
         </li>
         <li>
-          <p class="menu-title">课程相关</p>
+          <p class="menu-title">订单相关</p>
           <div class="menu-box">
             <div>
               <van-icon name="point-gift" />
-              <p>关注的老师</p>
+              <p>课程订单</p>
             </div>
             <div>
               <van-icon name="point-gift" />
-              <p>我的收藏</p>
+              <p>会员订单</p>
+            </div>
+            <div>
+              <van-icon name="point-gift" />
+              <p>约课订单</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <p class="menu-title">我的账户</p>
+          <div class="menu-box">
+            <div @click="$router.push('/coupon')">
+              <van-icon name="point-gift" />
+              <p>优惠券</p>
+            </div>
+            <div @click="$router.push('/card')">
+              <van-icon name="point-gift" />
+              <p>学习卡</p>
+            </div>
+            <div @click="$router.push('/vip')">
+              <van-icon name="point-gift" />
+              <p>会员</p>
+            </div>
+          </div>
+        </li>
+        <li>
+          <p class="menu-title">自助服务</p>
+          <div class="menu-box">
+            <div @click="$router.push('/message')">
+              <van-icon name="point-gift" />
+              <p>我的消息</p>
+            </div>
+            <div @click="$router.push('/feedback')">
+              <van-icon name="point-gift" />
+              <p>意见反馈</p>
+            </div>
+            <div>
+              <van-icon name="point-gift" />
+              <p>在线客服</p>
+            </div>
+            <div @click="$router.push('/options')">
+              <van-icon name="point-gift" />
+              <p>设置</p>
             </div>
           </div>
         </li>
@@ -92,6 +130,7 @@
 </template>
 
 <script>
+// import { AjaxMy } from "../utils/myApi";
 export default {
   // 组件名称
   name: "", // 组件参数 接收来自父组件的数据
@@ -99,25 +138,25 @@ export default {
   components: {}, // 组件状态值
   data() {
     return {
-        flag:false
+      flag: false,
+      list:[]
     };
   }, // 计算属性
   computed: {}, // 侦听器
   watch: {}, // 组件方法
   methods: {
-    toLogin() {
-      this.$router.push({ path: "/login" });
-    }
+    
   },
-  /**
-   * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
-   */ created() {},
+  created() {},
   mounted() {
-      if(sessionStorage.getItem("token")){
-          this.flag = true
-      }else{
-          this.flag = false
-      }
+   this.list = JSON.parse( localStorage.getItem("loginArr"))
+   this.list = this.list.data
+   console.log(this.list);
+    if (sessionStorage.getItem("token")) {
+      this.flag = true;
+    } else {
+      this.flag = false;
+    }
   }
 };
 </script> 
@@ -125,8 +164,6 @@ export default {
 <style lang="scss" scoped >
 .box {
   width: 100%;
-  height: 90vh;
-  overflow: scroll;
 }
 .user_icon {
   width: 3.75rem;
@@ -243,7 +280,7 @@ export default {
 }
 //
 .menu {
-  width: 3.76rem;
+  width: 3.75rem;
   background-color: #fff;
   padding: 0 0.15rem;
   box-sizing: border-box;
@@ -264,6 +301,7 @@ export default {
         .van-icon {
           font-size: 0.22rem;
           line-height: 0.44rem;
+          color: #f2995a;
         }
         p {
           font-size: 0.12rem;
