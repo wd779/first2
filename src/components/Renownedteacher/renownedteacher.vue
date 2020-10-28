@@ -3,24 +3,25 @@
     <div class="Renowned_teacher_con">
       <div class="Renowned_teacher_warpper">
         <div class="Renowned_teacher_content">
-          <div class="Renowned_teacher_content_warpper">
+          <div class="Renowned_teacher_content_warpper" 
+           v-for="(item,index) in RenowneList[0].list"
+           :key="index"
+          >
             <!-- 左侧图片盒子 -->
             <div class="Renowned_teacher_content_left">
               <van-image
                 round
                 width="10rem"
                 height="10rem"
-                src="https://img.yzcdn.cn/vant/cat.jpeg"
+                :src="item.teacher_avatar"
                 style="width: 40px; height: 40px"
               />
             </div>
             <!-- 描述盒子 -->
             <div class="Renowned_teacher_content_right">
-              <div class="right_title">杨老师</div>
+              <div class="right_title">{{item.teacher_name}}</div>
 
-              <div class="right_msg">
-               中学一级教师,16年教学经验学校骨干...
-              </div>
+              <div class="right_msg">{{item.introduction}}</div>
             </div>
           </div>
         </div>
@@ -30,7 +31,28 @@
 </template>
 
 <script>
-export default {};
+// 明星讲师  组件
+import { HomeList } from "../../utils/homeApi";
+export default {
+  data() {
+    return {
+      RenowneList:[]
+    };
+  },
+
+  methods: {
+    async onRenowneList() {
+      let { data: res } = await HomeList();
+      console.log(res);
+      this.RenowneList = res;
+      // console.log(this.HomeLists);
+    },
+  },
+
+  mounted() {
+    this.onRenowneList();
+  },
+};
 </script>
 
 <style scoped>
@@ -57,6 +79,7 @@ export default {};
   align-items: center;
 }
 .right_msg {
+  width: 3rem;
   color: #b7b7b7;
 }
 .right_title {
