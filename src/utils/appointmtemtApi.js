@@ -33,3 +33,4 @@ export function post(url, data) {
             })
     });
 }
+export const GetData = data => get('api/app/courseClassify',data) // 课程信息
