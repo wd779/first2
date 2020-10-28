@@ -12,7 +12,7 @@
     <Teacher></Teacher>
     <!-- 精品课程 -->
     <Title>精品课程</Title>
-    <Crad></Crad>
+    <Crad v-for="item in RenowneList[1].list" :key="item.id"  :data="item"></Crad>
     <!-- 明星讲师 -->
     <Title>明星讲师</Title>
     <RenownedTeacher></RenownedTeacher>
@@ -24,8 +24,10 @@ import Swiper from "../components/Swiper/Swiper"; //轮播图
 import IconBotton from "../components/iconBotton/iconBotton"; //按钮 图标
 import Teacher from "../components/Teacher/TeacherLineup"; //名师阵容
 import RenownedTeacher from "../components/Renownedteacher/renownedteacher"; //明星讲师
-import Crad from "../components/Card";  //精品课程
-import Title from "../components/Renownedteacher/Renowned_teacher_border";  //home页  分类标签组件
+import Crad from "../components/Card"; //精品课程
+import Title from "../components/Renownedteacher/Renowned_teacher_border"; //home页  分类标签组件
+
+import { HomeList } from "../utils/homeApi";
 export default {
   name: "Home",
   components: {
@@ -46,27 +48,45 @@ export default {
         { Swiper: require("../assets/Swiper/2019MGNW3BtiS91569839576.jpg") },
       ],
 
-      
+      // list:{
+      //     title: "标题",
+      //     desc: "描述",
+      //     img:
+      //       "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1603780371383&di=418f70b09f7c380e134464456dd454f2&imgtype=0&src=http%3A%2F%2Fimg02.fs.yiban.cn%2F43259453%2Favatar%2Fuser%2F200",
+      //     name: "姓名",
+      //   }
+      RenowneList:[]
     };
   },
 
-
+  methods: {
+    async onRenowneList() {
+      let { data: res } = await HomeList();
+      console.log(res);
+      this.RenowneList = res;
+      // console.log(this.HomeLists);
+    },
+  },
+  
+  mounted(){
+    this.onRenowneList()
+  }
 };
 </script>
 <style scoped>
-.home{
+.home {
   height: 90vh;
   overflow: scroll;
   margin-bottom: 64px;
 }
 .con {
   width: 100%;
-  height: 3rem;
+  height: 2.8rem;
   position: relative;
 }
 .icon {
   width: 100%;
   position: absolute;
-  bottom: 0.3rem;
+  bottom: 0.4rem;
 }
 </style>
