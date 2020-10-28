@@ -22,11 +22,23 @@ const routes = [
       { path: "order", name: "order", component: () => import("../views/order/order.vue") },// 约课记录主页面-zhy
       { path: '/fudao', name: 'fudao', component: () => import('../views/Home/FuDao.vue') },// 一对一辅导页面,
       { path: '/study', name: 'study', component: () => import('../views/Home/Study.vue') },// 学习日历
+      { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue') },// 学习日历
     ]
   }, // 主页面
   { path: '/login', name: 'Login', component: () => import('../views/login/Login.vue') }, // 密码登录
   { path: '/forgetPass', name: 'ForgetPass', component: () => import('../views/login/ForgetPass.vue') }, // 修改密码
   { path: '/smsLogin', name: 'SmsLogin', component: () => import('../views/login/SmsLogin.vue') }, // 验证码登录
+  { path: '/info', name: 'Info', component: () => import('../views/my/Info.vue') }, // 个人信息
+  { path: '/my-study', name: 'My-study', component: () => import('../views/my/My-study.vue') }, // 我的特色课 我的学习
+  { path: '/my-currency', name: 'My-currency', component: () => import('../views/my/My-currency.vue') }, // 我的特色课 我的学习
+  { path: '/collect', name: 'Collect', component: () => import('../views/my/Collect.vue') }, // 我的收藏
+  { path: '/concern', name: 'Concern', component: () => import('../views/my/Concern.vue') }, // 我的关注 关注的老师
+  { path: '/coupon', name: 'Coupon', component: () => import('../views/my/Coupon.vue') }, // 优惠券
+  { path: '/card', name: 'Card', component: () => import('../views/my/Card.vue') }, // 学习卡
+  { path: '/vip', name: 'Vip', component: () => import('../views/my/Vip.vue') }, // 会员
+  { path: '/message', name: 'Message', component: () => import('../views/my/Message.vue') }, // 我的消息
+  { path: '/feedback', name: 'Feedback', component: () => import('../views/my/Feedback.vue') }, // 意见反馈
+  { path: '/options', name: 'Options', component: () => import('../views/my/Options.vue') }, // 设置
 
 ]
 const router = new VueRouter({
