@@ -75,16 +75,12 @@ export default {
   text-align: center;
 }
 img {
-  width: 4rem;
   width: 40vw;
-  height: 4rem;
   height: 40vw;
 }
 p {
-  font-size: 0.4rem;
   font-size: 4vw;
   color: #8c8c8c;
-  margin-top: 0.53333rem;
   margin-top: 5.33333vw;
 }
 </style>

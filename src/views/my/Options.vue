@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <!-- 头部组件 -->
     <app-header>
       <template>
@@ -9,7 +9,7 @@
     </app-header>
     <!-- 设置密码 -->
     <ul>
-      <li >
+      <li @click="$router.push('/setPass')" >
           <!-- ::before -->
           设置密码</li>
     </ul>
@@ -93,5 +93,10 @@ background-color: #eb6100;
     height: 2.66667vw;
     border-top: 1px solid #b7b7b7;
     border-right: 1px solid #b7b7b7;
+}
+#app {
+  background: #fff;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 </style>

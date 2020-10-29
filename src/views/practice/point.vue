@@ -8,7 +8,7 @@
       :items="items"
       :active-id.sync="activeId"
       :main-active-index.sync="activeIndex"
-      @click-item="fyhdata"
+      @click-item="data"
     />
   </div>
 </template>
@@ -31,6 +31,7 @@ export default {
           children: [
             {
               text: "洛必达法则",
+         
               id: 2
             }
           ]
@@ -45,7 +46,12 @@ export default {
           ]
         },
         { text: "生物", children: [] },
-        { text: "化学", children: [] },
+        { text: "化学", children: [
+             {
+              text: "初三化学一模考试题",
+              id: 2
+            }
+        ] },
         { text: "数学", children: [] }
       ],
       activeId: 1,
@@ -62,7 +68,7 @@ export default {
       // 返回上一级
       this.$router.go(-1);
     },
-    fyhdata() {
+    data() {
       this.$router.push("/shu");
     }
   },

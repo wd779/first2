@@ -30,7 +30,7 @@
         <span @click="$router.push('/forgetPass')">找回密码</span>
         <span @click="$router.push('/smsLogin')">注册/验证码登录</span>
       </div>
-      <div>
+      <div class="vvv">
         <van-button round block type="warning" native-type="submit">登录</van-button>
       </div>
     </van-form>
@@ -115,5 +115,8 @@ export default {
     margin-bottom: 0.4rem;
     padding: 0 0.1rem;
   }
+}
+.vvv {
+  color: rgb(235, 97, 0);
 }
 </style>
