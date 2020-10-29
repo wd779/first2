@@ -6,6 +6,7 @@ import axios from '../plugins/axios';
  * @param {Object} data [请求时携带的参数]
  */
 export function get(url, data) {
+    // console.log(data);
     return new Promise((resolve, reject) => {
         axios.get(url, {
             params: data
@@ -37,5 +38,5 @@ export function post(url, data) {
 // api/app/courseBasis
 export const GetData = data => get('api/app/courseClassify',data) // 课程信息
 export const GetDataList = data => get('api/app/courseBasis',data) // 课程列表
-export const GetCurriculum = data => get('api/app/courseInfo/basis_id=189',data) // 课程单页数据
+export const GetCurriculum = data => get('api/app/courseInfo/basis_id='+data) // 课程单页数据
 export const Search = data => get('api/app/courseBasis',data) // 搜索课程

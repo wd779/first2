@@ -6,6 +6,7 @@
           <div class="Renowned_teacher_content_warpper" 
            v-for="(item,index) in RenowneList[0].list"
            :key="index"
+           @click="TeacherDetails"
           >
             <!-- 左侧图片盒子 -->
             <div class="Renowned_teacher_content_left">
@@ -47,6 +48,15 @@ export default {
       this.RenowneList = res;
       // console.log(this.HomeLists);
     },
+
+
+
+    // 点击跳转到  讲师详情
+    TeacherDetails(){
+      this.$router.push({
+        path:'/teacher_details'
+      })
+    }
   },
 
   mounted() {

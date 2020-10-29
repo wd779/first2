@@ -47,14 +47,6 @@ export default {
         { Swiper: require("../assets/Swiper/2019LnKumseuhw1569839569.jpg") },
         { Swiper: require("../assets/Swiper/2019MGNW3BtiS91569839576.jpg") },
       ],
-
-      // list:{
-      //     title: "标题",
-      //     desc: "描述",
-      //     img:
-      //       "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1603780371383&di=418f70b09f7c380e134464456dd454f2&imgtype=0&src=http%3A%2F%2Fimg02.fs.yiban.cn%2F43259453%2Favatar%2Fuser%2F200",
-      //     name: "姓名",
-      //   }
       RenowneList:[]
     };
   },

@@ -175,7 +175,7 @@ export default {
       } else {
         this.final = this.SearchArr[0] + this.SearchArr[1];
       }
-      console.log(this.final);
+      // console.log(this.final);
     },
     Reset() {
       this.SearchArr = ["", ""];
