@@ -9,7 +9,8 @@
     <van-form @submit="onSubmit">
       <div class="yan">
         <van-field v-model="mobile" name="用户名" label placeholder="请输入手机号" />
-        <span @click="sms">获取验证码</span>
+        <span @click="sms" v-show="!flag">获取验证码</span>
+        <span v-show="flag" style="color:#ccc;">获取验证码 ({{count}})</span>
       </div>
       <van-field v-model="sms_code" name="验证码" label placeholder="请输入短信验证码" />
       <div class="pass">
@@ -39,7 +40,9 @@ export default {
       sms_code: "",
       type: 2,
       sms_type: "",
-      client: 1
+      client: 1,
+      flag: false,
+      count: ""
     };
   },
   // 计算属性
@@ -59,7 +62,11 @@ export default {
       if (res.code == 200) {
         sessionStorage.setItem("token", res.data.remember_token);
         this.$toast.success("登录成功");
-        this.$router.push("/mine");
+        if (res.data.is_new == 1) {
+          this.$router.push("/setPass");
+        } else if(res.data.is_new == 2){
+          this.$router.push("/mine");
+        }
       }
       console.log("submit", values);
       console.log(res);
@@ -72,6 +79,16 @@ export default {
       });
       if (res.code == 200) {
         this.$toast.success("发送成功");
+        const sum = 60;
+        this.count = sum;
+        this.flag = true;
+        setInterval(() => {
+          if (this.count > 0 && this.count <= sum) {
+            this.count--;
+          } else {
+            this.flag = false;
+          }
+        }, 1000);
       }
       console.log(res);
     }
@@ -87,6 +104,8 @@ export default {
 <style scoped lang="scss">
 .smsLogin {
   width: 100%;
+  height: 100%;
+  background-color: #fff;
   .logo {
     width: 100%;
     padding: 0 0.4rem;
@@ -112,6 +131,9 @@ export default {
     }
     .van-field {
       line-height: 0.4rem;
+    }
+    .van-field:hover {
+      border-bottom: 1px solid #eb6100;
     }
     .pass {
       font-size: 0.12rem;

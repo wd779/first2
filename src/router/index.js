@@ -25,6 +25,7 @@ const routes = [
   { path: '/login', name: 'Login', component: () => import('../views/login/Login.vue') }, // 密码登录
   { path: '/forgetPass', name: 'ForgetPass', component: () => import('../views/login/ForgetPass.vue') }, // 修改密码
   { path: '/smsLogin', name: 'SmsLogin', component: () => import('../views/login/SmsLogin.vue') }, // 验证码登录
+  { path: '/setPass', name: 'SetPass', component: () => import('../views/login/SetPass.vue') }, // 设置密码
   { path: '/info', name: 'Info', component: () => import('../views/my/Info.vue') }, // 个人信息
   { path: '/my-study', name: 'My-study', component: () => import('../views/my/My-study.vue') }, // 我的特色课 我的学习
   { path: '/my-currency', name: 'My-currency', component: () => import('../views/my/My-currency.vue') }, // 我的特色课 我的学习
@@ -37,6 +38,7 @@ const routes = [
   { path: '/feedback', name: 'Feedback', component: () => import('../views/my/Feedback.vue') }, // 意见反馈-hrj-zhy
   { path: '/options', name: 'Options', component: () => import('../views/my/Options.vue') }, // 设置-hrj-zhy
   { path: '/personOne', name: 'personOne', component: () => import('../views/my/personOne.vue') }, // 客服留言-zhy
+
   { path: '/study', name: 'study', component: () => import('../views/Home/Study.vue') },// 学习日历
   { path: '/fudao', name: 'fudao', component: () => import('../views/Home/FuDao.vue') },// 一对一辅导页面,
   { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue') },// 详情,

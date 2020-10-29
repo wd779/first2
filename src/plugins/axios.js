@@ -14,7 +14,9 @@ const _axios = axios.create(config);
 _axios.interceptors.request.use(
   function (config) {
     // token请求头
-    config.headers.Authorization = sessionStorage.getItem("token")
+    // let a = `Bearer `
+    // config.headers.aAuthorization = a+sessionStorage.getItem("token")
+    config.headers.aAuthorization = sessionStorage.getItem("token")
     return config;
   },
   function (error) {

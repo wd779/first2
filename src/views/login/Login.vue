@@ -8,9 +8,24 @@
     <!-- 登录 -->
     <van-form @submit="onSubmit">
       <!-- 用户名 -->
-      <van-field v-model="mobile" name="用户名" label placeholder="请输入手机号" />
+      <van-field
+        number
+        v-model="mobile"
+        name="用户名"
+        label
+        placeholder="请输入手机号"
+      />
+        <!-- validate-trigger="onSubmit" -->
+        <!-- :rules="[{ pattern, message: '请填写用户名' }]" -->
       <!-- 密码  -->
-      <van-field v-model="password" type="password" name="密码" label placeholder="请输入密码" />
+      <van-field
+        v-model="password"
+        type="password"
+        name="密码"
+        label
+        placeholder="请输入密码"
+      />
+        <!-- :rules="[{ pattern, message: '请填写密码' }]" -->
       <div class="pass">
         <span @click="$router.push('/forgetPass')">找回密码</span>
         <span @click="$router.push('/smsLogin')">注册/验证码登录</span>
@@ -37,6 +52,7 @@ export default {
       mobile: "",
       password: "",
       type: 1,
+      pattern: `/^1[3|4|5|7|8][0-9]{9}$/`
     };
   },
   // 计算属性
@@ -72,6 +88,9 @@ export default {
 
 <style scoped lang="scss">
 .login {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
   .logo {
     width: 100%;
     padding: 0 0.4rem;
@@ -83,6 +102,9 @@ export default {
   }
   .van-form {
     padding: 0 0.4rem;
+    .van-field:hover {
+      border-bottom: 1px solid #eb6100;
+    }
   }
   .pass {
     font-size: 0.12rem;

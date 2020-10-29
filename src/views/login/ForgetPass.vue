@@ -11,7 +11,8 @@
     <van-form @submit="onSubmit">
       <div class="yan">
         <van-field v-model="mobile" name="用户名" label placeholder="请输入手机号" />
-        <span @click="editPass">获取验证码</span>
+        <span v-show="!flag" @click="editPass">获取验证码</span>
+         <span v-show="flag" style="color:#ccc;">获取验证码 ({{count}})</span>
       </div>
       <van-field v-model="sms_code" name="验证码" label placeholder="请输入验证码" />
       <van-field v-model="password" name="密码" label placeholder="请输入密码" />
@@ -37,7 +38,8 @@ export default {
       sms_code: "",
       password: "",
       mobile: "",
-      sms_type: "getPassword"
+      sms_type: "getPassword",
+      count: '',
     };
   },
   // 计算属性
@@ -69,6 +71,16 @@ export default {
       });
       if (res.code == 200) {
         this.$toast.success("发送成功");
+         const sum = 60;
+        this.count = sum;
+        this.flag = true;
+        setInterval(() => {
+          if (this.count > 0 && this.count <= sum) {
+            this.count--;
+          } else {
+            this.flag = false;
+          }
+        }, 1000);
       }
       console.log(res);
     }
@@ -84,6 +96,8 @@ export default {
 <style scoped lang="scss">
 .forgetPass {
   width: 100%;
+  height: 100%;
+  background-color: #fff;
   .header {
     width: 100%;
     display: flex;
@@ -92,9 +106,13 @@ export default {
     box-sizing: border-box;
     height: 0.45rem;
     align-items: center;
+    background-color: #fff;
     font-size: 0.18rem;
   }
   .van-form {
+    .van-field:hover {
+      border-bottom: 1px solid #eb6100;
+    }
     .yan {
       position: relative;
       span {
