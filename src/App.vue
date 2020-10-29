@@ -1,11 +1,7 @@
 <template>
   <div id="app">
     <router-view></router-view>
-<<<<<<< HEAD
     <div class="box1" @click="$router.push('/email')">
-=======
-    <div class="box" @click="$router.push('/email')">
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
       <div class="lo">
         <label for class="icon">
           <span type="call-button-1" width="32px" height="32px" class="base-icon"></span>
@@ -31,38 +27,24 @@ body,
   list-style: none;
   font-size: 0.16rem;
   background-color: #f0f2f5;
-<<<<<<< HEAD
-=======
-  position: absolute;
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
 }
 * {
   margin: 0;
   padding: 0;
 }
 
-<<<<<<< HEAD
 .box1 {
-=======
-.box {
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
   height: 0.5rem;
   width: 0.5rem;
   background-color: rgb(0, 122, 255);
   border-radius: 50%;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 5px 14px;
-<<<<<<< HEAD
   text-align: center;
   cursor: pointer;
   position: fixed;
   z-index: 999;
   top:0.5rem;
 
-=======
-  position: relative;
-  text-align: center;
-  cursor: pointer;
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
 }
 .lo {
   padding-top: 0.14rem;
@@ -70,10 +52,6 @@ body,
 .icon {
   display: inline-block;
   vertical-align: middle;
-<<<<<<< HEAD
-=======
-  cursor: pointer;
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
 }
 .base-icon {
   vertical-align: middle;

@@ -17,10 +17,6 @@
         </div>
       </div>
     </van-cell>
-<<<<<<< HEAD
-=======
-
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
   </div>
 </template>
 
@@ -53,13 +49,8 @@ export default {
     showPopup() {
       this.show = true;
     },
-<<<<<<< HEAD
     ret() {
       this.$router.push("/point");
-=======
-    ret(){
-        this.$router.push("/point");
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
     }
   }
 };
@@ -113,13 +104,8 @@ img {
   color: #fff;
   background-color: #eb6100;
   text-align: center;
-<<<<<<< HEAD
   height: 0.4rem;
   line-height: 0.4rem;
-=======
-  height: .4rem;
-  line-height: .4rem;
->>>>>>> 096ed1e91533a7d730111f29c7124ede56d6cbd7
 }
 .van-radio-group {
   font-size: 0.37333rem;
