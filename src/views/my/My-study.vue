@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="box">
     <!-- 头部组件 -->
     <app-header>
       <template>
@@ -12,7 +12,25 @@
     </app-header>
     <!-- 滚动标签栏 -->
     <van-tabs>
-      <van-tab v-for="index in 8" :title="'标签 ' + index" :key="index">内容 {{ index }}</van-tab>
+      <van-tab v-for="index in 8" :title="'标签 ' + index" :key="index">
+        <ul class="ul-box">
+          <li>
+            <div class="div-box">
+              <p>22号李老师大课堂开课啦</p>
+              <div class="div-top">
+                <i>□</i>
+                <span>02月22日 10:00 ~ 02月23日 20:00</span> |
+                <span>共3课时</span>
+              </div>
+              <div class="div-bottom">
+                <van-progress pivot-text stroke-width="3" :percentage="0" />
+                <span>已学习0%</span>
+              </div>
+              <span></span>
+            </div>
+          </li>
+        </ul>
+      </van-tab>
     </van-tabs>
   </div>
 </template>
@@ -47,4 +65,49 @@ export default {
 </script> 
 
 <style scoped lang="scss">
+.box {
+  width: 100%;
+  height: 100%;
+  background-color: #fff;
+}
+
+.ul-box {
+  width: 100%;
+  padding: 0.1rem 0.15rem;
+  box-sizing: border-box;
+  li {
+    width: 100%;
+    padding: 0.24rem 0.15rem;
+    box-sizing: border-box;
+    box-shadow: 0 0 0.1rem #ccc;
+    border-radius: 0.06rem;
+    .div-box {
+      p {
+        color: #333;
+        line-height: 0.16rem;
+      }
+      .div-top {
+        font-size: 0.1rem;
+        line-height: 0.16rem;
+        padding: 0.1rem 0 0.32rem 0;
+        color: #666;
+        i {
+          margin-right: 0.05rem;
+        }
+      }
+      .div-bottom {
+        display: flex;
+        align-items: center;
+        .van-progress {
+          width: 1.2rem;
+        }
+        span {
+          font-size: 0.08rem;
+          color: #8c8c8c;
+          margin-left: 0.15rem;
+        }
+      }
+    }
+  }
+}
 </style>

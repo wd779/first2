@@ -21,12 +21,12 @@
           </section>
           <div class="info">
             <ul>
-              <li>
+              <li  @click="$router.push('/my-study')">
                 <h3>1</h3>
                 <p>我的特色课</p>
                 <span>已购特色课程的学习</span>
               </li>
-              <li @click="$router.push('/fudao')">
+              <li @click="$router.push('/order')">
                 <h3>0</h3>
                 <p>一对一辅导</p>
                 <span>我的一对一老师辅导</span>
@@ -72,7 +72,7 @@
         <li>
           <p class="menu-title">订单相关</p>
           <div class="menu-box">
-            <div>
+            <div >
               <van-icon name="point-gift" />
               <p>课程订单</p>
             </div>
@@ -191,7 +191,7 @@ export default {
         align-items: center;
         position: relative;
         img {
-          width: 0.5rem;
+          width: 0.62rem;
           border-radius: 50%;
         }
         span {
