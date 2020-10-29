@@ -12,6 +12,7 @@ const routes = [
       { path: 'mine', name: 'mine', component: () => import('../views/mine.vue') }, // 我的
       { path: 'Appointment', name: 'Appointment', component: () => import('../views/Appointment.vue') }, // 课程
       { path: "practice", name: "Practice", component: () => import("../views/practice/Practice.vue"), },// 练习页面主页面-zhy
+      { path: "email", name: "email", component: () => import("../views/email.vue") }, //弹出信封-zhy
       { path: "point", name: "point", component: () => import("../views/practice/point.vue") }, //考点练习-zhy
       { path: "paper_package", name: "paper_package", component: () => import("../views/practice/paper_package.vue") }, //套卷练习-zhy
       { path: "exam", name: "exam", component: () => import("../views/practice/exam.vue") }, // 仿真模考-zhy
@@ -19,6 +20,7 @@ const routes = [
       { path: "assess", name: "assess", component: () => import("../views/practice/assess.vue") }, // 测评记录-zhy
       { path: "ques_collect", name: "ques_collect", component: () => import("../views/practice/ques_collect.vue") },// 习题收藏-zhy
       { path: "shu", name: "shu", component: () => import("../views/practice/shu.vue") },// 学习跳转页面-zhy
+      { path: "hua", name: "hua", component: () => import("../views/practice/hua.vue") },// 学习跳转页面-zhy
       { path: "order", name: "order", component: () => import("../views/order/order.vue") },// 约课记录主页面-zhy
     ]
   }, // 主页面

@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div id="app">
     <router-view></router-view>
+    
     <van-tabbar v-model="active" class="tabBar">
-      
       <van-tabbar-item icon="wap-home-o" to="/">首页</van-tabbar-item>
       <van-tabbar-item icon="coupon-o" to="/Appointment">课程</van-tabbar-item>
       <van-tabbar-item icon="orders-o" to="/order">约课记录</van-tabbar-item>
@@ -48,8 +48,10 @@ export default {
 </script> 
 
 <style scoped>
-.tabBar{
+
+.tabBar {
   width: 100%;
-  height: 64px;
+  height: 0.6rem;
 }
+
 </style>
