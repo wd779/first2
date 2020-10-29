@@ -39,6 +39,7 @@ const routes = [
   { path: '/study', name: 'study', component: () => import('../views/Home/Study.vue') },// 学习日历
   { path: '/fudao', name: 'fudao', component: () => import('../views/Home/FuDao.vue') },// 一对一辅导页面,
   { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue') },// 详情,
+  { path: '/teacher_details', name: 'teacher_details', component: () => import('../views/Home/Teacher_Details.vue') },// 教师详情,
 ]
 const router = new VueRouter({
   routes
