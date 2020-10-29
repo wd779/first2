@@ -114,7 +114,7 @@
               <van-icon name="point-gift" />
               <p>意见反馈</p>
             </div>
-            <div>
+            <div @click="$router.push('/personOne')">
               <van-icon name="point-gift" />
               <p>在线客服</p>
             </div>
