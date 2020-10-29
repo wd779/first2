@@ -2,7 +2,7 @@
   <div class="box_container">
     <div class="box_wrapper">
       <h6>{{ datas.title }}</h6>
-      <p>{{ datas.desc || '暂无描述' }}</p>
+      <p>{{ datas.course_statement || '暂无描述' }}</p>
       <div class="user">
         <img :src="datas.cover_img" />
         <span>
@@ -11,8 +11,8 @@
       </div>
 
       <p>
-        67人已报名
-        <b>免费</b>
+        {{datas.sales_num}}人已报名
+        <b :class="datas.price==0?'':'red'">{{ datas.price==0?'免费':"￥"+datas.price }}</b>
       </p>
     </div>
   </div>
@@ -73,8 +73,12 @@ export default {
     -webkit-line-clamp: 1;
     overflow: hidden;
     b {
-      color: aquamarine;
+      font-weight: normal;
+      color: #44A426;
       float: right;
+    }
+    b.red{
+      color: red;
     }
   }
 }
@@ -85,6 +89,9 @@ export default {
     width: 0.3rem;
     height: 0.3rem;
     border-radius: 50%;
+  }
+  span{
+    text-indent: 1em;
   }
 }
 </style>
