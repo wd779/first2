@@ -7,13 +7,13 @@
         <div class="head">
           <section @click="$router.push('/info')">
             <div v-show="flag">
-              <img :src="list.avatar"/>
-              <span>{{list.nickname}}</span>
+              <img :src="personal.avatar"/>
+              <span>{{personal.nickname}}</span>
               <van-icon name="edit" />
               <h4 @click="$router.push('/fudao')">去约课</h4>
             </div>
             <div v-show="!flag">
-              <img :src="list.avatar">
+              <img :src="personal.avatar">
               <span @click="$router.push('/login')">登录/注册</span>
               <van-icon name="edit" />
               <h4 @click="$router.push('/fudao')">去约课</h4>
@@ -139,7 +139,7 @@ export default {
   data() {
     return {
       flag: false,
-      list:[] // 个人信息
+      personal:[] // 个人信息
     };
   }, // 计算属性
   computed: {}, // 侦听器
@@ -148,13 +148,12 @@ export default {
     async info(){
       let data = await AjaxInfo()
       console.log(data);
+      this.personal = data.data
     }
   },
   created() {},
   mounted() {
     this.info()
-   this.list = JSON.parse( localStorage.getItem("loginArr"))
-   this.list = this.list.data
     if (sessionStorage.getItem("token")) {
       this.flag = true;
     } else {

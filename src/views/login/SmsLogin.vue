@@ -83,8 +83,8 @@ export default {
     },
     // 验证码
     async sms() {
-      let sms = /^[0-9]{6}$/;
-      if (sms.test(this.mobile) && this.mobile != "") {
+      let patterns = /^1[3|4|5|7|8][0-9]{9}$/;
+      if (patterns.test(this.mobile) && this.mobile != "") {
         let res = await AjaxSmsLogin({
           mobile: this.mobile,
           sms_type: "login"

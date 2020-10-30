@@ -60,7 +60,6 @@ export default {
             sessionStorage.setItem("token", res.data.remember_token);
             this.$toast.success("登录成功");
             this.$router.push("/mine");
-            localStorage.setItem("loginArr", JSON.stringify(res));
           }
           console.log(res);
         } else {
@@ -69,7 +68,6 @@ export default {
       } else {
         this.$toast("请输入正确的手机号");
       }
-    console.log(this.mobile,this.password);
     }
   },
   /**
