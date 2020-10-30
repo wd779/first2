@@ -42,7 +42,10 @@ export default {
       sms_type: "",
       client: 1,
       flag: false,
-      count: ""
+      count: "",
+      pattern: `/^1[3|4|5|7|8][0-9]{9}$/`,
+      pass: `/^[0-9]{6,12}$/`,
+      smss: `/^[0-9]{6}$/`
     };
   },
   // 计算属性
@@ -53,44 +56,55 @@ export default {
   methods: {
     // 登录
     async onSubmit(values) {
-      let res = await AjaxLogin({
-        mobile: this.mobile,
-        sms_code: this.sms_code,
-        client: this.client,
-        type: this.type
-      });
-      if (res.code == 200) {
-        sessionStorage.setItem("token", res.data.remember_token);
-        this.$toast.success("登录成功");
-        if (res.data.is_new == 1) {
-          this.$router.push("/setPass");
-        } else if(res.data.is_new == 2){
-          this.$router.push("/mine");
+      if (this.pattern.match(this.mobile)) {
+        if (this.sms.match(this.sms_code)) {
+          let res = await AjaxLogin({
+            mobile: this.mobile,
+            sms_code: this.sms_code,
+            client: this.client,
+            type: this.type
+          });
+          if (res.code == 200) {
+            sessionStorage.setItem("token", res.data.remember_token);
+            this.$toast.success("登录成功");
+            if (res.data.is_new == 1) {
+              this.$router.push("/setPass");
+            } else if (res.data.is_new == 2) {
+              this.$router.push("/mine");
+            }
+          }
+        } else {
+          this.$toast("验证码必须是6位的数字");
         }
+      } else {
+        this.$toast("请输入正确的手机号");
       }
       console.log("submit", values);
       console.log(res);
     },
     // 验证码
     async sms() {
-      let res = await AjaxSmsLogin({
-        mobile: this.mobile,
-        sms_type: "login"
-      });
-      if (res.code == 200) {
-        this.$toast.success("发送成功");
-        const sum = 60;
-        this.count = sum;
-        this.flag = true;
-        setInterval(() => {
-          if (this.count > 0 && this.count <= sum) {
-            this.count--;
-          } else {
-            this.flag = false;
-          }
-        }, 1000);
+      if (this.smss.match(this.mobile) && this.mobile != '') {
+        let res = await AjaxSmsLogin({
+          mobile: this.mobile,
+          sms_type: "login"
+        });
+        if (res.code == 200) {
+          this.$toast.success("发送成功");
+          const sum = 60;
+          this.count = sum;
+          this.flag = true;
+          setInterval(() => {
+            if (this.count > 0 && this.count <= sum) {
+              this.count--;
+            } else {
+              this.flag = false;
+            }
+          }, 1000);
+        }
+      } else {
+        this.$toast("请输入正确的手机号");
       }
-      console.log(res);
     }
   },
   /**

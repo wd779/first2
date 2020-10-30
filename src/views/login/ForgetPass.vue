@@ -42,7 +42,8 @@ export default {
       count: "",
       pattern: `/^1[3|4|5|7|8][0-9]{9}$/`,
       pass: `/^[0-9]{6,12}$/`,
-      sms: `/^[0-9]{6}$/`
+      sms: `/^[0-9]{6}$/`,
+      flag:false
     };
   },
   // 计算属性
@@ -52,9 +53,9 @@ export default {
   // 组件方法
   methods: {
     async onSubmit(values) {
-      if (this.pattern.test(this.mobile)) {
-        if (this.sms.test(this.sms_code)) {
-          if (this.pass.test(this.password)) {
+      if (this.pattern.match(this.mobile)) {
+        if (this.sms.match(this.sms_code)) {
+          if (this.pass.match(this.password)) {
             let res = await AjaxPass({
               mobile: this.mobile,
               password: this.password,
@@ -80,7 +81,7 @@ export default {
     },
     // 验证码
     async editPass() {
-      if (this.sms.test(this.mobile)) {
+      if (this.sms.match(this.mobile)) {
         let res = await AjaxSmsLogin({
           mobile: this.mobile,
           sms_type: this.sms_type

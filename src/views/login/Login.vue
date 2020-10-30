@@ -8,12 +8,9 @@
     <!-- 登录 -->
     <van-form @submit="onSubmit">
       <!-- 用户名 -->
-      <van-field number v-model="mobile" name="用户名" label placeholder="请输入手机号" />
-      <!-- validate-trigger="onSubmit" -->
-      <!-- :rules="[{ pattern, message: '请填写用户名' }]" -->
+      <van-field v-model="mobile" label placeholder="请输入手机号" />
       <!-- 密码  -->
-      <van-field v-model="password" type="password" name="密码" label placeholder="请输入密码" />
-      <!-- :rules="[{ pattern, message: '请填写密码' }]" -->
+      <van-field v-model="password" type="password" label placeholder="请输入密码" />
       <div class="pass">
         <span @click="$router.push('/forgetPass')">找回密码</span>
         <span @click="$router.push('/smsLogin')">注册/验证码登录</span>
@@ -39,9 +36,7 @@ export default {
     return {
       mobile: "",
       password: "",
-      type: 1,
-      pattern: `/^1[3|4|5|7|8][0-9]{9}$/`,
-      pass: `/^[0-9]{6,12}$/`
+      type: 1
     };
   },
   // 计算属性
@@ -51,28 +46,33 @@ export default {
   // 组件方法
   methods: {
     // 登录
-    async onSubmit(values) {
-      if (this.pattern.test(this.mobile)) {
-        if (this.pass.test(this.password)) {
-          let res = await AjaxLogin({
-            mobile: this.mobile,
-            password: this.password,
-            type: this.type
-          });
-          if (res.code == 200) {
-            sessionStorage.setItem("token", res.data.remember_token);
-            this.$toast.success("登录成功");
-            this.$router.push("/mine");
-            localStorage.setItem("loginArr", JSON.stringify(res));
-          }
-          console.log("submit", values);
-          console.log(res);
+    onSubmit(values) {
+      let pattern = `/^1[3|4|5|7|8][0-9]{9}$/`; // 手机号正则
+      let pass = `/^[0-9]{6,12}$/`; // 密码正则
+      if (pattern.match(this.mobile)) {
+        if (pass.match(this.password)) {
+          this.login();
         } else {
           this.$toast("密码必须是6-12位的数字");
         }
       } else {
         this.$toast("请输入正确的手机号");
       }
+      console.log("submit", values);
+    },
+    async login() {
+      let res = await AjaxLogin({
+        mobile: this.mobile,
+        password: this.password,
+        type: this.type
+      });
+      if (res.code == 200) {
+        sessionStorage.setItem("token", res.data.remember_token);
+        this.$toast.success("登录成功");
+        this.$router.push("/mine");
+        localStorage.setItem("loginArr", JSON.stringify(res));
+      }
+      console.log(res);
     }
   },
   /**

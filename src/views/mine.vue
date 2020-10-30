@@ -130,7 +130,7 @@
 </template>
 
 <script>
-// import { AjaxMy } from "../utils/myApi";
+import { AjaxInfo } from "../utils/myApi";
 export default {
   // 组件名称
   name: "", // 组件参数 接收来自父组件的数据
@@ -139,19 +139,22 @@ export default {
   data() {
     return {
       flag: false,
-      list:[]
+      list:[] // 个人信息
     };
   }, // 计算属性
   computed: {}, // 侦听器
   watch: {}, // 组件方法
   methods: {
-    
+    async info(){
+      let data = await AjaxInfo()
+      console.log(data);
+    }
   },
   created() {},
   mounted() {
+    this.info()
    this.list = JSON.parse( localStorage.getItem("loginArr"))
    this.list = this.list.data
-   console.log(this.list);
     if (sessionStorage.getItem("token")) {
       this.flag = true;
     } else {
