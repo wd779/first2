@@ -42,10 +42,7 @@ export default {
       sms_type: "",
       client: 1,
       flag: false,
-      count: "",
-      pattern: `/^1[3|4|5|7|8][0-9]{9}$/`,
-      pass: `/^[0-9]{6,12}$/`,
-      smss: `/^[0-9]{6}$/`
+      count: ""
     };
   },
   // 计算属性
@@ -56,8 +53,10 @@ export default {
   methods: {
     // 登录
     async onSubmit(values) {
-      if (this.pattern.match(this.mobile)) {
-        if (this.sms.match(this.sms_code)) {
+      let pattern = /^1[3|4|5|7|8][0-9]{9}$/;
+      let sms = /^[0-9]{6}$/;
+      if (pattern.test(this.mobile)) {
+        if (sms.test(this.sms_code)) {
           let res = await AjaxLogin({
             mobile: this.mobile,
             sms_code: this.sms_code,
@@ -84,7 +83,8 @@ export default {
     },
     // 验证码
     async sms() {
-      if (this.smss.match(this.mobile) && this.mobile != '') {
+      let sms = /^[0-9]{6}$/;
+      if (sms.test(this.mobile) && this.mobile != "") {
         let res = await AjaxSmsLogin({
           mobile: this.mobile,
           sms_type: "login"

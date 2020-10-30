@@ -47,10 +47,10 @@ export default {
   methods: {
     // 登录
     async onSubmit(values) {
-      let pattern = `/^1[3|4|5|7|8][0-9]{9}$/`; // 手机号正则
-      let pass = `/^[0-9]{6,12}$/`; // 密码正则
-      if (!pattern.match(this.mobile)) {
-        if (!pass.match(this.password)) {
+      let pattern = /^1[3|4|5|7|8][0-9]{9}$/; // 手机号正则
+      let pass = /^[0-9]{6,12}$/; // 密码正则
+      if (pattern.test(this.mobile)) {
+        if (pass.test(this.password)) {
           let res = await AjaxLogin({
             mobile: this.mobile,
             password: this.password,
