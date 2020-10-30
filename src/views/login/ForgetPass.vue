@@ -12,7 +12,7 @@
       <div class="yan">
         <van-field v-model="mobile" name="用户名" label placeholder="请输入手机号" />
         <span v-show="!flag" @click="editPass">获取验证码</span>
-         <span v-show="flag" style="color:#ccc;">获取验证码 ({{count}})</span>
+        <span v-show="flag" style="color:#ccc;">获取验证码({{count}})</span>
       </div>
       <van-field v-model="sms_code" name="验证码" label placeholder="请输入验证码" />
       <van-field v-model="password" name="密码" label placeholder="请输入密码" />
@@ -39,7 +39,10 @@ export default {
       password: "",
       mobile: "",
       sms_type: "getPassword",
-      count: '',
+      count: "",
+      pattern: `/^1[3|4|5|7|8][0-9]{9}$/`,
+      pass: `/^[0-9]{6,12}$/`,
+      sms: `/^[0-9]{6}$/`
     };
   },
   // 计算属性
@@ -49,40 +52,56 @@ export default {
   // 组件方法
   methods: {
     async onSubmit(values) {
-      let res = await AjaxPass({
-        mobile: this.mobile,
-        password: this.password,
-        sms_code: this.sms_code,
-        type: this.type
-      });
-      // 修改密码
-      console.log("submit", values);
-      console.log(res);
-      if (res.code == 200) {
-        this.$toast.success("修改成功");
-        this.$router.push("/login");
+      if (this.pattern.test(this.mobile)) {
+        if (this.sms.test(this.sms_code)) {
+          if (this.pass.test(this.password)) {
+            let res = await AjaxPass({
+              mobile: this.mobile,
+              password: this.password,
+              sms_code: this.sms_code,
+              type: this.type
+            });
+            // 修改密码
+            console.log("submit", values);
+            console.log(res);
+            if (res.code == 200) {
+              this.$toast.success("修改成功");
+              this.$router.push("/login");
+            }
+          } else {
+            this.$toast("密码必须是6-12位的数字");
+          }
+        } else {
+          this.$toast("验证码必须是6位的数字");
+        }
+      } else {
+        this.$toast("请输入正确的手机号");
       }
     },
     // 验证码
     async editPass() {
-      let res = await AjaxSmsLogin({
-        mobile: this.mobile,
-        sms_type: this.sms_type
-      });
-      if (res.code == 200) {
-        this.$toast.success("发送成功");
-         const sum = 60;
-        this.count = sum;
-        this.flag = true;
-        setInterval(() => {
-          if (this.count > 0 && this.count <= sum) {
-            this.count--;
-          } else {
-            this.flag = false;
-          }
-        }, 1000);
+      if (this.sms.test(this.mobile)) {
+        let res = await AjaxSmsLogin({
+          mobile: this.mobile,
+          sms_type: this.sms_type
+        });
+        if (res.code == 200) {
+          this.$toast.success("发送成功");
+          const sum = 60;
+          this.count = sum;
+          this.flag = true;
+          setInterval(() => {
+            if (this.count > 0 && this.count <= sum) {
+              this.count--;
+            } else {
+              this.flag = false;
+            }
+          }, 1000);
+        }
+        console.log(res);
+      } else {
+        this.$toast("请输入正确的手机号");
       }
-      console.log(res);
     }
   },
   /**
