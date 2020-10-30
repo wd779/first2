@@ -29,7 +29,7 @@ _axios.interceptors.request.use(
     // token请求头
     let token = sessionStorage.getItem("token")
     if (token) {
-      config.headers.aAuthorization = `Bearer ${token}`
+      config.headers.Authorization = `Bearer ${token}`
     }
     // devicetype
     config.headers.devicetype = "H5"
