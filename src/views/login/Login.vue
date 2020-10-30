@@ -46,33 +46,30 @@ export default {
   // 组件方法
   methods: {
     // 登录
-    onSubmit(values) {
+    async onSubmit(values) {
       let pattern = `/^1[3|4|5|7|8][0-9]{9}$/`; // 手机号正则
       let pass = `/^[0-9]{6,12}$/`; // 密码正则
-      if (pattern.match(this.mobile)) {
-        if (pass.match(this.password)) {
-          this.login();
+      if (!pattern.match(this.mobile)) {
+        if (!pass.match(this.password)) {
+          let res = await AjaxLogin({
+            mobile: this.mobile,
+            password: this.password,
+            type: this.type
+          });
+          if (res.code == 200) {
+            sessionStorage.setItem("token", res.data.remember_token);
+            this.$toast.success("登录成功");
+            this.$router.push("/mine");
+            localStorage.setItem("loginArr", JSON.stringify(res));
+          }
+          console.log(res);
         } else {
           this.$toast("密码必须是6-12位的数字");
         }
       } else {
         this.$toast("请输入正确的手机号");
       }
-      console.log("submit", values);
-    },
-    async login() {
-      let res = await AjaxLogin({
-        mobile: this.mobile,
-        password: this.password,
-        type: this.type
-      });
-      if (res.code == 200) {
-        sessionStorage.setItem("token", res.data.remember_token);
-        this.$toast.success("登录成功");
-        this.$router.push("/mine");
-        localStorage.setItem("loginArr", JSON.stringify(res));
-      }
-      console.log(res);
+    console.log(this.mobile,this.password);
     }
   },
   /**
