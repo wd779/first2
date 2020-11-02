@@ -51,4 +51,7 @@ export const AjaxSmsLogin = data => post("/api/app/smsCode", data); // 验证码
 export const AjaxPass = data => post("/api/app/password", data); // 修改密码
 // // 我的页面
 export const AjaxInfo = data => get("/api/app/userInfo", data); // 个人信息
-export const AjaxEdit = data => put("/api/app/user", data); // 修改个人信息
+export const AjaxEditUser = data => put("/api/app/user", data); // 修改个人信息
+export const AjaxEditAttribute = data => get("/app/module/attribute/1", data); // 选择年纪和学科得数据
+export const AjaxEditSonArea = data => get("/api/app/sonArea/0", data); // 获取城市列表数据
+

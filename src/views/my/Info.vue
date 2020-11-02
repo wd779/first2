@@ -5,59 +5,53 @@
       <p>个人信息</p>
       <p></p>
     </div>
-    <ul class="ul-box">
+    <ul>
       <li>
-        <van-cell is-link @click="showPopup">
-          <div>
-            <span>头像</span>
-          </div>
-          <div>
-            <span>头像</span>
-          </div>
-        </van-cell>
+        <span>头像</span>
+        <span>
+          <img :src="userinfo.avatar" alt />
+        </span>
       </li>
       <li>
-        <van-cell is-link @click="showPopup">
-          <span>昵称</span>
-        </van-cell>
+        <span>昵称</span>
+        <span>{{ userinfo.nickname }}</span>
       </li>
       <li>
-        <van-cell is-link @click="showPopup">
-          <span>手机号</span>
-        </van-cell>
+        <span>手机号</span>
+        <span>{{ userinfo.mobile }}</span>
       </li>
       <li>
-        <van-cell is-link @click="showPopup">
-          <span>性别</span>
-        </van-cell>
+        <span>性别</span>
+        <span>{{ userinfo.sex }}</span>
       </li>
       <li>
-        <van-cell is-link @click="showPopup">
-          <span>出生日期</span>
-        </van-cell>
+        <span>出生日期</span>
+        <span>{{ userinfo.birthday }}</span>
+      </li>
+      <li @click="city">
+        <span>所在城市</span>
+        <span>北京，北京市，西城区</span>
       </li>
       <li>
-        <van-cell is-link @click="showPopup">
-          <span>所在城市</span>
-        </van-cell>
+        <span>学科</span>
+        <span>语文</span>
       </li>
       <li>
-        <van-cell is-link @click="showPopup">
-          <span>学科</span>
-        </van-cell>
-      </li>
-      <li>
-        <van-cell is-link @click="showPopup">
-          <span>年级</span>
-        </van-cell>
+        <span>年级</span>
+        <span>初二</span>
       </li>
     </ul>
-    <van-popup position="bottom" v-model="show">内容</van-popup>
+
+    <!-- 城市信息 -->
+    <van-popup position="bottom" v-model="cityShow">
+      <!-- <van-picker show-toolbar title="标题" :columns="cityEdit" /> -->
+      <p v-for="item in cityEdit" :key="item.id">{{item.area_name}}</p>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import { AjaxInfo,AjaxEdit } from "../../utils/myApi";
+import { AjaxInfo, AjaxEditUser, AjaxEditSonArea } from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -68,7 +62,10 @@ export default {
   // 组件状态值
   data() {
     return {
-      show: false
+      cityShow: false,
+      userinfo: [],
+      user: [],
+      cityEdit: []
     };
   },
   // 计算属性
@@ -80,11 +77,22 @@ export default {
     showPopup() {
       this.show = true;
     },
-    async info(){
-      let res = await AjaxInfo()
+    async info() {
+      let res = await AjaxInfo();
+      this.userinfo = res.data;
       console.log(res);
-      let a = await AjaxEdit()
-      console.log(a);
+    },
+    // 城市信息
+    async city() {
+      let { data } = await AjaxEditSonArea();
+      this.cityShow = true;
+      this.cityEdit = data;
+    },
+    // 修改信息
+    async userEdit() {
+      let data = await AjaxEditUser();
+      this.user = res.data;
+      console.log(data);
     }
   },
   /**
@@ -92,7 +100,7 @@ export default {
    */
   created() {},
   mounted() {
-    this.info()
+    this.info();
   }
 };
 </script> 
@@ -111,20 +119,53 @@ export default {
     font-size: 0.18rem;
     background-color: #fff;
   }
-  .ul-box {
-    width: 100%;
-    padding: 0 0.15rem;
-    box-sizing: border-box;
-    background-color: #fff;
-    margin: 0.1rem 0;
-    li {
+  ul {
+    background: #fff;
+    margin: 2.66667vw 0;
+    padding: 1.33333vw 4vw;
+    li:before {
+      content: "";
+      display: block;
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%) rotate(45deg);
+      width: 2.66667vw;
+      height: 2.66667vw;
+      border-top: 1px solid #b7b7b7;
+      border-right: 1px solid #b7b7b7;
+    }
+    li:after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
       width: 100%;
-      border-bottom: 0.01rem solid #ccc;
-      .van-cell {
-        div {
-          display: flex;
-          justify-content: space-between;
-        }
+      height: 1px;
+      background-color: #f5f5f5;
+    }
+    li {
+      height: 14.66667vw;
+      line-height: 14.66667vw;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      span:first-child {
+        font-size: 3.73333vw;
+        color: #595959;
+      }
+      img {
+        width: 9.86667vw;
+        height: 9.86667vw;
+        border-radius: 50%;
+        vertical-align: middle;
+      }
+      span:nth-child(2) {
+        color: #8c8c8c;
+        font-size: 3.73333vw;
+        margin-right: 6.66667vw;
       }
     }
   }
