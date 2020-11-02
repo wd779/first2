@@ -53,7 +53,7 @@
     <div
       v-for="item in RenowneList4"
       :key="item.teacher_id"
-      @click="TeacherDetails"
+      @click="TeacherDetails(item.teacher_id)"
     >
       <RenownedTeacher :list="item"></RenownedTeacher>
     </div>
@@ -69,7 +69,7 @@
     <div
       v-for="item in RenowneList"
       :key="item.teacher_id"
-      @click="TeacherDetails"
+      @click="TeacherDetails(item.teacher_id)"
     >
       <RenownedTeacher :list="item"></RenownedTeacher>
     </div>
@@ -170,7 +170,7 @@ export default {
       this.$router.push({ name: "Details", query: { con: item } });
     },
     // 点击跳转到  讲师详情
-    TeacherDetails() {
+    TeacherDetails(id) {
       // 获取token   判断 登录状态
       let str = localStorage.getItem("token");
       // console.log(str);
@@ -179,6 +179,7 @@ export default {
       } else {
         this.$router.push({
           path: "/teacher_details",
+          query:{id}
         });
       }
     },
