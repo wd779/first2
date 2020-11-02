@@ -125,19 +125,6 @@ export default {
   beforeRouteEnter: (to, from, next) => {
     if (!sessionStorage.getItem("token")) {
       next("/login");
-  mounted() {
-    var Scr = String(window.location.href.split("#")[1]);
-    if (Scr == "/mine") {
-      this.changeRouter(4);
-    }
-    if (Scr == "/practice") {
-      this.changeRouter(3);
-    }
-    if (Scr == "/order") {
-      this.changeRouter(2);
-    }
-    if (Scr == "/Appointment") {
-      this.changeRouter(1);
     }
     next();
   },
