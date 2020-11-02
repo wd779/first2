@@ -8,7 +8,7 @@
       <p></p>
     </div>
     <!-- 找回密码 -->
-    <van-form @submit="onSubmit">
+    <div class="van-form">
       <div class="yan">
         <van-field v-model="mobile" name="用户名" label placeholder="请输入手机号" />
         <span v-show="!flag" @click="editPass">获取验证码</span>
@@ -17,9 +17,9 @@
       <van-field v-model="sms_code" name="验证码" label placeholder="请输入验证码" />
       <van-field v-model="password" name="密码" label placeholder="请输入密码" />
       <div style="margin: 0.3rem;">
-        <van-button round block type="warning" native-type="submit">确定</van-button>
+        <van-button round block type="warning" native-type="submit" @click="onSubmit">确定</van-button>
       </div>
-    </van-form>
+    </div>
   </div>
 </template>
 

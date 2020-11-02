@@ -6,7 +6,7 @@
       <img src="../../assets/2019pILfAg7Avr1567732916.png" alt />
     </div>
     <!-- 登录 -->
-    <van-form @submit="onSubmit">
+    <div class="van-form">
       <!-- 用户名 -->
       <van-field v-model="mobile" label placeholder="请输入手机号" />
       <!-- 密码  -->
@@ -16,9 +16,9 @@
         <span @click="$router.push('/smsLogin')">注册/验证码登录</span>
       </div>
       <div class="vvv">
-        <van-button round block type="warning" native-type="submit">登录</van-button>
+        <van-button round block type="warning" @click="onSubmit" native-type="submit">登录</van-button>
       </div>
-    </van-form>
+    </div>
   </div>
 </template>
 

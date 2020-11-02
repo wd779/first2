@@ -8,13 +8,13 @@
       <p>跳过</p>
     </div>
     <!-- 找回密码 -->
-    <van-form @submit="onSubmit">
+    <div class="van-form">
       <van-field v-model="sms_code" name="验证码" label placeholder="请设置登录密码" />
       <van-field v-model="password" name="密码" label placeholder="请在次输入密码" />
       <div style="margin: 0.3rem;">
-        <van-button round block type="warning" native-type="submit">确定</van-button>
+        <van-button round block type="warning" native-type="submit" @click="onSubmit">确定</van-button>
       </div>
-    </van-form>
+    </div>
   </div>
 </template>
 
