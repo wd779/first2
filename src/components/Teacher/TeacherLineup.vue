@@ -4,9 +4,9 @@
       <div class="teacher_warpper">
         <div class="teacher_content">
           <div class="teacher_content_warpper" 
-          v-for="(item,index) in HomeLists[4].list" 
-          :key="index"
-           v-show="index < 3"
+          v-for="item in HomeLists[4].list" 
+          :key="item.teacher_id"
+          
           >
             <!-- 左侧图片盒子 -->
             <div class="teacher_content_left">
@@ -69,6 +69,7 @@ export default {
 .teacher_warpper {
   width: 100%;
   height: 2.5rem;
+  overflow: hidden;
   /* border: 1px solid #000; */
 }
 

@@ -43,7 +43,7 @@ body,
   cursor: pointer;
   position: fixed;
   z-index: 999;
-  top:0.5rem;
+  top:2.5rem;
 
 }
 .lo {

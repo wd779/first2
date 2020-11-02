@@ -5,7 +5,7 @@
       <div class="header">
         <header>
           <span class="back">
-            <img src="../../assets/下载.png" alt="" />
+            <img src="../../assets/下载.png" alt="" @click="backHome" />
           </span>
           <h3>讲师详情</h3>
         </header>
@@ -47,7 +47,43 @@
               </ul>
             </van-tab>
             <van-tab title="主讲课程" name="b">
-              <div class="vant-list-con"></div>
+              <ul class="masterCourse">
+                <li v-for="index in 7" :key="index">
+                  <div class="wsy_ii_item" @click="ToCourseDetail()">
+                    <p>
+                      每时每课特级教师-自主招生冲刺讲座6-多元方程组与可转化为多元方程组问题
+                    </p>
+                    <div class="wsy_ii_time">
+                      <p>共一课时</p>
+                    </div>
+                    <div class="wsy_ii_teacher">
+                      <img
+                        src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/2019wX5ZNRNxBT1577773182.jpg"
+                      />
+                      <p>杨德胜</p>
+                    </div>
+
+                    <div class="wsy_ii_info">
+                      <span>1000人已报名</span>
+                      <span class="wsy_good">免费</span>
+                      <!-- <span class="wsy_price">
+                    <img
+                      src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20191HHDExgz0u1567065946.png"
+                      alt
+                    />
+
+
+                    <span>1.00</span>
+                      </span>-->
+                    </div>
+                    <img
+                      class="wsy_flag_img"
+                      src="https://wap.365msmk.com/img/has-buy.6cfbd83d.png"
+                      alt
+                    />
+                  </div>
+                </li>
+              </ul>
             </van-tab>
             <van-tab title="学员评价" name="c">
               <van-empty description="暂无学员评价" />
@@ -72,15 +108,107 @@ export default {
       activeName: "a",
     };
   },
+
+  methods: {
+    backHome() {
+      this.$router.go(-1)
+    },
+  },
 };
 </script>
 
-<style scoped>
-.vant-list-con {
+<style lang="scss" scoped>
+.masterCourse {
   width: 100%;
-  height: 4vm;
+  padding: 0.15rem;
+  box-sizing: border-box;
+  background: #fff;
+  padding-bottom: 1.5rem;
+  > li {
+    margin-bottom: 0.2rem;
+    width: 100%;
+    height: 2rem;
+    border-radius: 0.04rem;
+    border: 0.01rem solid rgb(238, 238, 238);
+    background: #fff;
+    box-shadow: 0 0 0.01rem 0.01rem rgb(238, 238, 238);
+  }
 }
-
+.wsy_ii_item {
+  position: relative;
+  width: 100%;
+  height: 2rem;
+  padding: 0 0.2rem;
+  margin-top: 0.1rem;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 0.05rem;
+  > :nth-child(1) {
+    width: 3.5rem;
+    padding-top: 0.2rem;
+    margin: 0;
+  }
+}
+.wsy_ii_time {
+  display: flex;
+  align-items: center;
+  height: 0.3rem;
+  line-height: 0.3rem;
+  > p {
+    margin: 0;
+    font-size: 0.1rem;
+    color: #8c8c8c;
+  }
+}
+.wsy_ii_teacher {
+  width: 100%;
+  height: 0.7rem;
+  display: flex;
+  align-items: center;
+  font-size: 0.12rem;
+  color: #8c8c8c;
+  > img {
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 50%;
+    margin-right: 0.1rem;
+  }
+}
+.wsy_ii_info {
+  width: 100%;
+  margin-top: 0.1rem;
+  height: 0.4rem;
+  line-height: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 0.01rem rgb(238, 238, 238) solid;
+  > :nth-child(1) {
+    font-size: 0.12rem;
+    color: #8c8c8c;
+  }
+  img {
+    width: 0.2rem;
+    height: 0.2rem;
+  }
+}
+.wsy_flag_img {
+  width: 0.5rem;
+  height: 0.4rem;
+  position: absolute;
+  right: 0.2rem;
+  top: 0.4rem;
+}
+.wsy_ii_item > :nth-child(1) {
+    width: 2.5rem;
+    padding-top: 0.2rem;
+    margin: 0;
+}
+.wsy_good {
+  color: #44a426;
+  font-size: 0.18rem;
+}
+ 
 .teacher-page {
   min-height: 100vh;
   background: #f0f2f5;

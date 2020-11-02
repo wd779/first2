@@ -35,4 +35,4 @@ export function post(url, data) {
 }
 
 // 获取  api 接口
-export const HomeList = data => get('/api/app/recommend/appIndex',data) 
+export const GetHomeList = data => get('/api/app/recommend/appIndex',data) 
