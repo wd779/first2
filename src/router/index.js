@@ -43,7 +43,7 @@ const routes = [
   { path: '/study', name: 'study', component: () => import('../views/Home/Study.vue'), meta: { title: '学习日历' } },// 学习日历
   { path: '/fudao', name: 'fudao', component: () => import('../views/Home/FuDao.vue'), meta: { title: '一对一辅导页面' } },// 一对一辅导页面,
   { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue'), meta: { title: '详情' } },// 详情,
-  { path: '/Teacher_Details', name: 'Teacher_Details', component: () => import('../views/Home/Teacher_Details.vue'),meta: { title: '讲师详情' }},// 详情,
+  { path: '/Teacher_Details', name: 'Teacher_Details', component: () => import('../views/Home/Teacher_Details.vue'),meta: { title: '讲师详情' }},// 讲师详情,
 ]
 const router = new VueRouter({
   routes
