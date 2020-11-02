@@ -82,7 +82,7 @@
 
         <!-- 按钮 -->
         <div class="right_msg">
-          <van-button plain round type="danger" size="mini">预约</van-button>
+          <van-button plain round type="danger" size="mini" @click="$router.push('/yuyue')">预约</van-button>
         </div>
       </div>
     </div>
