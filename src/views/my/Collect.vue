@@ -8,10 +8,10 @@
       </template>
     </app-header>
     <div class="div-box">
-      <div class="item">
-        <van-icon name="star" />
+      <div class="item" v-for="(item,index) in list" :key="index">
+        <van-icon name="star" size="24" @click="del(item.collect_id)"/>
         <div class="top">
-          <p class="title">李老师18号20号地理大课堂开课啦</p>
+          <p class="title">{{item.title}}</p>
           <p class="itme">
             <span class="duration">
               <img
@@ -25,22 +25,22 @@
           <ul class="teachers">
             <li>
               <img
-                src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=286605818,4063183168&fm=11&gp=0.jpg"
+                :src="item.teachersAvatar"
                 alt
               />
-              <span>李青</span>
+              <span>{{item.teachers}}</span>
             </li>
           </ul>
         </div>
         <div class="bottom">
           <div class="info">
-            <p class="p-title">23人已报名</p>
+            <p class="p-title">{{item.sales_num}}人已报名</p>
             <div class="price">
               <p class="price-now">
                 <img
                   src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=286605818,4063183168&fm=11&gp=0.jpg"
                   alt
-                /> 0
+                /> {{item.price}}
               </p>
             </div>
           </div>
@@ -53,6 +53,7 @@
 
 <script>
 import appHeader from "../../components/AppHeader.vue";
+import {GetCollect , postCancel} from '../../utils/homeApi'
 export default {
   // 组件名称
   name: "",
@@ -62,19 +63,38 @@ export default {
   components: { appHeader },
   // 组件状态值
   data() {
-    return {};
+    return {
+      list:[]
+    };
   },
   // 计算属性
   computed: {},
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    async onGetCollect(){
+      let res = await GetCollect()
+      this.list = res.data.list
+      console.log( this.list);
+    },
+
+
+    async del(collect_id){
+      console.log(collect_id);
+      let res = await postCancel(collect_id)
+      if(res.code == 200){
+        this.onGetCollect()
+      }
+    }
+  },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */
   created() {},
-  mounted() {}
+  mounted() {
+    this.onGetCollect() 
+  }
 };
 </script> 
 
@@ -84,6 +104,9 @@ export default {
 }
 .div-box {
   width: 100%;
+  height: 90vh;
+  overflow: scroll;
+
   padding: 0.15rem 0.1rem;
   box-sizing: border-box;
   .van-list__finished-text{

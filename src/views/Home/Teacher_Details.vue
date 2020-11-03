@@ -96,9 +96,9 @@
 
       <button
         class="course-btn van-button van-button--default van-button--normal"
-        style=""
+        style=""   @click="goDetails_kecheng"
       >
-        <span class="van-button__text" @click="goDetails_kecheng"
+        <span class="van-button__text" 
           >立即预约</span
         >
       </button>
@@ -107,17 +107,19 @@
 </template>
 
 <script>
-import { GetTeacher } from "../../utils/homeApi";
+import { GetTeacher , GetTeacherInfo} from "../../utils/homeApi";
 export default {
   data() {
     return {
       activeName: "a",
       data: [],
+      Info:[]
     };
   },
 
   mounted() {
     this.onTeacher();
+    this.onTeacherInfo()
   },
   methods: {
     // 获取数据
@@ -126,14 +128,27 @@ export default {
       this.data = res.data.teacher;
       console.log(res);
     },
-
+    
+    async onTeacherInfo(){
+        let res = await GetTeacherInfo()
+        //  this.Info = res.attr
+         console.log(res);
+    },
     // 返回home 页面
     backHome() {
       this.$router.go(-1);
     },
 
     // 跳转到  课程预约
-    goDetails_kecheng() {},
+   goDetails_kecheng() {
+     console.log(11111);
+      this.$router.push({
+        path:'/yuyue'
+      })
+    },
+
+    // 主讲课程 点击事件
+    ToCourseDetail(){}
   },
 };
 </script>
