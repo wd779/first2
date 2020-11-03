@@ -9,19 +9,18 @@
     </app-header>
     <div class="div-box">
       <ul>
-        <li>
-          <img src alt />
+        <li v-for="item in list" :key="item.teacher_id">
+          <img :src="item.avatar" alt />
           <div>
             <h4>
-              <span>杨德胜</span>
-              <i>M20</i>
+              <span>{{ item.teacher_name }}</span>
+              <i>{{ item.level_name }}</i>
             </h4>
             <p>
-              杨老师,特级教师.多次被中国数学会评为全国高中数学竞联赛优秀教练员。长期从事名校理科班的数学教学和数学竞赛辅导工作。辅导学生参加全国高中数学联赛有数百人次获全国高中数学联赛一、二、三等奖，数十人被免试保送到清华大学、北京大学等名牌大学学习。十多人获CMO获一、二、三等奖，一人获IMO金牌。
-              特别是近年来大学试行自主招生，有很多同学通过上他的竞赛辅导课进入清华大学、北京大学、上海交通大学等。
+              {{ item.introduction }}
             </p>
           </div>
-          <p class="p-quxiao">取消关注</p>
+          <p class="p-quxiao" @click="qx(item.collect_id)">取消关注</p>
         </li>
       </ul>
       <p>没有更多了</p>
@@ -31,7 +30,7 @@
 
 <script>
 import appHeader from "../../components/AppHeader.vue";
-
+import { guanzhu,qxguanzhu } from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -41,19 +40,40 @@ export default {
   components: { appHeader },
   // 组件状态值
   data() {
-    return {};
+    return {
+      list:[]
+    };
   },
   // 计算属性
   computed: {},
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    async guanzhuTarcher() {
+      let obj = {
+        page: 1,
+        limit: 10,
+        type: 2
+      };
+      let { data } = await guanzhu(obj);
+      this.list = data.list
+      console.log(data);
+    },
+    async qx(collect_id){
+      console.log(collect_id);
+      let { data } = await qxguanzhu(collect_id)
+      console.log(data);
+      this.guanzhuTarcher();
+    }
+  },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */
   created() {},
-  mounted() {}
+  mounted() {
+    this.guanzhuTarcher();
+  }
 };
 </script> 
 
