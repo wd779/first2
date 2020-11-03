@@ -8,39 +8,30 @@
       </template>
     </app-header>
     <div class="div-box">
-      <div class="item" v-for="(item,index) in list" :key="index">
-        <van-icon name="star" size="24" @click="del(item.collect_id)"/>
+      <div class="item" v-for="item in list" :key="item.course_id">
+        <van-icon name="star" @click="qx(item.collect_id)" />
         <div class="top">
-          <p class="title">{{item.title}}</p>
+          <p class="title">{{ item.title }}</p>
           <p class="itme">
-            <span class="duration">
-              <img
-                src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=286605818,4063183168&fm=11&gp=0.jpg"
-                alt
-              />
-              <span>02月18日 13:00 ~ 02月20日 17:00</span>
-            </span> |
-            <span class="keshi">共4课时</span>
+            <span class="keshi">共{{item.sales_num}}课时</span>
           </p>
           <ul class="teachers">
             <li>
-              <img
-                :src="item.teachersAvatar"
-                alt
-              />
-              <span>{{item.teachers}}</span>
+              <img :src="item.teachersAvatar" alt />
+              <span>李青</span>
             </li>
           </ul>
         </div>
         <div class="bottom">
           <div class="info">
-            <p class="p-title">{{item.sales_num}}人已报名</p>
+            <p class="p-title">{{item.section_num}}人已报名</p>
             <div class="price">
               <p class="price-now">
                 <img
                   src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=286605818,4063183168&fm=11&gp=0.jpg"
                   alt
-                /> {{item.price}}
+                />
+                {{item.price }}
               </p>
             </div>
           </div>
@@ -53,7 +44,7 @@
 
 <script>
 import appHeader from "../../components/AppHeader.vue";
-import {GetCollect , postCancel} from '../../utils/homeApi'
+import { shoucang,qxshoucang } from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -64,7 +55,7 @@ export default {
   // 组件状态值
   data() {
     return {
-      list:[]
+      list: []
     };
   },
   // 计算属性
@@ -73,19 +64,20 @@ export default {
   watch: {},
   // 组件方法
   methods: {
-    async onGetCollect(){
-      let res = await GetCollect()
-      this.list = res.data.list
-      console.log( this.list);
+    async shoucangTarcher() {
+      let obj = {
+        page: 1,
+        limit: 10,
+        type: 1
+      };
+      let { data } = await shoucang(obj);
+      this.list = data.list;
+      console.log(data);
     },
-
-
-    async del(collect_id){
-      console.log(collect_id);
-      let res = await postCancel(collect_id)
-      if(res.code == 200){
-        this.onGetCollect()
-      }
+    async qx(collect_id){
+      let { data } = await qxshoucang(collect_id)
+      this.shoucangTarcher();
+      console.log(data);
     }
   },
   /**
@@ -93,7 +85,7 @@ export default {
    */
   created() {},
   mounted() {
-    this.onGetCollect() 
+    this.shoucangTarcher();
   }
 };
 </script> 
@@ -104,12 +96,9 @@ export default {
 }
 .div-box {
   width: 100%;
-  height: 90vh;
-  overflow: scroll;
-
   padding: 0.15rem 0.1rem;
   box-sizing: border-box;
-  .van-list__finished-text{
+  .van-list__finished-text {
     color: #969799;
     font-size: 1.86667vw;
     line-height: 6.66667vw;
@@ -124,7 +113,7 @@ export default {
     padding: 0.1rem;
     box-sizing: border-box;
     margin-bottom: 0.1rem;
-    .van-icon{
+    .van-icon {
       position: absolute;
       font-size: 0.2rem;
       color: orangered;
@@ -133,9 +122,11 @@ export default {
     }
     .title {
       font-size: 0.16rem;
-      line-height: 0.16rem;
       font-weight: 500;
       color: #000;
+      padding-right: 0.4rem;
+      box-sizing: border-box;
+      line-height: 0.16rem;
     }
     .itme {
       line-height: 0.14rem;
@@ -174,7 +165,7 @@ export default {
   .bottom {
     width: 100%;
     height: 0.36rem;
-    margin-top: 0.15rem;
+    margin-top: 0.1rem;
     padding-top: 0.05rem;
     box-sizing: border-box;
     border-top: 1px solid #f5f5f5;

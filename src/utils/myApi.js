@@ -59,4 +59,6 @@ export const AjaxEditImg = data => post("/api/app/public/img", data); // 修改�
 // 关注
 export const guanzhu = data => get("/api/app/collect", data); // 关注列表
 export const qxguanzhu = collect_id => put(`api/app/collect/cancel/${collect_id}/2`); // 取消关注
-
+// 收藏
+export const shoucang = data => get(`/api/app/collect`,data); // 收藏列表
+export const qxshoucang = collect_id => put(`/api/app/collect/cancel/${collect_id}/1`); // 收藏列表
