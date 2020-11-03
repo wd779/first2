@@ -7,7 +7,14 @@
     </van-nav-bar>
     <div class="info">
       <div class="top">
-        <p>{{ data.title }}</p>
+        <div class="ping">
+           <p>{{ data.title }}</p>
+           <p>
+             <van-icon name="star-o" size="24" v-if="data.is_collect==0" @click="liang"/>
+             <van-icon name="star" size="24" v-if="data.is_collect!=0"  @click="liang"/>
+           </p>
+        </div>
+       
         <p>{{ data.price == 0 ? "免费" : "￥" + data.price }}</p>
         <p>共{{ data.total_periods }}课时 | {{ data.sales_num }}人已报名</p>
         <p>
@@ -52,6 +59,7 @@
 
 <script>
 import { GetCurriculum } from "../../utils/appointmtemtApi";
+import {postCollect , postCancel} from '../../utils/homeApi'
 export default {
   // 组件名称
   name: "", // 组件参数 接收来自父组件的数据
@@ -60,6 +68,7 @@ export default {
   data() {
     return {
       data: "",
+      id:""
     };
   }, // 计算属性
   computed: {}, // 侦听器
@@ -69,11 +78,53 @@ export default {
       // console.log(this.$route.query);
       var a = await GetCurriculum(this.$route.query.con.id);
       this.data = a.data.info;
-      console.log(this.data);
+     
+      if(this.data.is_collect==1){
+        this.id=this.data.collect_id
+        console.log(this.id);
+     }
+              // this.id = res.data.collect_id
     },
     onClickLeft() {
       this.$router.go(-1);
     },
+
+    // 点亮
+    liang(){
+      console.log(this.data.is_collect);
+     if(this.data.is_collect==0){
+       this.onpostCollect()
+        console.log("收藏");
+        // data.is_collect=1
+     }else if(this.data.is_collect==1){
+        console.log("取消收藏");
+        this.onpostCancel()
+        // data.is_collect=0
+     }
+    },
+
+
+    // 收藏   post传参方式
+    async onpostCollect(){
+      let res = await postCollect({
+        course_basis_id:this.$route.query.con.id,
+        type: 1      
+      })
+
+      if(res.code == 200){
+        this.getdata();
+      }
+      console.log(res);
+    },
+
+    // 取消收藏
+    async onpostCancel(){
+      let res = await postCancel(this.id);
+      if(res.code == 200){
+        this.getdata()  //重新渲染
+      }
+      console.log(res);
+    }
   },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
@@ -124,6 +175,13 @@ export default {
 }
 .top p:nth-child(4) {
   color: #8c8c8c;
+}
+.ping{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 0px 10px;
 }
 .box {
   width: 100%;
