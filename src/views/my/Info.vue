@@ -5,14 +5,14 @@
       <p>个人信息</p>
       <p></p>
     </div>
-    <ul>
-      <li>
+    <ul class="ul-box">
+      <li @click="img">
         <span>头像</span>
         <span>
           <img :src="userinfo.avatar" alt />
         </span>
       </li>
-      <li>
+      <li @click="name">
         <span>昵称</span>
         <span>{{ userinfo.nickname }}</span>
       </li>
@@ -41,17 +41,32 @@
         <span>初二</span>
       </li>
     </ul>
-
+    <!-- 修改用户名 -->
+    <van-popup position="bottom" v-model="nicknameShow" :style="{ height: '30%' }">
+      <input type="text" v-model="nickname" />
+      <button @click="userEdit">保存</button>
+    </van-popup>
+    <!-- 头像 -->
+    <van-popup position="bottom" v-model="imgShow">
+      <ul class="ul-bom">
+        <li>
+          <van-uploader>拍照</van-uploader>
+        </li>
+        <li>
+          <van-uploader>从手机相册选择</van-uploader>
+        </li>
+        <li @click="imgShow=false">取消</li>
+      </ul>
+    </van-popup>
     <!-- 城市信息 -->
     <van-popup position="bottom" v-model="cityShow">
-      <!-- <van-picker show-toolbar title="标题" :columns="cityEdit" /> -->
       <p v-for="item in cityEdit" :key="item.id">{{item.area_name}}</p>
     </van-popup>
   </div>
 </template>
 
 <script>
-import { AjaxInfo, AjaxEditUser, AjaxEditSonArea } from "../../utils/myApi";
+import { AjaxInfo, AjaxEditUser, AjaxEditSonArea,AjaxEditImg } from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -63,6 +78,9 @@ export default {
   data() {
     return {
       cityShow: false,
+      imgShow: false,
+      nicknameShow: false,
+      nickname: "",
       userinfo: [],
       user: [],
       cityEdit: []
@@ -77,10 +95,20 @@ export default {
     showPopup() {
       this.show = true;
     },
+    // 个人信息获取
     async info() {
       let res = await AjaxInfo();
       this.userinfo = res.data;
       console.log(res);
+    },
+    name() {
+      this.nicknameShow = true;
+    },
+    // 头像
+    async img() {
+      this.imgShow = true;
+      let data = await AjaxEditImg({avatar:this.userinfo.avatar})
+      console.log(data);
     },
     // 城市信息
     async city() {
@@ -90,9 +118,10 @@ export default {
     },
     // 修改信息
     async userEdit() {
-      let data = await AjaxEditUser();
-      this.user = res.data;
-      console.log(data);
+      let data = await AjaxEditUser({ nickname: this.nickname });
+      this.user = data.data;
+      this.userinfo.nickname = this.nickname;
+      this.nicknameShow = false
     }
   },
   /**
@@ -119,7 +148,7 @@ export default {
     font-size: 0.18rem;
     background-color: #fff;
   }
-  ul {
+  .ul-box {
     background: #fff;
     margin: 2.66667vw 0;
     padding: 1.33333vw 4vw;
@@ -167,6 +196,33 @@ export default {
         font-size: 3.73333vw;
         margin-right: 6.66667vw;
       }
+    }
+  }
+  .ul-bom {
+    background: #fff;
+    margin: 2.66667vw 0;
+    padding: 1.33333vw 4vw;
+    li {
+      height: 12.26667vw;
+      line-height: 12.26667vw;
+      font-size: 4.53333vw;
+      font-weight: 300;
+      color: #030303;
+      text-align: center;
+      display: block;
+      justify-content: space-between;
+      position: relative;
+    }
+    li:after {
+      content: "";
+      display: block;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      height: 1px;
+      background-color: #f5f5f5;
     }
   }
 }

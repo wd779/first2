@@ -7,13 +7,13 @@
         <div class="head">
           <section @click="$router.push('/info')">
             <div v-show="flag">
-              <img :src="personal.avatar"/>
+              <img :src="personal.avatar" />
               <span>{{personal.nickname}}</span>
               <van-icon name="edit" />
               <h4 @click="$router.push('/fudao')">去约课</h4>
             </div>
             <div v-show="!flag">
-              <img :src="personal.avatar">
+              <img :src="personal.avatar" />
               <span @click="$router.push('/login')">登录/注册</span>
               <van-icon name="edit" />
               <h4 @click="$router.push('/fudao')">去约课</h4>
@@ -21,7 +21,7 @@
           </section>
           <div class="info">
             <ul>
-              <li  @click="$router.push('/my-study')">
+              <li @click="$router.push('/my-study')">
                 <h3>1</h3>
                 <p>我的特色课</p>
                 <span>已购特色课程的学习</span>
@@ -72,7 +72,7 @@
         <li>
           <p class="menu-title">订单相关</p>
           <div class="menu-box">
-            <div >
+            <div>
               <van-icon name="point-gift" />
               <p>课程订单</p>
             </div>
@@ -139,26 +139,33 @@ export default {
   data() {
     return {
       flag: false,
-      personal:[] // 个人信息
+      personal: [] // 个人信息
     };
   }, // 计算属性
   computed: {}, // 侦听器
   watch: {}, // 组件方法
   methods: {
-    async info(){
-      let data = await AjaxInfo()
+    async info() {
+      let data = await AjaxInfo();
       console.log(data);
-      this.personal = data.data
+      this.personal = data.data;
     }
   },
   created() {},
   mounted() {
-    this.info()
+    this.info();
     if (sessionStorage.getItem("token")) {
       this.flag = true;
     } else {
       this.flag = false;
     }
+  },
+  //  路由组件首位
+  beforeRouteEnter: (to, from, next) => {
+    if (!sessionStorage.getItem("token")) {
+      next("/login");
+    }
+    next();
   }
 };
 </script> 

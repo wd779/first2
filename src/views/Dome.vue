@@ -33,10 +33,8 @@ export default {
   data() {
     return {
       active: 0,
-      active: 0,
       icons: [
         {
-          title: "首页",
           title: "首页",
           active: "https://wap.365msmk.com/img/home-active.87af5fd4.png",
           inactive:
@@ -45,14 +43,12 @@ export default {
 
         {
           title: "课程",
-          title: "课程",
           active: "https://wap.365msmk.com/img/home-active.87af5fd4.png",
           inactive:
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAA2CAYAAABqbKGZAAAFZElEQVRoQ+2af4hUVRTHv+e+t7q72ZSkJCmLWP0RIVngbgpREzrz3luWyaIlg0RR/4hEJJDAKDZCoiisKCNQQoLUgUpYd9682dEHhjJuEqTRX/2hW5rrauXij2lm3j1xYTbGbWbeDOwyN/D++859nM89555z7rmXMA3D87xnpJTfNvGrU7ZtL29CviFRakgqRKgC5gaAP4lIVpvCzALAfACn/w8wnhDi9UKhMFENpq2tbS4z7wNwTXsYZv66o6NjUzQa/asazODg4Ly2trYsMxdvw4S4O7mue7TJfaNW/VXbts9OzpvcMy23jOu63CTMuBDi6Xg8/tNUGAC/AfiemQs1/jlbCPEUM/8yI25WAZNi5qq+XlZsERH1AJioA9PousxMaFYwRMRSyicAnKmljWEYjpTyUwCB9jAAHrUs68daMOl0OgFgLzPL2zC3rtLMuplOlvF93ywUCt3MvCKXy+0aGBioWlFM9SIVmiej2R9EVKrlZsw8G8CdAK5Mt5slk0mjs7MzAmCBaZprAKxj5gcBXGbmqOM4PzcSWSphGpFXMvVCc6P/OGVZVvfg4OBi0zS7iagbwAoAywCoRRtVNR6AhwBssW17byM/bhmMEMKXUq4honnMfBeA6wB8IcRBZj5pmubcYrF4kpn3BEGwra+vTxWxdUfLYJg5Q0Q7iEglX6Xwwd7e3ouV2rqu+wMAwzTNvtWrVytr6QkjpdwshDgO4CPbtndM1VIFgXw+/w6ArUSUsCwrrS0MEcUBqKrjXsuylqjErZT1fX/ezZs31wohnlV7Rn1XlrNte7O2MKOjoyu7uro+UBtcCJEIgmA2Ea0DYAMwKxUnoitSyoWO4/xdD6hle0YVmq7rrgXwGREZzHwHgHon37W2bR/QFiabzS4pFosZAPeHuhBR2rIsZbWao6WWUVq5rvsNAJUo6w5mvkhEKyrPUVMntBymic6OyjObbNveX4u65TDJZLIjEon8ysz3hBuHPwbwWq1A0HIYBZBOp3cz88thrgYgZxjGc7FY7EI1WS1gPM9bKaX0AcwKAbohpbR7e3uPaQuTSqXmE9ERAEvDrMPM7zuOs11nGNXo+ISZN4bkGsVwrr29/YFoNPqf44oWblYO0RuJ6ENmnhNmHcMw4rFYTOWnW4Y2MOl0+mFmPgxgcRgMgAO2bavqQU+YgYEB0dPT4wFY1QDMeSHEY/F4/FKlrDaWKbvaegBfNABzjZlfchznkLYwvu/fnc/nzwPoDAFSDY5329vb36wMBFpZRgF4nrdfSvlCA9Y5WigUXkwkEmOTstrBuK6rDm1D6rgcAnTVMIxVsVjslLYwQ0NDC4QQ3wF4oB5MuaX8huM4O7WFOXHiRMfExMQeZlaht+41JTOfGRkZWTbZJNTOzcqF5xZmfg9AR4irqab/45ZljSg5LWGy2ezyYrGoDm2LwgKBEGJ3PB5/RVuYZDI5KxKJ+My8MgyGiM5KKR9xHGdCS8uUXW0bM+8KgwFwlZn7HcfJaAuTyWTuC4JAdTHDQnRARG/lcrmd2sKUyxtVq8XCrENEh03TXK81TCaTeV71oMNCNBFdCoJgldYwqVRKXQrnACwMC9HMvFVrmGQyOScSiXwJIMHM9RKo6lMPaw2jADzP2y6lfJuIqjU7VO/5tOraMPNxrWGUa2UymSdLpdIBIlrwbw1GdIGZvzIM41CpVDo3NjZ2ecOGDXntYXzfn5PP59XdTBeAY0KIfbFY7Ei1Z2DawyhrDA8PLw2C4LJlWb/XraSn+e1MWEqY/D5z7wAa1aAsNy23zTP1EEiV2s2M61LKzysvU5vo5M+sZdRFaDMk4+Pj3N/fH1TO0QXmHxqW620Azy1NAAAAAElFTkSuQmCC"
         },
 
         {
-          title: "约课记录",
           title: "约课记录",
           active: "https://wap.365msmk.com/img/home-active.87af5fd4.png",
           inactive:
@@ -61,14 +57,12 @@ export default {
 
         {
           title: "练习",
-          title: "练习",
           active: "https://wap.365msmk.com/img/home-active.87af5fd4.png",
           inactive:
             "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADYAAAA2CAYAAACMRWrdAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyhpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQwIDc5LjE2MDQ1MSwgMjAxNy8wNS8wNi0wMTowODoyMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTggKE1hY2ludG9zaCkiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MTA1MTBDRjlDMjIwMTFFOThBODNDNERFMzE4MzM4NDMiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MTA1MTBDRkFDMjIwMTFFOThBODNDNERFMzE4MzM4NDMiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDoxMDUxMENGN0MyMjAxMUU5OEE4M0M0REUzMTgzMzg0MyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDoxMDUxMENGOEMyMjAxMUU5OEE4M0M0REUzMTgzMzg0MyIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Php7KSUAAAPhSURBVHja3JpraI1xHMf/Y17IreaWS8iUeIHkuo0Xi3bGiBcIxbBsxyUMRXhhSSkris1myKUsXpjIzrBMks1sXsjKNpc3aoWZGDaz+f47v9Xx7P8857n9n8t+9Wk7/+d5zulzfv/n97+cJ6a0tJQhBoAgSAGDWTi6mLvRB/wBH8F1cEt0UiAQEF4cC+JBORjPvBurQAlYaeRbqfC4VHesAHlGxMYy/0RQbxL6MP/F4t4qNqa3iv3ujWJPQJGeE2N9JHUPLDVSFf0QJUak/CJ2UzAwp4G7oDgUCo3zo9gFsFrRthXcoQyuATWQm+AnsUKQIZAqULQNA9VKOa+KnQWZirZMgZSqnBfFToAdAqlzUa7rlpvoRbHD4IAJqUi551zOS+PYPpBrQao7hvLMeUVsDzilaMsC+SbfL84LYjvBGUGm8q28qdtiGTRWWe1+yqhwU2wDuCoYp6xKPQPJbonxGcMNCZmqAkmBQKDLDbHlNCWyO1MvSKrT6XvsLy3rH+mYJhmNWpAIqQ6ni0c7WEhdRYZUAqTanZ4rtoL5kqRqSKrN6dn9VzCXvlVlmbcqVU3dr83pcayZMlUvkDpvhxQLb4E7uoJuoky5IiVL7D2YDRrdkpLRFRv4zQw+uylld8begHkCqS1OS9kp9pqkmgVSRTZIJRiRskusEswBLYr2zTZIVZFUh9PLFj49Sha0bxIsR8xIJdJUzHBYyVi5htRFSVKjwQKZYnwXdpGgPV2i1EC+UQPWyhLjW87LVKQuSZIaQcsS/ttYnQyxK6znljOPoESpeJprTpZ1j/FisFHl2FvQaUGKd7EkgRSvti/Z/79ixtgpls967qPzmAZywH0wBfwyOVyISnoKZXGQrKrIpbapHJsBjrDwnmA9vf5pUEqUKb4nErLSr6OJFWpIMVoV89gFTpLcdJ1yalL8fi22OmvQEitgPX/xUMaSiP/3klyjDrlKlULBs5/HbAg1Md61sqJcOxOMUrRxudwIuR8aUp2Cz8yxa0YuEjvGwnvp0SJVpT1bIfdd0P2UUpepO9sWyrniIXBc57UBjWPZVJazqaDw4eCdyj3F9xjT7F7tRortp3tET8RRidYKnvWRYD0NC00Kqf7gAXVLI2FoHNttQIrRPFHPULGOCswr8CmifThNkRJNJKOv3ozxreXTBt88VeNYLWXiId1TykeEJtFyx+xTdy16xYImvrH0iNc8E49BGf1t0Lh2FgkPsbgGlLLQTKBicJumUk9Vyrqo+5ZZXAPyMe6DLLE66k56ox84CI5aLHT8ueDtMrcGvhg8fyoVEP7kWquJz/sGrtHiVnf8E2AAJ/f4tFT+KuUAAAAASUVORK5CYII="
         },
 
         {
-          title: "我的",
           title: "我的",
           active: "https://wap.365msmk.com/img/home-active.87af5fd4.png",
           inactive:
@@ -85,9 +79,6 @@ export default {
   updated() {},
   methods: {
     changeRoute() {
-      // console.log(index);
-
-      // console.log(this.active);
       switch (this.active) {
         case 0:
           this.$router.push({ path: "/" });
@@ -102,7 +93,11 @@ export default {
           this.$router.push({ path: "/practice" });
           break;
         case 4:
+          // if (sessionStorage.getItem("token")) {
           this.$router.push({ path: "/mine" });
+          // }else{
+          // this.$router.push({ path: "/login" });
+          // }
           break;
       }
     },
@@ -114,14 +109,6 @@ export default {
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */
   created() {},
-
-  //  路由组件首位
-  beforeRouteEnter: (to, from, next) => {
-    if (!sessionStorage.getItem("token")) {
-      next("/login");
-    }
-    next();
-  },
   mounted() {
     var Scr = String(window.location.href.split("#")[1]);
     if (Scr == "/mine") {

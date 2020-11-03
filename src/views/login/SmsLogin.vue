@@ -52,7 +52,7 @@ export default {
   // 组件方法
   methods: {
     // 登录
-    async onSubmit(values) {
+    async onSubmit() {
       let pattern = /^1[3|4|5|7|8][0-9]{9}$/;
       let sms = /^[0-9]{6}$/;
       if (pattern.test(this.mobile)) {
@@ -67,7 +67,13 @@ export default {
             sessionStorage.setItem("token", res.data.remember_token);
             this.$toast.success("登录成功");
             if (res.data.is_new == 1) {
-              this.$router.push("/setPass");
+              this.$router.push({
+                path:"/SetPassword",
+                query:{
+                  mobile:this.mobile,
+                  sms_code:this.sms_code
+                }
+              });
             } else if (res.data.is_new == 2) {
               this.$router.push("/mine");
             }
@@ -78,8 +84,6 @@ export default {
       } else {
         this.$toast("请输入正确的手机号");
       }
-      console.log("submit", values);
-      console.log(res);
     },
     // 验证码
     async sms() {
@@ -132,6 +136,7 @@ export default {
   .van-form {
     padding: 0 0.3rem;
     box-sizing: border-box;
+    background-color: #fff;
     .yan {
       position: relative;
       span {
