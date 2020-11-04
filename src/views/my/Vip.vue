@@ -10,63 +10,47 @@
     <!-- 会员 -->
     <div class="top">
       <div class="box">
-        <img
-          src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20191HHDExgz0u1567065946.png"
-          alt
-        />
+        <img :src="arr.avatar" />
         <div class="info">
-          <div class="name">玛卡巴卡</div>
+          <div class="name">{{ arr.nickname}}</div>
           <p class="note">开通会员免费学习</p>
         </div>
       </div>
     </div>
     <!-- 购买会员 -->
-    <div data-v-d183123a class="bottom">
-      <p data-v-d183123a>
-        <span data-v-d183123a class="tag1">购买会员</span>
-        <span data-v-d183123a class="tag2">购买会员后可免费观看会员课程</span>
+    <div class="bottom">
+      <p>
+        <span class="tag1">购买会员</span>
+        <span class="tag2">购买会员后可免费观看会员课程</span>
       </p>
-      <div data-v-d183123a class="vip-items">
-        <div data-v-d183123a class="vip-item select">
-          <p data-v-d183123a class="name">季度会员</p>
-          <p data-v-d183123a class="price">
+      <div class="vip-items">
+        <div
+          class="vip-item"
+          :id="active == index?'active':''"
+          @click="activeFn(index,item.id)"
+          v-for="(item,index) in list"
+          :key="item.id"
+        >
+          <p class="name">{{item.name}}</p>
+          <p class="price">
             <img
-              data-v-d183123a
               src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20191HHDExgz0u1567065946.png"
               class="price-ico"
             />
-            <span data-v-d183123a>40.00</span>
-          </p>
-        </div>
-        <div data-v-d183123a class="vip-item">
-          <p data-v-d183123a class="name">半年会员</p>
-          <p data-v-d183123a class="price">
-            <img
-              data-v-d183123a
-              src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20191HHDExgz0u1567065946.png"
-              class="price-ico"
-            />
-            <span data-v-d183123a>75.00</span>
-          </p>
-        </div>
-        <div data-v-d183123a class="vip-item">
-          <p data-v-d183123a class="name">月会员</p>
-          <p data-v-d183123a class="price">
-            <img
-              data-v-d183123a
-              src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20191HHDExgz0u1567065946.png"
-              class="price-ico"
-            />
-            <span data-v-d183123a>15.00</span>
+            <span>{{item.price|toFixPrice}}</span>
           </p>
         </div>
       </div>
     </div>
+    <div class="btn" @click="pay">立即支付</div>
   </div>
 </template>
 
 <script>
+import { vipAjax, AjaxInfo, downOrderAjax } from "../../utils/myApi";
 import appHeader from "../../components/AppHeader.vue";
+import Vant from "vant";
+import { Dialog } from "vant";
 export default {
   // 组件名称
   name: "",
@@ -76,19 +60,62 @@ export default {
   components: { appHeader },
   // 组件状态值
   data() {
-    return {};
+    return {
+      list: [],
+      arr: [],
+      active: 0,
+      shop_id: 0
+    };
   },
   // 计算属性
   computed: {},
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    async vip() {
+      let { data } = await vipAjax();
+      console.log(data);
+      this.list = data;
+    },
+    async info() {
+      let { data } = await AjaxInfo();
+      this.arr = data;
+      console.log(data);
+    },
+    activeFn(index, id) {
+      this.active = index;
+      this.shop_id = id;
+      console.log(id);
+    },
+    pay() {
+      Dialog.confirm({
+        title: "提示",
+        message: "你确定购买此会员吗?"
+      }).then(() => {
+        this.pays();
+      });
+    },
+    async pays() {
+      let data = await downOrderAjax({ shop_id: this.shop_id, type: 14 });
+      console.log(data);
+      Dialog.confirm({
+        title: "提示",
+        message: data.data.msg,
+        confirmButtonText: "去充值"
+      }).then(() => {
+        this.$router.push("/my-currency");
+      });
+    }
+  },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */
   created() {},
-  mounted() {}
+  mounted() {
+    this.vip();
+    this.info();
+  }
 };
 </script> 
 
@@ -126,16 +153,16 @@ img {
 .bottom {
   padding: 8vw 4vw;
 }
-.select[data-v-d183123a] {
-  border: 0.26667vw solid #e6c37f;
-  background-color: #f9f0d9;
-}
 .vip-items {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
   align-content: space-between;
   padding-top: 5.33333vw;
+  #active {
+    border: 0.26667vw solid #e6c37f;
+    background-color: #f9f0d9;
+  }
 }
 .vip-item {
   width: 26.66667vw;
@@ -173,5 +200,22 @@ img {
 .price-ico {
   width: 3.73333vw;
   margin-right: 0.4vw;
+}
+.btn {
+  width: 92vw;
+  height: 11.73333vw;
+  background: linear-gradient(90deg, #eac687, #c8ae84);
+  border-radius: 5.86667vw;
+  font-size: 4.53333vw;
+  font-family: PingFangSC-Regular;
+  font-weight: 400;
+  color: #fff;
+  line-height: 11.73333vw;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  bottom: 8vw;
+  transform: translateX(-50%);
+  z-index: 999;
 }
 </style>

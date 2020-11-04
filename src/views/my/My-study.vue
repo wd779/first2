@@ -12,30 +12,38 @@
     </app-header>
     <!-- 滚动标签栏 -->
     <van-tabs>
-      <van-tab v-for="index in 8" :title="'标签 ' + index" :key="index">
-        <ul class="ul-box">
-          <li>
+      <van-tab v-for="(item,index) in list" @click="clkFn(item.type)" :key="index">
+        <div slot="title" @click="navToggle(item.type)">{{item.name+`(${item.num})`}}</div>
+        <ul class="ul-box" v-if="newList.length>0">
+          <li v-for="item in newList" :key="item.course_id">
             <div class="div-box">
-              <p>22号李老师大课堂开课啦</p>
+              <p>{{item.title}}</p>
               <div class="div-top">
                 <i>□</i>
-                <span>02月22日 10:00 ~ 02月23日 20:00</span> |
-                <span>共3课时</span>
+                <span>{{item.start_play_date*1000 | timeA}} ~ {{item.end_play_date*1000 | timeA}}</span> |
+                <span>共{{item.section_num}}课时</span>
               </div>
               <div class="div-bottom">
                 <van-progress pivot-text stroke-width="3" :percentage="0" />
-                <span>已学习0%</span>
+                <span>已学习{{item.progress_rate}}%</span>
               </div>
               <span></span>
             </div>
           </li>
         </ul>
+
+        <div class="empty" v-else>
+          <img src="https://wap.365msmk.com/img/empty.0d284c2e.png" />
+          <p>还没有课程，快去选择课程学习吧</p>
+          <div class="info" @click="$router.push('/Appointment')">选择课程</div>
+        </div>
       </van-tab>
     </van-tabs>
   </div>
 </template>
 
 <script>
+import { myStudyAjax } from "../../utils/myApi";
 import appHeader from "../../components/AppHeader.vue";
 export default {
   // 组件名称
@@ -48,19 +56,37 @@ export default {
   },
   // 组件状态值
   data() {
-    return {};
+    return {
+      type: 2,
+      list: [],
+      newList: []
+    };
   },
   // 计算属性
   computed: {},
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    async clkFn() {
+      let { data } = await myStudyAjax(this.type);
+      console.log(data);
+      this.list = data.typeNum;
+      this.newList = data.courseList;
+    },
+    // 切换导航
+    navToggle(type) {
+      this.type = type;
+      this.clkFn();
+    }
+  },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */
   created() {},
-  mounted() {}
+  mounted() {
+    this.clkFn();
+  }
 };
 </script> 
 
@@ -109,5 +135,33 @@ export default {
       }
     }
   }
+}
+.empty {
+  margin-top: 26.66667vw;
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  img {
+    width: 40vw;
+    height: 40vw;
+  }
+  p {
+    font-size: 4vw;
+    color: #8c8c8c;
+    margin-top: 5.33333vw;
+  }
+}
+.info {
+  width: 23.46667vw;
+  height: 7.46667vw;
+  border-radius: 1.06667vw;
+  background-color: #eb6100;
+  font-size: 3.46667vw;
+  color: #fff;
+  line-height: 7.46667vw;
+  margin: 10.66667vw auto;
+  text-align: center;
+  line-height: 7.46667vw;
 }
 </style>

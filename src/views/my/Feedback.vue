@@ -12,11 +12,11 @@
       <div class="con-to">
         <div class="con">
           <div class="van">
-            <textarea placeholder="请输入您的意见" maxlength="500" class="van-con"></textarea>
+            <textarea placeholder="请输入您的意见" maxlength="500" v-model="content"  class="van-con"></textarea>
           </div>
         </div>
         <p class="max-len">0/500</p>
-        <p class="btn">提交</p>
+        <p class="btn" @click="feedback">提交</p>
       </div>
     </div>
   </div>
@@ -24,6 +24,7 @@
 
 
 <script>
+import { feedbackAjax } from "../../utils/myApi";
 import appHeader from "../../components/AppHeader.vue";
 export default {
   // 组件名称
@@ -34,14 +35,25 @@ export default {
   components: { appHeader },
   // 组件状态值
   data() {
-    return {};
+    return {
+      content:''
+    };
   },
   // 计算属性
   computed: {},
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    async feedback(){
+      let  data  = await feedbackAjax ({content:this.content})
+      if(data.code == 200){
+        this.$toast.success({message:data.msg})
+        this.$router.push('/mine')
+      }
+      console.log(data);
+    }
+  },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */

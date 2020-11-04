@@ -50,6 +50,7 @@ export const AjaxLogin = data => post("/api/app/login", data); // 密码登录
 export const AjaxSmsLogin = data => post("/api/app/smsCode", data); // 验证码登录 验证码
 export const AjaxPass = data => post("/api/app/password", data); // 修改密码
 // // 我的页面
+export const getUCenterInfoAjax = data => get("/api/app/getUCenterInfo?", data); // 渲染
 // 个人信息
 export const AjaxInfo = data => get("/api/app/userInfo", data); // 个人信息
 export const AjaxEditUser = data => put("/api/app/user", data); // 修改个人信息
@@ -65,3 +66,17 @@ export const qxshoucang = collect_id => put(`/api/app/collect/cancel/${collect_i
 // 消息
 export const messageAjax = data => post(`/api/app/message/classifyMessage`,data); // 消息
 export const msgDetailAjax = data => post(`/api/app/message/getMessage`,data); // 消息
+// 意见反馈
+export const feedbackAjax = data => post(`/api/app/feedback`,data); // 消息
+// 会员
+export const vipAjax = data => get(`/api/app/vip/grade`,data); // 会员
+export const downOrderAjax = data => post(`/api/app/order/downOrder`,data); // 充值
+// 学习币
+export const coinRankAjax = data => get(`/api/app/coin/coinRank`,data); // 渲染数据
+export const payAjax = data => post(`/api/app/pay`,data); // 充值
+export const itemAjax = data => get(`/api/app/coin/item`,data); // 获取余额
+// 我的学习
+export const myStudyAjax = type => get(`/api/app/myStudy/${type}?`); // 获取余额
+
+
+

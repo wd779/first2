@@ -9,49 +9,13 @@
     </app-header>
     <!-- 课程通知 -->
     <ul>
-      <li>
+      <li v-for="(item,index) in list" :key="index" @click="detail(item.message_classify,item.title)">
         <div class="icon">
-          <img src="https://wap.365msmk.com/img/icon-msg-course.d8a2c8d5.png" alt />
+          <img :src="item.url" />
         </div>
         <div class="info">
-          <span>课程通知</span>
-          <p class="content">您报名的课程《李老师18号20号地理大课堂开课啦》已经有3天没有学习了，快去学习吧</p>
-        </div>
-      </li>
-      <li>
-        <div class="icon">
-          <img src="https://wap.365msmk.com/img/icon-msg-system.db56e51b.png" alt />
-        </div>
-        <div class="info">
-          <span>系统通知</span>
-          <p>暂无消息</p>
-        </div>
-      </li>
-      <li>
-        <div class="icon">
-          <img src="https://wap.365msmk.com/img/icon-msg-order.41755990.png" alt />
-        </div>
-        <div class="info">
-          <span>订单通知</span>
-          <p>您的课程订单《》取消成功</p>
-        </div>
-      </li>
-      <li>
-        <div class="icon">
-          <img src="https://wap.365msmk.com/img/icon-msg-oto.d8a2c8d5.png" alt />
-        </div>
-        <div class="info">
-          <span>约课通知</span>
-          <p>暂无消息</p>
-        </div>
-      </li>
-      <li>
-        <div class="icon">
-          <img src="https://wap.365msmk.com/img/icon-msg-exam.8a210fd7.png" alt />
-        </div>
-        <div class="info">
-          <span>考试通知</span>
-          <p>暂无消息</p>
+          <span>{{ item.title }}</span>
+          <p class="content">{{ item.content==''?'暂无消息':item.content }}</p>
         </div>
       </li>
     </ul>
@@ -72,7 +36,39 @@ export default {
   // 组件状态值
   data() {
     return {
-      message_classify: ""
+      messageList: [],
+      list: [
+        {
+          title: "课程通知",
+          url: "https://wap.365msmk.com/img/icon-msg-course.d8a2c8d5.png",
+          message_classify: "course",
+          content: ""
+        },
+        {
+          title: "系统通知",
+          url: "https://wap.365msmk.com/img/icon-msg-system.db56e51b.png",
+          message_classify: "system",
+          content: ""
+        },
+        {
+          title: "订单通知",
+          url: "https://wap.365msmk.com/img/icon-msg-order.41755990.png",
+          message_classify: "order",
+          content: ""
+        },
+        {
+          title: "约课通知",
+          url: "https://wap.365msmk.com/img/icon-msg-oto.d8a2c8d5.png",
+          message_classify: "oto",
+          content: ""
+        },
+        {
+          title: "考试通知",
+          url: "https://wap.365msmk.com/img/icon-msg-exam.8a210fd7.png",
+          message_classify: "exam",
+          content: ""
+        }
+      ]
     };
   },
   // 计算属性
@@ -83,20 +79,24 @@ export default {
   methods: {
     async msg() {
       let { data } = await messageAjax();
-      console.log(data);
-      data.forEach(item => {
-        this.message_classify = item.message_classify;
+      this.messageList = data;
+      this.list.forEach(item => {
+        this.messageList.forEach(value => {
+          if (item.message_classify === value.message_classify) {
+            item.content = value.content;
+          }
+        });
       });
-      
-      console.log(this.message_classify);
+      console.log(this.list);
     },
-    async detail() {
-      let obj = {
-        limit: 10,
-        message_classify: this.message_classify,
-        page: 1
-      };
-      let { data } = await msgDetailAjax(obj);
+    detail(message_classify,title){
+      this.$router.push({
+        path:'/message-detail',
+        query:{
+          message_classify,
+          title
+        }
+      })
     }
   },
   /**

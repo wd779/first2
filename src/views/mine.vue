@@ -22,17 +22,17 @@
           <div class="info">
             <ul>
               <li @click="$router.push('/my-study')">
-                <h3>1</h3>
+                <h3>{{personal.courses}}</h3>
                 <p>我的特色课</p>
                 <span>已购特色课程的学习</span>
               </li>
               <li @click="$router.push('/order')">
-                <h3>0</h3>
+                <h3>{{personal.oto}}</h3>
                 <p>一对一辅导</p>
                 <span>我的一对一老师辅导</span>
               </li>
               <li @click="$router.push('/my-currency')">
-                <h3>0.00</h3>
+                <h3>{{`${personal.integral}.00`}}</h3>
                 <p>剩余学习币</p>
                 <span>查看剩余学习币</span>
               </li>
@@ -41,7 +41,7 @@
         </div>
       </div>
       <!-- 邀请 -->
-      <div class="yao">
+      <div class="yao" @click="show=true">
         <div>
           <van-icon name="point-gift" />
           <section>
@@ -126,11 +126,17 @@
         </li>
       </ul>
     </div>
+    <div class="van-overlay"  v-show="show" @click="show=false"></div>
+    <div class="van-popup van-popup--center" v-show="show">
+      <div class="share-box">
+        <img src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/2020gS8dQ6ChUu1604494536.png" alt="">
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import { AjaxInfo } from "../utils/myApi";
+import { AjaxInfo, getUCenterInfoAjax } from "../utils/myApi";
 export default {
   // 组件名称
   name: "", // 组件参数 接收来自父组件的数据
@@ -139,21 +145,22 @@ export default {
   data() {
     return {
       flag: false,
-      personal: [] // 个人信息
+      personal: [], // 个人信息
+      show: false
     };
   }, // 计算属性
   computed: {}, // 侦听器
   watch: {}, // 组件方法
   methods: {
-    async info() {
-      let data = await AjaxInfo();
+    async getUCenterInfo() {
+      let { data } = await getUCenterInfoAjax();
       console.log(data);
-      this.personal = data.data;
+      this.personal = data;
     }
   },
   created() {},
   mounted() {
-    this.info();
+    this.getUCenterInfo();
     if (sessionStorage.getItem("token")) {
       this.flag = true;
     } else {
@@ -241,6 +248,7 @@ export default {
             line-height: 0.35rem;
             font-size: 0.24rem;
             color: #eb6100;
+            font-weight: normal;
           }
           p {
             font-size: 0.12rem;
@@ -319,5 +327,33 @@ export default {
       }
     }
   }
+}
+.van-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 2009;
+}
+.van-popup--center {
+  z-index: 2010;
+  background-color: transparent;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate3d(-50%, -50%, 0);
+  transform: translate3d(-50%, -50%, 0);
+  position: fixed;
+  max-height: 100%;
+  overflow-y: auto;
+  transition: 0.3s ease-out;
+  .share-box{
+    width: 89.33333vw;
+    img{
+      display: block;
+    width: 100%;
+    }
+}
 }
 </style>
