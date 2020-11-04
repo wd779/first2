@@ -62,3 +62,6 @@ export const qxguanzhu = collect_id => put(`api/app/collect/cancel/${collect_id}
 // 收藏
 export const shoucang = data => get(`/api/app/collect`,data); // 收藏列表
 export const qxshoucang = collect_id => put(`/api/app/collect/cancel/${collect_id}/1`); // 收藏列表
+// 消息
+export const messageAjax = data => post(`/api/app/message/classifyMessage`,data); // 消息
+export const msgDetailAjax = data => post(`/api/app/message/getMessage`,data); // 消息

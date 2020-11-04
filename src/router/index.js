@@ -38,6 +38,7 @@ const routes = [
   { path: '/card', name: 'Card', component: () => import('../views/my/Card.vue'), meta: { title: '学习卡' } }, // 学习卡-hrj-zhy
   { path: '/vip', name: 'Vip', component: () => import('../views/my/Vip.vue'), meta: { title: '会员' } }, // 会员-hrj-zhy
   { path: '/message', name: 'Message', component: () => import('../views/my/Message.vue'), meta: { title: '我的消息' } }, // 我的消息-hrj-zhy
+  { path: '/message-detail', name: 'Message-detail', component: () => import('../views/my/Message-detail.vue'), meta: { title: '消息详情' } }, // 消息详情
   { path: '/feedback', name: 'Feedback', component: () => import('../views/my/Feedback.vue'), meta: { title: '意见反馈' } }, // 意见反馈-hrj-zhy
   { path: '/options', name: 'Options', component: () => import('../views/my/Options.vue'), meta: { title: '设置' } }, // 设置-hrj-zhy
   { path: '/setPass', name: 'setPass', component: () => import('../views/my/setPass.vue'), meta: { title: '设置密码页面' } }, // 设置密码页面-zhy

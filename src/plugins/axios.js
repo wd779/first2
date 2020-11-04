@@ -14,8 +14,8 @@ if (id) {
 // 写入设备ID
 localStorage.setItem("deviceid", deviceid)
 let config = {
-  // baseURL: "http://120.53.31.103:84",
-  baseURL: "https://www.365msmk.com",
+  baseURL: "http://120.53.31.103:84",
+  // baseURL: "https://www.365msmk.com",
   timeout: 60 * 1000, // Timeout
 };
 const _axios = axios.create(config);

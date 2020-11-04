@@ -61,6 +61,7 @@
 
 <script>
 import appHeader from "../../components/AppHeader.vue";
+import { messageAjax, msgDetailAjax } from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -70,19 +71,41 @@ export default {
   components: { appHeader },
   // 组件状态值
   data() {
-    return {};
+    return {
+      message_classify: ""
+    };
   },
   // 计算属性
   computed: {},
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    async msg() {
+      let { data } = await messageAjax();
+      console.log(data);
+      data.forEach(item => {
+        this.message_classify = item.message_classify;
+      });
+      
+      console.log(this.message_classify);
+    },
+    async detail() {
+      let obj = {
+        limit: 10,
+        message_classify: this.message_classify,
+        page: 1
+      };
+      let { data } = await msgDetailAjax(obj);
+    }
+  },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */
   created() {},
-  mounted() {}
+  mounted() {
+    this.msg();
+  }
 };
 </script> 
 
@@ -90,17 +113,17 @@ export default {
 <style scoped lang="scss">
 ul {
   margin-top: 0;
-  border-top: .2vw solid #f5f5f5;
+  border-top: 0.2vw solid #f5f5f5;
   background: #fff;
   padding: 1.33333vw 4vw;
-//   margin: 2.66667vw 0;
+  //   margin: 2.66667vw 0;
 }
 li {
   height: auto;
   line-height: normal;
   display: flex;
   color: #595959;
-  border-bottom: .01vw solid #e0dddd;
+  border-bottom: 0.01vw solid #e0dddd;
 }
 .icon {
   padding: 2.6vw 0;
