@@ -88,7 +88,7 @@ export default {
   methods: {
     //   导航部分事件
     onClickLeft() {
-      this.$router.push("/detail");
+      this.$router.go(-1)
     },
     onClickRight() {
       Toast("按钮");

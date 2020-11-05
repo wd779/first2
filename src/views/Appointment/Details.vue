@@ -53,13 +53,23 @@
       </div>
     </div>
     <div class="btn">
-      <van-button type="default" class="btn_n">立即学习</van-button>
+      <van-button
+        type="default"
+        v-if="isbuy == 0"
+        class="btn_n"
+        @click="onsignUp"
+        >立即报名</van-button
+      >
+      <van-button type="default" v-if="isbuy == 1" class="btn_n"
+      @click="ToStudy"
+        >立即学习</van-button
+      >
     </div>
   </div>
 </template>
 
 <script>
-import { GetCurriculum } from "../../utils/appointmtemtApi";
+import { GetCurriculum,SignUp } from "../../utils/appointmtemtApi";
 import {postCollect , postCancel} from '../../utils/homeApi'
 export default {
   // 组件名称
@@ -73,9 +83,31 @@ export default {
       info:"",
     };
   }, // 计算属性
-  computed: {}, // 侦听器
+  computed: {
+    isbuy() {
+      return this.data.is_join_study;
+    },
+  }, // 侦听器
   watch: {}, // 组件方法
   methods: {
+    async onsignUp() {
+      console.log(this.$route.query.id);
+      let res = await SignUp({
+        shop_id: this.$route.query.id,
+        type:5
+      });
+      if (res.code == 200) {
+        this.$toast('报名成功');
+        this.$router.push({path:"/MyStudy"})
+      }else if (res.code == 201){
+        // console.log(res.msg);
+        this.$toast(res.msg);
+      }
+      // console.log(res);
+    },
+    ToStudy(){
+      this.$router.push({path:"/MyStudy"})
+    },
     async getdata() {
       // console.log(this.$route.query);
       var a = await GetCurriculum(this.$route.query.id);
@@ -91,7 +123,9 @@ export default {
     onClickLeft() {
       this.$router.go(-1);
     },
-
+  subscribe() {
+      this.$router.push({ path: "/yuyue" });
+    },
     // 点亮
     liang(){
       console.log(this.data.is_collect);

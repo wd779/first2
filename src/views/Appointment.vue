@@ -38,9 +38,9 @@
           </div>
         </van-dropdown-item>
         <van-dropdown-item title="排序" ref="item1">
-          <div class="box">
+          <div class="box box1">
             <van-cell
-              v-for="(item,index) in courseClassify"
+              v-for="(item, index) in courseClassify"
               :key="item"
               :title="item"
               @click="searchText(index)"
@@ -191,7 +191,7 @@ export default {
     },
     Reset() {
       this.SearchArr = ["", ""];
-      this.final = '';
+      this.final = "";
       this.$refs.item.toggle();
       this.search();
     },
@@ -202,22 +202,26 @@ export default {
     changeActive(types) {
       this.$refs.item2.toggle();
       this.search({
-        course_type: types
+        course_type: types,
       });
     },
     searchText(i) {
       this.final = "";
       this.$refs.item1.toggle();
       this.search({
-order_by:i
+        order_by: i,
       });
     },
     async getdata() {
       var a = await GetData();
       console.log(a);
       this.courseClassify = [
-        "综合排序","最新","最热","价格从高到低","价格从低到高",
-      ]
+        "综合排序",
+        "最新",
+        "最热",
+        "价格从高到低",
+        "价格从低到高",
+      ];
     },
     async getdata1() {
       var a = await GetDataList();
@@ -228,23 +232,22 @@ order_by:i
     async search(data) {
       // console.log({...this.requeryHeader,
       //   keywords:this.final,}
-                
+
       // );
-      this.ShowList = []
+      this.ShowList = [];
       if (data) {
         var a = await Search({
-        ...this.requeryHeader,
-        data
-      });
-      this.ShowList = a.data.list;
+          ...this.requeryHeader,
+          data,
+        });
+        this.ShowList = a.data.list;
       } else {
         var a = await Search({
-        ...this.requeryHeader,
-        keywords:this.final,
-      });
-      this.ShowList = a.data.list;
+          ...this.requeryHeader,
+          keywords: this.final,
+        });
+        this.ShowList = a.data.list;
       }
-      
     },
     onLoad() {
       this.requeryHeader.page++;
@@ -265,6 +268,9 @@ order_by:i
   width: 100%;
   padding: 0.1rem 0.2rem;
   box-sizing: border-box;
+}
+.box1 {
+  text-align: center;
 }
 .btn_bottom {
   width: 100%;

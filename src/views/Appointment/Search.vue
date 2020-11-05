@@ -16,14 +16,14 @@
       <p>
         搜索记录
         <span class="float">
-          <van-icon name="delete" />
+          <van-icon name="delete" @click="clear" />
         </span>
       </p>
       <br />
       <van-tag
         color="#F7F7F7"
         text-color="#000"
-        v-for="(item, index) in list.slice(list.length-4,list.length)"
+        v-for="(item, index) in showL"
         :key="index"
         @click="value = item"
         >{{ item }}</van-tag
@@ -45,8 +45,7 @@
 </template>
 
 <script>
-
-import { Search } from "../../utils/myApi";
+import { Search } from "../../utils/appointmtemtApi";
 import Card from "../../components/Card copy 2";
 export default {
   // 组件名称
@@ -56,10 +55,15 @@ export default {
   data() {
     return {
       value: "",
-      list: JSON.parse(localStorage.getItem("searchList")) || [],
+      list:  JSON.parse(localStorage.getItem("searchList")) ||[],
       ShowList: [],
       finished: false,
       loading: false,
+      requeryHeader: {
+        limit: 10,
+        page: 1,
+        course_type: "0",
+      },
     };
   }, // 计算属性
   computed: {
@@ -70,31 +74,51 @@ export default {
         return false;
       }
     },
+    showL(){
+      if (this.list.length >= 4 ) {
+        return this.list.slice(list.length - 4, list.length)
+      }
+      return this.list
+    }
   }, // 侦听器
   watch: {}, // 组件方法
   methods: {
     back() {
       this.$router.go(-1);
     },
+    clear(){
+      this.list = [];
+      localStorage.searchList = JSON.stringify(this.list);
+    },
     async onSearch() {
       if (this.value == "") {
         return false;
       }
-      let res = await Search(this.value);
+      let res = await Search({
+        ...this.requeryHeader,
+        keywords: this.value,
+      });
       if (res.code == 200) {
         this.ShowList = [];
         res.data.list.forEach((element) => {
           this.ShowList.push(element);
         });
         this.finished = true;
-        var arr = this.list;
-        arr.forEach(item=>{
-            if (item == this.value) {
-                return
-            }
-        })
-        arr.push(this.value);
-        localStorage.searchList = JSON.stringify(arr);
+        // var arr = this.list;
+        // arr.forEach(item=>{
+        //     if (item == this.value) {
+        //         return
+        //     }
+        // })
+        // arr.push(this.value);
+        // localStorage.searchList = JSON.stringify(arr);
+        // console.log(this.list);
+        // console.log([...new Set(this.list)]);
+        this.list.push(this.value)
+        console.log(this.list);
+        this.list = [...new Set(this.list)];
+        console.log(this.list);
+        localStorage.searchList = JSON.stringify(this.list);
       } else {
         console.log("没有查询到相关信息");
       }
@@ -114,6 +138,9 @@ export default {
   background: #ffffff;
   height: 8vh;
   font-size: 0.1rem;
+}
+.connect{
+  height: 92vh;
 }
 .float {
   float: right;
