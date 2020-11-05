@@ -21,8 +21,8 @@
               ><font data-v-8a020ce2="">{{info.level_name}}</font>
             </p>
             <p data-v-8a020ce2="">
-              男
-              <font data-v-8a020ce2="">{{info.age}}年教龄</font>
+              {{info.sex==0?'男':'女'}}
+              <font data-v-8a020ce2="">{{info.teach_age}}年教龄</font>
             </p>
           </div>
           <button 
