@@ -46,6 +46,10 @@ export const cancelCollectTeacher = collect_id => get(`api/app/teacher/col
 export const collectTeacherList = data => get("/api/app/collect", data); // 关注列表
 export const cancelCollect = collect_id => put(`api/app/collect/cancel/${collect_id}/2`); // 取消关注
 export const SignUp = data => post(`api/app/order/downOrder`,data); // 报名课程
-export const GetComment = data => post(`api/app/courseComment`,data); // 报名课程
-export const GetOutline = data => post(`api/app/courseChapter`,data); // 报名课程
+export const GetComment = data => post(`api/app/courseComment`,data); // 获取该课程的评论
+export const GetOutline = data => post(`api/app/courseChapter`,data); // 获取老师的课程列表
+export const GetCourses = data => get(`api/app/myStudy/course/${data}`); // 获取视频列表
+export const QuertIsSee = (data,data1) => get(`api/app/getPcRoomCode/course_id=${data}/chapter_id=${data1}`); // 查询是否可观看
+// api/app/myStudy/course/287?
+
 
