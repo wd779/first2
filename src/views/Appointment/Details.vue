@@ -92,6 +92,7 @@ export default {
   watch: {}, // 组件方法
   methods: {
     async onsignUp() {
+      let id = this.$route.query.id
       console.log(this.$route.query.id);
       let res = await SignUp({
         shop_id: this.$route.query.id,
@@ -99,7 +100,6 @@ export default {
       });
       if (res.code == 200) {
         this.$toast("报名成功");
-        let id = this.$route.query.id
         console.log(id);
         this.$router.push({ path: "/MyStudy" ,query:{vid:id}});
       } else if (res.code == 201) {
@@ -126,7 +126,7 @@ export default {
     },
     // outline
     ToStudy() {
-      this.$router.push({ path: "/MyStudy",query:{vid:id} });
+      this.$router.push({ path: "/MyStudy",query:{vid:this.$route.query.id} });
     },
     async getdata() {
       // console.log(this.$route.query);
@@ -184,7 +184,8 @@ export default {
   },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
-   */ created() {},
+   */ 
+  created() {},
   mounted() {
     this.getdata();
     this.getComment();

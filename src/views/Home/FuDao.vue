@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import { GetOtoCourse } from "../../utils/homeApi"
+import { GetOtoCourse } from "../../utils/homeApi";
 export default {
   data() {
     return {
@@ -140,18 +140,18 @@ export default {
     showPopup() {
       this.show = true;
     },
-    async onGetOtoCourse(){
+    async onGetOtoCourse() {
       let obj = {
         page: 1,
-limit: 10
+        limit: 10,
       };
-      let {data} = await GetOtoCourse(obj);
+      let { data } = await GetOtoCourse(obj);
       console.log(data);
-    }
+    },
   },
-  mounted(){
+  mounted() {
     this.onGetOtoCourse();
-  }
+  },
 };
 </script>
 

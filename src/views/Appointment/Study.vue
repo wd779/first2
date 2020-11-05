@@ -4,7 +4,7 @@
     <van-sticky>
       <div class="hmw-top">
         <van-nav-bar
-          title="学习"
+          :title="infoList.course.title"
           @click-left="onClickLeft"
           @click-right="onClickRight"
         >
@@ -23,20 +23,20 @@
       <van-list>
         <!-- 主题的上部分 -->
         <div class="hmwC-top">
-          <p>共8时</p>
+          <p>共{{infoList.course.section_num}}时</p>
           <van-progress inactive :percentage="0" />
           <p>已学习0%</p>
         </div>
         <!-- 列表部分 -->
         <ul>
-          <div :key="index" v-for="(item, index) in 10">
+          <div :key="item.id" v-for="(item) in infoList.periods" @click="onQuertIsSee(item.id)">
             <li>
               <p>
                 <span class="hmwS1" style="">[回放]</span
-                ><span class="hmwS2">第二讲第一课时</span>
+                ><span class="hmwS2">{{item.periods_title}}</span>
               </p>
               <p class="hmwP3">
-                <span>李青</span><span>03月16日 18:30 - 19:30</span>
+                <span>{{item.teachers[0].teacher_name}}</span><span>{{item.total_end_play}}-{{item.total_start_play}}</span>
               </p>
               <p class="hmwJD">
                 <van-progress inactive :percentage="0" />
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { GetCourses,QuertIsSee } from "../../utils/appointmtemtApi"
 import { Toast } from "vant";
 export default {
   // 组件名称
@@ -78,11 +79,12 @@ export default {
     return {
       //    底部导航
       active: 0,
+      infoList:"",
     };
   },
   mounted(){
-    console.log(this.$route);
-
+    // console.log(this.$route.query.vid);
+    this.onGetCourses();
   },
   // 计算属性
   computed: {},
@@ -101,6 +103,22 @@ export default {
     hmwDian() {
       alert("你点了一下");
     },
+    async onQuertIsSee(i){
+      // console.log(i);
+      let res = await QuertIsSee(this.$route.query.vid,i);
+      // console.log(res);
+      if (res.code == 200) {
+        this.$toast('正在进入');
+        window.location.href = res.data.chapterInfo.web_url
+      }else{
+        console.log(res.msg);
+      }
+    },
+    async onGetCourses(){
+      let {data} = await GetCourses(this.$route.query.vid);
+      this.infoList = data;
+      console.log(this.infoList);
+    }
   },
 };
 </script>
@@ -126,8 +144,6 @@ body,
   border-bottom: 1px solid #f5f5f5;
 }
 .hmw-center {
-  flex: 1;
-  height: 50vh;
   overflow: scroll;
 }
 .hmw-foot {
