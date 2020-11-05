@@ -49,6 +49,9 @@ const routes = [
   { path: '/yuyue', name: 'yuyue', component: () => import('../views/Home/YuYue.vue'), meta: { title: '预约课程' } },// 预约课程页面-zhy,
   { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue'), meta: { title: '详情' } },// 详情,
   { path: '/Teacher_Details', name: 'Teacher_Details', component: () => import('../views/Home/Teacher_Details.vue'),meta: { title: '讲师详情' }},// 讲师详情,
+  {path: "/MyStudy",name: "MyStudy",component: () => import("../views/Appointment/Study.vue"),meta: {  pageTitle: "我的学习",},},//学习
+  {path: "/Search",name: "Search",component: () => import("../views/Appointment/Search.vue"),meta: {  pageTitle: "搜索",},},//搜索
+
 ]
 const router = new VueRouter({
   routes

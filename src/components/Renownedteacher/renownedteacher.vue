@@ -93,6 +93,10 @@ export default {
 .right_msg {
   /* width: 3rem; */
   color: #b7b7b7;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }
 .right_title {
   color: #595959;

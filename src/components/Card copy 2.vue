@@ -4,12 +4,16 @@
       <h6>{{ datas.title }}</h6>
       <p>{{ datas.course_statement || '暂无描述' }}</p>
       <div class="user">
-        <img :src="datas.cover_img" />
+        <div>
+          <img :src="datas.cover_img" />
         <span>
           {{ datas.teachers_list[0].teacher_name }}
         </span>
+        </div>
+          <div>
+            
+          </div>
       </div>
-
       <p>
         {{datas.sales_num}}人已报名
         <b :class="datas.price==0?'':'red'">{{ datas.price==0?'免费':"￥"+datas.price }}</b>
@@ -44,22 +48,19 @@ export default {
 
 <style lang="scss" scoped>
 .box_container {
-  height: 1.5rem;
-  margin: 1vw;
-  width: 98vw;
+  margin: 1%;
+  width: 98%;
   background: white;
-  box-shadow: 3px 1px 5px #ccc;
+  // box-shadow: 3px 1px 5px #ccc;
+  // border: 1px solid  #ccc;
   border-radius: 5px;
   box-sizing: border-box;
 }
 .box_wrapper {
-  margin: 0.2rem;
-  font-size: 0.1rem;
+  margin: 0.08rem;
   h6 {
-    
+    font-size: 0.1rem;
     font-weight: normal;
-    height: 0.2rem;
-    padding-top: 0.1rem;
     height: 0.4rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -69,6 +70,7 @@ export default {
   p {
     margin-top: 0.1rem;
     width: 100%;
+    font-size: 0.1rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
@@ -77,9 +79,11 @@ export default {
       font-weight: normal;
       color: #44A426;
       float: right;
+      font-size: 0.1rem;
     }
     b.red{
       color: red;
+      font-size: 0.1rem;
     }
   }
 }
@@ -93,6 +97,7 @@ export default {
   }
   span{
     text-indent: 1em;
+    font-size: 0.1rem;
   }
 }
 </style>

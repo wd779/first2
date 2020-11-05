@@ -39,4 +39,4 @@ export function post(url, data) {
 export const GetData = data => get('api/app/courseClassify',data) // 课程信息
 export const GetDataList = data => get('api/app/courseBasis',data) // 课程列表
 export const GetCurriculum = data => get('api/app/courseInfo/basis_id='+data) // 课程单页数据
-export const Search = data => get('api/app/courseBasis',data) // 搜索课程
+export const Search = data => get('api/app/courseBasis?limit=10&page=1&course_type=0&keywords='+data) // 搜索课程
