@@ -26,8 +26,9 @@
       <div class="box">
         <p>教学团队</p>
         <div class="address">
-          <img :src="data.cover_img" />
-          <p>{{ data.address == undefined ? "团队" : data.address }}</p>
+          
+          <img :src="info.teacher_avatar" />
+          <p>{{ info.teacher_name }}</p>
         </div>
       </div>
       <div class="box">
@@ -52,13 +53,17 @@
       </div>
     </div>
     <div class="btn">
-      <van-button type="default" class="btn_n">立即学习</van-button>
+
+      <van-button type="default"  class="btn_n"
+      @click="ToStudy"
+        >立即学习</van-button
+      >
     </div>
   </div>
 </template>
 
 <script>
-import { GetCurriculum } from "../../utils/appointmtemtApi";
+import { GetCurriculum,SignUp } from "../../utils/appointmtemtApi";
 import {postCollect , postCancel} from '../../utils/homeApi'
 export default {
   // 组件名称
@@ -68,27 +73,53 @@ export default {
   data() {
     return {
       data: "",
-      id:""
+      id:"",
+      info:"",
     };
   }, // 计算属性
-  computed: {}, // 侦听器
+  computed: {
+    isbuy() {
+      return this.data.is_join_study;
+    },
+  }, // 侦听器
   watch: {}, // 组件方法
   methods: {
+    async onsignUp() {
+      console.log(this.$route.query.id);
+      let res = await SignUp({
+        shop_id: this.$route.query.id,
+        type:5
+      });
+      if (res.code == 200) {
+        this.$toast('报名成功');
+        this.$router.push({path:"/MyStudy"})
+      }else if (res.code == 201){
+        // console.log(res.msg);
+        this.$toast(res.msg);
+      }
+      // console.log(res);
+    },
+    ToStudy(){
+      this.$router.push({path:"/MyStudy"})
+    },
     async getdata() {
       // console.log(this.$route.query);
-      var a = await GetCurriculum(this.$route.query.con.id);
+      var a = await GetCurriculum(this.$route.query.id);
       this.data = a.data.info;
-     
+      this.info = a.data.teachers[0]
+    //  console.log(a);
       if(this.data.is_collect==1){
         this.id=this.data.collect_id
-        console.log(this.id);
+        // console.log(this.id);
      }
               // this.id = res.data.collect_id
     },
     onClickLeft() {
       this.$router.go(-1);
     },
-
+  subscribe() {
+      this.$router.push({ path: "/yuyue" });
+    },
     // 点亮
     liang(){
       console.log(this.data.is_collect);
@@ -107,7 +138,7 @@ export default {
     // 收藏   post传参方式
     async onpostCollect(){
       let res = await postCollect({
-        course_basis_id:this.$route.query.con.id,
+        course_basis_id:this.$route.query.id,
         type: 1      
       })
 
@@ -130,7 +161,6 @@ export default {
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */ created() {},
   mounted() {
-    new Date();
     this.getdata();
     // this.GetCurriculum().then(res=>{
     //     console.log(res);
@@ -181,7 +211,13 @@ export default {
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 0px 10px;
+}
+.ping p:nth-child(1){
+  // background: #000;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }
 .box {
   width: 100%;
@@ -189,9 +225,6 @@ export default {
   background: white;
   padding: 0 0.2rem;
   box-sizing: border-box;
-}
-.box p:nth-child(1) {
-  padding-top: 0.1rem;
 }
 .box .li .dian {
   color: #ff976a;

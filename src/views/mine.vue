@@ -56,20 +56,21 @@
       </div>
       <!-- ulBox -->
       <ul class="menu">
-        <li>
+        <li class="icon1">
           <p class="menu-title">课程相关</p>
           <div class="menu-box">
             <div @click="$router.push('/concern')">
-              <van-icon name="point-gift" />
+              <van-icon name="friends" />
               <p>关注的老师</p>
             </div>
             <div @click="$router.push('/collect')">
-              <van-icon name="point-gift" />
+              <van-icon name="underway" />
               <p>我的收藏</p>
             </div>
           </div>
         </li>
-        <li>
+
+        <li  class="icon2">
           <p class="menu-title">订单相关</p>
           <div class="menu-box">
             <div @click="$router.push({path:'/orderDetail',query:{order_type:2,title:'课程订单'}})">
@@ -86,40 +87,40 @@
             </div>
           </div>
         </li>
-        <li>
+        <li  class="icon3">
           <p class="menu-title">我的账户</p>
           <div class="menu-box">
             <div @click="$router.push('/coupon')">
-              <van-icon name="point-gift" />
+              <van-icon name="gift-card" />
               <p>优惠券</p>
             </div>
             <div @click="$router.push('/card')">
-              <van-icon name="point-gift" />
+              <van-icon name="vip-card" />
               <p>学习卡</p>
             </div>
             <div @click="$router.push('/vip')">
-              <van-icon name="point-gift" />
+              <van-icon name="gem" />
               <p>会员</p>
             </div>
           </div>
         </li>
-        <li>
+        <li  class="icon4">
           <p class="menu-title">自助服务</p>
           <div class="menu-box">
             <div @click="$router.push('/message')">
-              <van-icon name="point-gift" />
+              <van-icon name="bell" />
               <p>我的消息</p>
             </div>
             <div @click="$router.push('/feedback')">
-              <van-icon name="point-gift" />
+              <van-icon name="comment" />
               <p>意见反馈</p>
             </div>
             <div @click="$router.push('/personOne')">
-              <van-icon name="point-gift" />
+              <van-icon name="service" />
               <p>在线客服</p>
             </div>
             <div @click="$router.push('/options')">
-              <van-icon name="point-gift" />
+              <van-icon name="setting" />
               <p>设置</p>
             </div>
           </div>
@@ -325,9 +326,9 @@ export default {
         height: 0.6rem;
         text-align: center;
         .van-icon {
-          font-size: 0.22rem;
+          font-size: 0.26rem;
           line-height: 0.44rem;
-          color: #f2995a;
+          //   color: #ff944b;
         }
         p {
           font-size: 0.12rem;
@@ -335,6 +336,18 @@ export default {
       }
     }
   }
+}
+.icon1 .van-icon {
+  color: #ff944b;
+}
+.icon2 .van-icon{
+    color: #fc5500;
+}
+.icon3 .van-icon{
+    color: #ffaf00;
+}
+.icon4 .van-icon{
+    color: #ff9a2a;
 }
 .van-overlay {
   position: fixed;

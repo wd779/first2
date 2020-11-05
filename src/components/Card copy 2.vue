@@ -6,16 +6,14 @@
       <div class="user">
         <div>
           <img :src="datas.teachers_list[0].teacher_avatar" />
-        <span>
-          {{ datas.teachers_list[0].teacher_name }}
-        </span>
+          <span>
+            {{ datas.teachers_list[0].teacher_name }}
+          </span>
         </div>
-        
-        <div class="float" v-if="datas.price == 0">
+        <div v-if="datas.price == 0">
           <img src="../assets/has-buy.png" />
         </div>
       </div>
-
       <p>
         {{ datas.sales_num }}人已报名
         <b :class="datas.price == 0 ? '' : 'red'">{{
@@ -27,7 +25,6 @@
 </template>
 
 <script>
-import { GetCurriculum } from "../utils/appointmtemtApi";
 export default {
   props: {
     data: {
@@ -43,53 +40,31 @@ export default {
       },
     },
   },
-
   computed: {
     datas() {
-      console.log(this.data);
+      // console.log(this.data);
       return this.data;
     },
-    isbuy() {
-      return this.info.has_buy;
-    },
-  },
-  data() {
-    return {
-      info: "",
-    };
-  },
-  methods: {
-    async getdata() {
-      var a = await GetCurriculum(this.datas.id);
-      console.log(a);
-      this.info = a.data.info;
-    },
-  },
-  mounted() {
-    this.getdata();
   },
 };
 </script>
 
 <style lang="scss" scoped>
-
 .box_container {
-  height: 1.5rem;
-  margin: 1vw;
-  width: 98vw;
+  margin: 1%;
+  width: 98%;
   background: white;
-  box-shadow: 3px 1px 5px #ccc;
+  // box-shadow: 3px 1px 5px #ccc;
+  // border: 1px solid  #ccc;
   border-radius: 5px;
   box-sizing: border-box;
 }
 .box_wrapper {
-  margin: 0.2rem;
+  margin: 0.08rem;
   font-size: 0.1rem;
   h6 {
     font-weight: normal;
-    height: 0.2rem;
-    padding-top: 0.1rem;
-    height: 0.4rem;
+    height: 0.5rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -98,6 +73,7 @@ export default {
   p {
     margin-top: 0.1rem;
     width: 100%;
+    font-size: 0.1rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
@@ -106,9 +82,11 @@ export default {
       font-weight: normal;
       color: #44a426;
       float: right;
+      font-size: 0.1rem;
     }
     b.red {
       color: red;
+      font-size: 0.1rem;
     }
   }
 }
@@ -116,18 +94,14 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  img:nth-child(1) {
+  img {
     width: 0.3rem;
     height: 0.3rem;
     border-radius: 50%;
   }
-  img:nth-child(2){
-    width: 0.44rem;
-    height: 0.44rem;
-  }
   span {
     text-indent: 1em;
-    line-height: 100%;
+    font-size: 0.1rem;
   }
 }
 </style>

@@ -5,246 +5,145 @@
       <div class="header">
         <header>
           <span class="back">
-            <img src="../../assets/下载.png" alt="" @click="backHome" />
+            <img src="../../assets/下载.png" @click="$router.go(-1)" alt="" />
           </span>
           <h3>讲师详情</h3>
         </header>
       </div>
 
       <!-- 模板介绍 -->
-      <div>
-        <div class="teacher-info">
-          <div class="ti-base">
-            <img :src="data.avatar" alt="" />
-            <div>
-              <p>
-                <span data-v-8a020ce2="">{{ data.real_name }}</span
-                ><font data-v-8a020ce2="">M20</font>
-              </p>
-              <p data-v-8a020ce2="">
-                男
-                <font data-v-8a020ce2="">30年教龄</font>
-              </p>
-            </div>
-            <button data-v-8a020ce2="">关注</button>
+      <div class="teacher-info">
+        <div class="ti-base">
+          <img :src="info.avatar" alt="" />
+          <div>
+            <p>
+              <span data-v-8a020ce2="">{{ info.teacher_name }}</span
+              ><font data-v-8a020ce2="">{{info.level_name}}</font>
+            </p>
+            <p data-v-8a020ce2="">
+              男
+              <font data-v-8a020ce2="">{{info.age}}年教龄</font>
+            </p>
           </div>
-        </div>
-
-        <!-- 讲师  简介 -->
-        <div class="com-box">
-          <div class="vant-nav">
-            <van-tabs v-model="activeName">
-              <van-tab title="讲师介绍" name="a">
-                <ul class="teacher-tro">
-                  <li><span>教学年龄</span><font>30年</font></li>
-                  <li><span>授课价格</span><font>400学习币</font></li>
-                  <li>
-                    <span>老师简介</span
-                    ><font
-                      >　　杨老师,特级教师.多次被中国数学会评为全国高中数学竞联赛优秀教练员。长期从事名校理科班的数学教学和数学竞赛辅导工作。辅导学生参加全国高中数学联赛有数百人次获全国高中数学联赛一、二、三等奖，数十人被免试保送到清华大学、北京大学等名牌大学学习。十多人获CMO获一、二、三等奖，一人获IMO金牌。
-                      　　特别是近年来大学试行自主招生，有很多同学通过上他的竞赛辅导课进入清华大学、北京大学、上海交通大学等。</font
-                    >
-                  </li>
-                </ul>
-              </van-tab>
-              <van-tab title="主讲课程" name="b">
-                <ul class="masterCourse">
-                  <li v-for="index in 7" :key="index">
-                    <div class="lm_ii_item" @click="ToCourseDetail()">
-                      <p>
-                        每时每课特级教师-自主招生冲刺讲座6-多元方程组与可转化为多元方程组问题
-                      </p>
-                      <div class="lm_ii_time">
-                        <p>共一课时</p>
-                      </div>
-                      <div class="lm_ii_teacher">
-                        <img
-                          src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/2019wX5ZNRNxBT1577773182.jpg"
-                        />
-                        <p>杨德胜</p>
-                      </div>
-
-                      <div class="lm_ii_info">
-                        <span>1000人已报名</span>
-                        <span class="lm_good">免费</span>
-                        <!-- <span class="lm_price">
-                    <img
-                      src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20191HHDExgz0u1567065946.png"
-                      alt
-                    />
-
-
-                    <span>1.00</span>
-                      </span>-->
-                      </div>
-                      <img
-                        class="lm_flag_img"
-                        src="https://wap.365msmk.com/img/has-buy.6cfbd83d.png"
-                        alt
-                      />
-                    </div>
-                  </li>
-                </ul>
-              </van-tab>
-              <van-tab title="学员评价" name="c">
-                <van-empty description="暂无学员评价" />
-              </van-tab>
-            </van-tabs>
-          </div>
+          <button 
+          @click="follow" 
+          class="follow" 
+          v-if="data.flag == 2">
+            关注
+          </button>
+          <button
+            @click="cancelFollow"
+            class="cancelFollow"
+            v-if="data.flag == 1"
+          >
+            已关注
+          </button>
         </div>
       </div>
 
+      <!-- 讲师  简介 -->
+      <div class="com-box">
+        <div class="vant-nav">
+          <van-tabs v-model="activeName">
+            <van-tab title="讲师介绍" name="a">
+              <ul class="teacher-tro">
+                <li><span>教学年龄</span><font>{{info.teach_age}}年</font></li>
+                <li><span>授课价格</span><font>300学习币</font></li>
+                <li>
+                  <span>老师简介</span>
+                  <font
+                    >　
+                    {{ info.tag_content == null?"特级教师.多次被中国数学会评为全国高中数学竞联赛优秀教练员。长期从事名校理科班的数学教学和数学竞赛辅导工作。辅导学生参加全国高中数学联赛有数百人次获全国高中数学联赛一、二、三等奖，数十人被免试保送到清华大学、北京大学等名牌大学学习。十多人获CMO获一、二、三等奖，一人获IMO金牌。特别是近年来大学试行自主招生，有很多同学通过上他的竞赛辅导课进入清华大学、北京大学、上海交通大学等。":info.tag_content}}
+                  </font>
+                </li>
+              </ul>
+            </van-tab>
+            <van-tab title="主讲课程" name="b">
+              <div class="vant-list-con"></div>
+            </van-tab>
+            <van-tab title="学员评价" name="c">
+              <van-empty description="暂无学员评价" />
+            </van-tab>
+          </van-tabs>
+        </div>
+      </div>
       <button
         class="course-btn van-button van-button--default van-button--normal"
-        style=""   @click="goDetails_kecheng"
+        @click="subscribe"
       >
-        <span class="van-button__text" 
-          >立即预约</span
-        >
+        <span class="van-button__text">立即预约</span>
       </button>
     </div>
   </div>
 </template>
 
 <script>
-import { GetTeacher , GetTeacherInfo} from "../../utils/homeApi";
+import {
+  GetTeacherInfo,
+  GetTeacherDetailed,
+  collectTeacher,
+  cancelCollectTeacher,
+} from "../../utils/appointmtemtApi";
 export default {
   data() {
     return {
       activeName: "a",
-      data: [],
-      Info:[]
+      info: {},
+      data: "",
+      id:"",
     };
   },
-
   mounted() {
-    this.onTeacher();
-    this.onTeacherInfo()
+    // console.log(this.$route.query.ID);
+    this.GetInfo();
+    this.getDetailed();
   },
   methods: {
-    // 获取数据
-    async onTeacher() {
-      let res = await GetTeacher(this.$route.query.id);
-      this.data = res.data.teacher;
+    async GetInfo() {
+      let res = await GetTeacherInfo(this.$route.query.id);
+      this.info = res.data.teacher;
+      this.data = res.data;
+      if (this.data == 1) {
+        this.id = this.data.teacher.id
+      }
       console.log(res);
     },
-    
-    async onTeacherInfo(){
-        let res = await GetTeacherInfo()
-        //  this.Info = res.attr
-         console.log(res);
+    async getDetailed() {
+      let res1 = await GetTeacherDetailed(this.$route.query.id);
+      // console.log(res1);
     },
-    // 返回home 页面
-    backHome() {
-      this.$router.go(-1);
+    subscribe() {
+      this.$router.push({ path: "/yuyue" });
     },
-
-    // 跳转到  课程预约
-   goDetails_kecheng() {
-     console.log(11111);
-      this.$router.push({
-        path:'/yuyue'
-      })
+    async follow() {
+      // console.log("去关注");
+      let res = await collectTeacher(this.$route.query.id);
+      // console.log(res);
+      if (res.code == 200) {
+        this.GetInfo();
+      }
     },
-
-    // 主讲课程 点击事件
-    ToCourseDetail(){}
+    async cancelFollow() {
+      // console.log("取消关注");
+      let res = await cancelCollectTeacher(this.$route.query.id);
+      // console.log(res);
+      if (res.code == 200) {
+        this.GetInfo();
+      }
+    },
   },
 };
 </script>
 
-<style lang="scss" scoped>
-.masterCourse {
+<style scoped>
+.vant-list-con {
   width: 100%;
-  padding: 0.15rem;
-  box-sizing: border-box;
-  background: #fff;
-  padding-bottom: 1.5rem;
-  > li {
-    margin-bottom: 0.2rem;
-    width: 100%;
-    height: 2rem;
-    border-radius: 0.04rem;
-    border: 0.01rem solid rgb(238, 238, 238);
-    background: #fff;
-    box-shadow: 0 0 0.01rem 0.01rem rgb(238, 238, 238);
-  }
-}
-.lm_ii_item {
-  position: relative;
-  width: 100%;
-  height: 2rem;
-  padding: 0 0.2rem;
-  margin-top: 0.1rem;
-  box-sizing: border-box;
-  background: #fff;
-  border-radius: 0.05rem;
-  > :nth-child(1) {
-    width: 3.5rem;
-    padding-top: 0.2rem;
-    margin: 0;
-  }
-}
-.lm_ii_time {
-  display: flex;
-  align-items: center;
-  height: 0.3rem;
-  line-height: 0.3rem;
-  > p {
-    margin: 0;
-    font-size: 0.1rem;
-    color: #8c8c8c;
-  }
-}
-.lm_ii_teacher {
-  width: 100%;
-  height: 0.7rem;
-  display: flex;
-  align-items: center;
-  font-size: 0.12rem;
-  color: #8c8c8c;
-  > img {
-    width: 0.3rem;
-    height: 0.3rem;
-    border-radius: 50%;
-    margin-right: 0.1rem;
-  }
-}
-.lm_ii_info {
-  width: 100%;
-  margin-top: 0.1rem;
-  height: 0.4rem;
-  line-height: 0.4rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-top: 0.01rem rgb(238, 238, 238) solid;
-  > :nth-child(1) {
-    font-size: 0.12rem;
-    color: #8c8c8c;
-  }
-  img {
-    width: 0.2rem;
-    height: 0.2rem;
-  }
-}
-.lm_flag_img {
-  width: 0.5rem;
-  height: 0.4rem;
-  position: absolute;
-  right: 0.2rem;
-  top: 0.4rem;
-}
-.lm_ii_item > :nth-child(1) {
-  width: 2.5rem;
-  padding-top: 0.2rem;
-  margin: 0;
-}
-.lm_good {
-  color: #44a426;
-  font-size: 0.18rem;
+  height: 4vm;
 }
 
+.cancelFollow {
+  color: #666;
+}
 .teacher-page {
   min-height: 100vh;
   background: #f0f2f5;
@@ -285,7 +184,6 @@ export default {
 }
 .header .back img {
   width: 2.4vw;
-
   height: 4.26667vw;
 }
 
@@ -317,7 +215,6 @@ export default {
   border-radius: 50%;
   flex: none;
 }
-
 .ti-base div {
   flex: 1;
 }

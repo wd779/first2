@@ -60,7 +60,7 @@
 
     <!-- 精品课程 -->
     <Title>精品课程</Title>
-    <div v-for="item in RenowneList1" :key="item.id" @click="toDetails(item)">
+    <div v-for="item in RenowneList1" :key="item.id+0.01" @click="toDetails(item)">
       <Crad :data="item"></Crad>
     </div>
 
@@ -68,7 +68,7 @@
     <Title>明星讲师</Title>
     <div
       v-for="item in RenowneList"
-      :key="item.teacher_id"
+      :key="item.teacher_id+0.1"
       @click="TeacherDetails(item.teacher_id)"
     >
       <RenownedTeacher :list="item"></RenownedTeacher>
@@ -127,10 +127,10 @@ export default {
   methods: {
     async onRenowneList() {
       var res = await GetHomeList();
-
-      this.RenowneList = res.data[0].list;
+      console.log(res);
+      this.RenowneList = res.data[3].list;
       this.RenowneList1 = res.data[1].list;
-      this.RenowneList4 = res.data[4].list.slice(0, 3);
+      this.RenowneList4 = res.data[0].list;
       // console.log(this.RenowneList1);
     },
     // 点击进入 课程
@@ -150,7 +150,7 @@ export default {
     // 学习日历
     onClickStudy() {
       // 获取token   判断 登录状态
-      let str = localStorage.getItem("token");
+      let str = sessionStorage.getItem("token");
       // console.log(str);
       if (str == null) {
         this.show = true;
@@ -167,12 +167,12 @@ export default {
     // 跳转课程详情
     toDetails(item) {
       console.log(item.id);
-      this.$router.push({ name: "Details", query: { con: item } });
+      this.$router.push({ name: "Details", query: { id: item.id } });
     },
     // 点击跳转到  讲师详情
     TeacherDetails(id) {
       // 获取token   判断 登录状态
-      let str = localStorage.getItem("token");
+      let str = sessionStorage.getItem("token");
       // console.log(str);
       if (str == null) {
         this.show = true;
