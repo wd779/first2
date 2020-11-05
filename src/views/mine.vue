@@ -32,7 +32,7 @@
                 <span>我的一对一老师辅导</span>
               </li>
               <li @click="$router.push('/my-currency')">
-                <h3>{{`${personal.integral}.00`}}</h3>
+                <h3>{{personal.integral | fnName}}</h3>
                 <p>剩余学习币</p>
                 <span>查看剩余学习币</span>
               </li>
@@ -72,15 +72,15 @@
         <li>
           <p class="menu-title">订单相关</p>
           <div class="menu-box">
-            <div>
+            <div @click="$router.push({path:'/orderDetail',query:{order_type:2,title:'课程订单'}})">
               <van-icon name="point-gift" />
               <p>课程订单</p>
             </div>
-            <div>
+            <div @click="$router.push({path:'/orderDetail',query:{order_type:3,title:'会员订单'}})">
               <van-icon name="point-gift" />
               <p>会员订单</p>
             </div>
-            <div>
+            <div @click="$router.push({path:'/orderDetail',query:{order_type:1,title:'约课订单'}})">
               <van-icon name="point-gift" />
               <p>约课订单</p>
             </div>
@@ -126,10 +126,13 @@
         </li>
       </ul>
     </div>
-    <div class="van-overlay"  v-show="show" @click="show=false"></div>
+    <div class="van-overlay" v-show="show" @click="show=false"></div>
     <div class="van-popup van-popup--center" v-show="show">
       <div class="share-box">
-        <img src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/2020gS8dQ6ChUu1604494536.png" alt="">
+        <img
+          src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/2020gS8dQ6ChUu1604494536.png"
+          alt
+        />
       </div>
     </div>
   </div>
@@ -165,6 +168,11 @@ export default {
       this.flag = true;
     } else {
       this.flag = false;
+    }
+  },
+  filters: {
+    fnName: function(value) {
+      return value.toFixed(2);
     }
   },
   //  路由组件首位
@@ -348,12 +356,12 @@ export default {
   max-height: 100%;
   overflow-y: auto;
   transition: 0.3s ease-out;
-  .share-box{
+  .share-box {
     width: 89.33333vw;
-    img{
+    img {
       display: block;
-    width: 100%;
+      width: 100%;
     }
-}
+  }
 }
 </style>

@@ -76,7 +76,10 @@ export const coinRankAjax = data => get(`/api/app/coin/coinRank`,data); // 渲�
 export const payAjax = data => post(`/api/app/pay`,data); // 充值
 export const itemAjax = data => get(`/api/app/coin/item`,data); // 获取余额
 // 我的学习
-export const myStudyAjax = type => get(`/api/app/myStudy/${type}?`); // 获取余额
+export const myStudyAjax = type => get(`/api/app/myStudy/${type}?`); // 我的特色课
+// 我的订单
+export const myOrderAjax = data => post(`/api/app/myOrder`,data); // 订单
+export const detailAjax = data => post(`/api/app/myOrder/detail`,data); // 订单详情
 
 
 
