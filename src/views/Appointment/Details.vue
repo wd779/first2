@@ -124,7 +124,9 @@ export default {
       });
       if (res.code == 200) {
         this.$toast("报名成功");
-        this.$router.push({ path: "/MyStudy" });
+        let id = this.$route.query.id
+        console.log(id);
+        this.$router.push({ path: "/MyStudy" ,query:{vid:id}});
       } else if (res.code == 201) {
         // console.log(res.msg);
         this.$toast(res.msg);
@@ -150,7 +152,7 @@ export default {
     },
     // outline
     ToStudy() {
-      this.$router.push({ path: "/MyStudy" });
+      this.$router.push({ path: "/MyStudy",query:{vid:id} });
     },
     async getdata() {
       // console.log(this.$route.query);
