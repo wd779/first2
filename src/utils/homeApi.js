@@ -54,3 +54,4 @@ export const GetTeacherInfo = data => get('api/app/teacher/info/'+data) //讲师
 export const postCollect = data => post('/api/app/collect',data) //收藏接口
 export const postCancel = data => PUT('/api/app/collect/cancel/'+data+'+/1') //取消收藏
 export const GetCollect = data => get('api/app/collect?page=1&limit=10&type=1',data) // 所有我的收藏数据
+export const GetOtoCourse = data => get('api/app/otoCourse',data) // 所有我的收藏数据

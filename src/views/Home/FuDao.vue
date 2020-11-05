@@ -82,7 +82,14 @@
 
         <!-- 按钮 -->
         <div class="right_msg">
-          <van-button plain round type="danger" size="mini" @click="$router.push('/yuyue')">预约</van-button>
+          <van-button
+            plain
+            round
+            type="danger"
+            size="mini"
+            @click="$router.push('/yuyue')"
+            >预约</van-button
+          >
         </div>
       </div>
     </div>
@@ -90,6 +97,7 @@
 </template>
 
 <script>
+import { GetOtoCourse } from "../../utils/homeApi"
 export default {
   data() {
     return {
@@ -132,7 +140,18 @@ export default {
     showPopup() {
       this.show = true;
     },
+    async onGetOtoCourse(){
+      let obj = {
+        page: 1,
+limit: 10
+      };
+      let {data} = await GetOtoCourse(obj);
+      console.log(data);
+    }
   },
+  mounted(){
+    this.onGetOtoCourse();
+  }
 };
 </script>
 
@@ -221,20 +240,19 @@ h6 {
   box-sizing: border-box;
   padding: 0px 5px;
 }
-.sex_titile{
+.sex_titile {
   width: 100%;
   height: 1rem;
 }
-.sex_top{
+.sex_top {
   width: 100%;
   height: 0.5rem;
   display: flex;
   justify-content: space-evenly;
   box-sizing: border-box;
   align-items: center;
- 
 }
-.sex_top span{
+.sex_top span {
   width: 0.8rem;
   height: 0.4rem;
   line-height: 0.4rem;

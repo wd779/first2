@@ -80,6 +80,10 @@ export default {
       active: 0,
     };
   },
+  mounted(){
+    console.log(this.$route);
+
+  },
   // 计算属性
   computed: {},
   // 侦听器
