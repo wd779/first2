@@ -5,7 +5,7 @@
       <p>{{ datas.course_statement || '暂无描述' }}</p>
       <div class="user">
         <div>
-          <img :src="datas.cover_img" />
+          <img :src="datas.teachers_list[0].teacher_avatar" />
         <span>
           {{ datas.teachers_list[0].teacher_name }}
         </span>
@@ -40,6 +40,7 @@ export default {
   },
   computed: {
     datas() {
+      // console.log(this.data);
       return this.data;
     },
   },
@@ -58,10 +59,10 @@ export default {
 }
 .box_wrapper {
   margin: 0.08rem;
+  font-size: 0.1rem;
   h6 {
-    font-size: 0.1rem;
     font-weight: normal;
-    height: 0.4rem;
+    height: 0.5rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;

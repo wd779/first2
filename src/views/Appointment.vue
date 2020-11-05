@@ -40,10 +40,10 @@
         <van-dropdown-item title="排序" ref="item1">
           <div class="box">
             <van-cell
-              v-for="item in courseClassify"
-              :key="item.id"
-              :title="item.name"
-              @click="searchText(item.name)"
+              v-for="(item,index) in courseClassify"
+              :key="item"
+              :title="item"
+              @click="searchText(index)"
             />
           </div>
         </van-dropdown-item>
@@ -52,7 +52,7 @@
             <button
               v-for="item in course_types"
               :key="item.type"
-              @click="changeActive(item.value)"
+              @click="changeActive(item.type)"
               :class="item.value == seartypes ? 'btns_avtive' : 'btns'"
             >
               {{ item.value }}
@@ -92,6 +92,11 @@ export default {
   }, // 组件状态值
   data() {
     return {
+      requeryHeader: {
+        limit: 10,
+        page: 1,
+        course_type: "0",
+      },
       courseClassify: [],
       CourseList: [],
       course_types: [
@@ -157,13 +162,11 @@ export default {
       searchTex: "",
       final: "",
       ShowList: [],
-      loading:false,
+      loading: false,
       finished: false,
     };
   }, // 计算属性
-  computed: {
-          
-  }, // 侦听器
+  computed: {}, // 侦听器
   watch: {}, // 组件方法
   methods: {
     //
@@ -174,7 +177,7 @@ export default {
       this.$router.go(-1);
     },
     toDetails(item) {
-      this.$router.push({ name: "Details", query: { con: item } });
+      this.$router.push({ name: "Details", query: { id: item.id } });
     },
     activeItem(name, name1) {
       this.SearchArr = [name, name1];
@@ -188,26 +191,33 @@ export default {
     },
     Reset() {
       this.SearchArr = ["", ""];
+      this.final = '';
+      this.$refs.item.toggle();
+      this.search();
     },
     suc() {
       this.$refs.item.toggle();
-      this.search()
+      this.search();
     },
     changeActive(types) {
-      this.seartypes = types;
       this.$refs.item2.toggle();
-      this.final = this.seartypes;
-      this.search()
+      this.search({
+        course_type: types
+      });
     },
     searchText(i) {
-      this.searchTex = i;
-      this.final = this.searchTex;
+      this.final = "";
       this.$refs.item1.toggle();
-      this.search()
+      this.search({
+order_by:i
+      });
     },
     async getdata() {
       var a = await GetData();
-      this.courseClassify = a.data.appCourseType;
+      console.log(a);
+      this.courseClassify = [
+        "综合排序","最新","最热","价格从高到低","价格从低到高",
+      ]
     },
     async getdata1() {
       var a = await GetDataList();
@@ -215,11 +225,29 @@ export default {
         this.ShowList.push(element);
       });
     },
-    async search() {
-      var a = await Search( this.final);
-      this.ShowList =  a.data.list;
+    async search(data) {
+      // console.log({...this.requeryHeader,
+      //   keywords:this.final,}
+                
+      // );
+      this.ShowList = []
+      if (data) {
+        var a = await Search({
+        ...this.requeryHeader,
+        data
+      });
+      this.ShowList = a.data.list;
+      } else {
+        var a = await Search({
+        ...this.requeryHeader,
+        keywords:this.final,
+      });
+      this.ShowList = a.data.list;
+      }
+      
     },
     onLoad() {
+      this.requeryHeader.page++;
       this.getdata1();
       this.loading = false;
     },
@@ -288,6 +316,6 @@ P {
   z-index: 0;
   width: 100%;
   height: 76vh;
-  overflow: scroll; 
+  overflow: scroll;
 }
 </style>

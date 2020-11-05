@@ -4,7 +4,7 @@
       <h6>{{ datas.title }}</h6>
       <p>{{ datas.course_statement || '暂无描述' }}</p>
       <div class="user">
-        <img :src="datas.cover_img" />
+        <img :src="datas.teachers_list[0].teacher_avatar" />
         <span>
           {{ datas.teachers_list[0].teacher_name }}
         </span>
@@ -36,6 +36,7 @@ export default {
   },
   computed: {
     datas() {
+      // console.log(this.data);
       return this.data;
     },
   },

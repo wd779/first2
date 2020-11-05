@@ -167,7 +167,7 @@ export default {
     // 跳转课程详情
     toDetails(item) {
       console.log(item.id);
-      this.$router.push({ name: "Details", query: { con: item } });
+      this.$router.push({ name: "Details", query: { id: item.id } });
     },
     // 点击跳转到  讲师详情
     TeacherDetails(id) {

@@ -26,8 +26,9 @@
       <div class="box">
         <p>教学团队</p>
         <div class="address">
-          <img :src="data.cover_img" />
-          <p>{{ data.address == undefined ? "团队" : data.address }}</p>
+          
+          <img :src="info.teacher_avatar" />
+          <p>{{ info.teacher_name }}</p>
         </div>
       </div>
       <div class="box">
@@ -68,7 +69,8 @@ export default {
   data() {
     return {
       data: "",
-      id:""
+      id:"",
+      info:"",
     };
   }, // 计算属性
   computed: {}, // 侦听器
@@ -76,12 +78,13 @@ export default {
   methods: {
     async getdata() {
       // console.log(this.$route.query);
-      var a = await GetCurriculum(this.$route.query.con.id);
+      var a = await GetCurriculum(this.$route.query.id);
       this.data = a.data.info;
-     
+      this.info = a.data.teachers[0]
+    //  console.log(a);
       if(this.data.is_collect==1){
         this.id=this.data.collect_id
-        console.log(this.id);
+        // console.log(this.id);
      }
               // this.id = res.data.collect_id
     },
@@ -107,7 +110,7 @@ export default {
     // 收藏   post传参方式
     async onpostCollect(){
       let res = await postCollect({
-        course_basis_id:this.$route.query.con.id,
+        course_basis_id:this.$route.query.id,
         type: 1      
       })
 
@@ -130,7 +133,6 @@ export default {
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */ created() {},
   mounted() {
-    new Date();
     this.getdata();
     // this.GetCurriculum().then(res=>{
     //     console.log(res);
