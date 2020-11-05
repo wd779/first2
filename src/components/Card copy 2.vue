@@ -2,21 +2,23 @@
   <div class="box_container">
     <div class="box_wrapper">
       <h6>{{ datas.title }}</h6>
-      <p>{{ datas.course_statement || '暂无描述' }}</p>
+      <p>{{ datas.course_statement || "暂无描述" }}</p>
       <div class="user">
         <div>
           <img :src="datas.teachers_list[0].teacher_avatar" />
-        <span>
-          {{ datas.teachers_list[0].teacher_name }}
-        </span>
+          <span>
+            {{ datas.teachers_list[0].teacher_name }}
+          </span>
         </div>
-          <div>
-            
-          </div>
+        <div v-if="datas.price == 0">
+          <img src="../assets/has-buy.png" />
+        </div>
       </div>
       <p>
-        {{datas.sales_num}}人已报名
-        <b :class="datas.price==0?'':'red'">{{ datas.price==0?'免费':"￥"+datas.price }}</b>
+        {{ datas.sales_num }}人已报名
+        <b :class="datas.price == 0 ? '' : 'red'">{{
+          datas.price == 0 ? "免费" : "￥" + datas.price
+        }}</b>
       </p>
     </div>
   </div>
@@ -78,11 +80,11 @@ export default {
     overflow: hidden;
     b {
       font-weight: normal;
-      color: #44A426;
+      color: #44a426;
       float: right;
       font-size: 0.1rem;
     }
-    b.red{
+    b.red {
       color: red;
       font-size: 0.1rem;
     }
@@ -91,12 +93,13 @@ export default {
 .user {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   img {
     width: 0.3rem;
     height: 0.3rem;
     border-radius: 50%;
   }
-  span{
+  span {
     text-indent: 1em;
     font-size: 0.1rem;
   }

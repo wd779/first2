@@ -2,23 +2,32 @@
   <div class="box_container">
     <div class="box_wrapper">
       <h6>{{ datas.title }}</h6>
-      <p>{{ datas.course_statement || '暂无描述' }}</p>
+      <p>{{ datas.course_statement || "暂无描述" }}</p>
       <div class="user">
-        <img :src="datas.teachers_list[0].teacher_avatar" />
+        <div>
+          <img :src="datas.teachers_list[0].teacher_avatar" />
         <span>
           {{ datas.teachers_list[0].teacher_name }}
         </span>
+        </div>
+        
+        <div class="float" v-if="datas.price == 0">
+          <img src="../assets/has-buy.png" />
+        </div>
       </div>
 
       <p>
-        {{datas.sales_num}}人已报名
-        <b :class="datas.price==0?'':'red'">{{ datas.price==0?'免费':"￥"+datas.price }}</b>
+        {{ datas.sales_num }}人已报名
+        <b :class="datas.price == 0 ? '' : 'red'">{{
+          datas.price == 0 ? "免费" : "￥" + datas.price
+        }}</b>
       </p>
     </div>
   </div>
 </template>
 
 <script>
+import { GetCurriculum } from "../utils/appointmtemtApi";
 export default {
   props: {
     data: {
@@ -34,16 +43,36 @@ export default {
       },
     },
   },
+
   computed: {
     datas() {
-      // console.log(this.data);
+      console.log(this.data);
       return this.data;
     },
+    isbuy() {
+      return this.info.has_buy;
+    },
+  },
+  data() {
+    return {
+      info: "",
+    };
+  },
+  methods: {
+    async getdata() {
+      var a = await GetCurriculum(this.datas.id);
+      console.log(a);
+      this.info = a.data.info;
+    },
+  },
+  mounted() {
+    this.getdata();
   },
 };
 </script>
 
 <style lang="scss" scoped>
+
 .box_container {
   height: 1.5rem;
   margin: 1vw;
@@ -57,7 +86,6 @@ export default {
   margin: 0.2rem;
   font-size: 0.1rem;
   h6 {
-    
     font-weight: normal;
     height: 0.2rem;
     padding-top: 0.1rem;
@@ -76,10 +104,10 @@ export default {
     overflow: hidden;
     b {
       font-weight: normal;
-      color: #44A426;
+      color: #44a426;
       float: right;
     }
-    b.red{
+    b.red {
       color: red;
     }
   }
@@ -87,13 +115,19 @@ export default {
 .user {
   display: flex;
   align-items: center;
-  img {
+  justify-content: space-between;
+  img:nth-child(1) {
     width: 0.3rem;
     height: 0.3rem;
     border-radius: 50%;
   }
-  span{
+  img:nth-child(2){
+    width: 0.44rem;
+    height: 0.44rem;
+  }
+  span {
     text-indent: 1em;
+    line-height: 100%;
   }
 }
 </style>

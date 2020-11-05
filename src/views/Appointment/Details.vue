@@ -53,14 +53,8 @@
       </div>
     </div>
     <div class="btn">
-      <van-button
-        type="default"
-        v-if="isbuy == 0"
-        class="btn_n"
-        @click="onsignUp"
-        >立即报名</van-button
-      >
-      <van-button type="default" v-if="isbuy == 1" class="btn_n"
+
+      <van-button type="default"  class="btn_n"
       @click="ToStudy"
         >立即学习</van-button
       >
@@ -217,7 +211,13 @@ export default {
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
-  padding: 0px 10px;
+}
+.ping p:nth-child(1){
+  // background: #000;
+     display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
 }
 .box {
   width: 100%;
@@ -225,9 +225,6 @@ export default {
   background: white;
   padding: 0 0.2rem;
   box-sizing: border-box;
-}
-.box p:nth-child(1) {
-  padding-top: 0.1rem;
 }
 .box .li .dian {
   color: #ff976a;
