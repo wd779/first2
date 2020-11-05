@@ -8,13 +8,23 @@
     <div class="info">
       <div class="top">
         <div class="ping">
-           <p>{{ data.title }}</p>
-           <p>
-             <van-icon name="star-o" size="24" v-if="data.is_collect==0" @click="liang"/>
-             <van-icon name="star" size="24" v-if="data.is_collect!=0"  @click="liang"/>
-           </p>
+          <p>{{ data.title }}</p>
+          <p>
+            <van-icon
+              name="star-o"
+              size="24"
+              v-if="data.is_collect == 0"
+              @click="liang"
+            />
+            <van-icon
+              name="star"
+              size="24"
+              v-if="data.is_collect != 0"
+              @click="liang"
+            />
+          </p>
         </div>
-       
+
         <p>{{ data.price == 0 ? "免费" : "￥" + data.price }}</p>
         <p>共{{ data.total_periods }}课时 | {{ data.sales_num }}人已报名</p>
         <p>
@@ -26,7 +36,6 @@
       <div class="box">
         <p>教学团队</p>
         <div class="address">
-          
           <img :src="info.teacher_avatar" />
           <p>{{ info.teacher_name }}</p>
         </div>
@@ -53,9 +62,7 @@
       </div>
     </div>
     <div class="btn">
-
-      <van-button type="default"  class="btn_n"
-      @click="ToStudy"
+      <van-button type="default" class="btn_n" @click="ToStudy"
         >立即学习</van-button
       >
     </div>
@@ -63,8 +70,8 @@
 </template>
 
 <script>
-import { GetCurriculum,SignUp } from "../../utils/appointmtemtApi";
-import {postCollect , postCancel} from '../../utils/homeApi'
+import { GetCurriculum, SignUp, GetComment,GetOutline } from "../../utils/appointmtemtApi";
+import { postCollect, postCancel } from "../../utils/homeApi";
 export default {
   // 组件名称
   name: "", // 组件参数 接收来自父组件的数据
@@ -73,8 +80,8 @@ export default {
   data() {
     return {
       data: "",
-      id:"",
-      info:"",
+      id: "",
+      info: "",
     };
   }, // 计算属性
   computed: {
@@ -88,80 +95,98 @@ export default {
       console.log(this.$route.query.id);
       let res = await SignUp({
         shop_id: this.$route.query.id,
-        type:5
+        type: 5,
       });
       if (res.code == 200) {
-        this.$toast('报名成功');
-        this.$router.push({path:"/MyStudy"})
-      }else if (res.code == 201){
+        this.$toast("报名成功");
+        this.$router.push({ path: "/MyStudy" });
+      } else if (res.code == 201) {
         // console.log(res.msg);
         this.$toast(res.msg);
       }
       // console.log(res);
     },
-    ToStudy(){
-      this.$router.push({path:"/MyStudy"})
+    async getOutline() {
+      let obj = {
+        id: String(this.$route.query.id),
+      };
+      let { data } = await GetOutline(obj);
+      console.log(data);
+    },
+    async getComment() {
+      let obj = {
+        page: 1,
+        limit: 10,
+        id: String(this.$route.query.id),
+      };
+      let { data } = await GetComment(obj);
+      console.log(data);
+    },
+    // outline
+    ToStudy() {
+      this.$router.push({ path: "/MyStudy" });
     },
     async getdata() {
       // console.log(this.$route.query);
       var a = await GetCurriculum(this.$route.query.id);
       this.data = a.data.info;
-      this.info = a.data.teachers[0]
-    //  console.log(a);
-      if(this.data.is_collect==1){
-        this.id=this.data.collect_id
+      this.info = a.data.teachers[0];
+      //  console.log(a);
+      if (this.data.is_collect == 1) {
+        this.id = this.data.collect_id;
         // console.log(this.id);
-     }
-              // this.id = res.data.collect_id
+      }
+      // this.id = res.data.collect_id
     },
     onClickLeft() {
       this.$router.go(-1);
     },
-  subscribe() {
+    subscribe() {
       this.$router.push({ path: "/yuyue" });
     },
     // 点亮
-    liang(){
+    liang() {
       console.log(this.data.is_collect);
-     if(this.data.is_collect==0){
-       this.onpostCollect()
-        console.log("收藏");
+      if (this.data.is_collect == 0) {
+        this.onpostCollect();
+        // console.log("收藏");
         // data.is_collect=1
-     }else if(this.data.is_collect==1){
-        console.log("取消收藏");
-        this.onpostCancel()
+      } else if (this.data.is_collect == 1) {
+        // console.log("取消收藏");
+        this.onpostCancel();
         // data.is_collect=0
-     }
+      }
     },
 
-
     // 收藏   post传参方式
-    async onpostCollect(){
+    async onpostCollect() {
       let res = await postCollect({
-        course_basis_id:this.$route.query.id,
-        type: 1      
-      })
+        course_basis_id: this.$route.query.id,
+        type: 1,
+      });
 
-      if(res.code == 200){
+      if (res.code == 200) {
         this.getdata();
       }
       console.log(res);
     },
 
     // 取消收藏
-    async onpostCancel(){
+    async onpostCancel() {
       let res = await postCancel(this.id);
-      if(res.code == 200){
-        this.getdata()  //重新渲染
+      if (res.code == 200) {
+        this.getdata(); //重新渲染
       }
       console.log(res);
-    }
+    },
   },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在
    */ created() {},
   mounted() {
     this.getdata();
+    this.getComment();
+    this.getOutline();
     // this.GetCurriculum().then(res=>{
     //     console.log(res);
     // })
@@ -206,18 +231,18 @@ export default {
 .top p:nth-child(4) {
   color: #8c8c8c;
 }
-.ping{
+.ping {
   width: 100%;
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
 }
-.ping p:nth-child(1){
+.ping p:nth-child(1) {
   // background: #000;
-     display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-    overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 .box {
   width: 100%;

@@ -46,7 +46,7 @@ export default {
 
   computed: {
     datas() {
-      console.log(this.data);
+      // console.log(this.data);
       return this.data;
     },
     isbuy() {
@@ -61,7 +61,7 @@ export default {
   methods: {
     async getdata() {
       var a = await GetCurriculum(this.datas.id);
-      console.log(a);
+      // console.log(a);
       this.info = a.data.info;
     },
   },
