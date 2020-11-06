@@ -30,7 +30,7 @@
       </li>
       <li @click="city">
         <span>所在城市</span>
-        <span>北京，北京市，西城区</span>
+        <span>{{userinfo.province_name}}-{{userinfo.city_name}}-{{userinfo.district_name}}</span>
       </li>
       <li>
         <span>学科</span>
@@ -42,7 +42,11 @@
       </li>
     </ul>
     <!-- 修改用户名 -->
-    <van-popup position="bottom" v-model="nicknameShow" :style="{ height: '30%' }">
+    <van-popup
+      position="bottom"
+      v-model="nicknameShow"
+      :style="{ height: '30%' }"
+    >
       <input type="text" v-model="nickname" />
       <button @click="userEdit">保存</button>
     </van-popup>
@@ -55,18 +59,30 @@
         <li>
           <van-uploader>从手机相册选择</van-uploader>
         </li>
-        <li @click="imgShow=false">取消</li>
+        <li @click="imgShow = false">取消</li>
       </ul>
     </van-popup>
     <!-- 城市信息 -->
     <van-popup position="bottom" v-model="cityShow">
-      <p v-for="item in cityEdit" :key="item.id">{{item.area_name}}</p>
+      <van-area
+        title="标题"
+        :area-list="areaList"
+        :value="userinfo.district_id+''"
+        @change="onChange"
+        @confirm="queding"
+      />
     </van-popup>
   </div>
 </template>
 
 <script>
-import { AjaxInfo, AjaxEditUser, AjaxEditSonArea,AjaxEditImg } from "../../utils/myApi";
+import {
+  AjaxInfo,
+  AjaxEditUser,
+  AjaxEditSonArea,
+  AjaxEditImg,
+  Ajaxput
+} from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -77,13 +93,19 @@ export default {
   // 组件状态值
   data() {
     return {
+      id:'',
       cityShow: false,
       imgShow: false,
       nicknameShow: false,
       nickname: "",
-      userinfo: [],
+      userinfo: {},
       user: [],
-      cityEdit: []
+      areaList: {
+        city_list: {},
+        province_list: {},
+        county_list: {},
+      }, //城市列表
+      cityEdit: [], //保存data
     };
   },
   // 计算属性
@@ -99,7 +121,7 @@ export default {
     async info() {
       let res = await AjaxInfo();
       this.userinfo = res.data;
-      console.log(res);
+      console.log(this.userinfo);
     },
     name() {
       this.nicknameShow = true;
@@ -107,21 +129,88 @@ export default {
     // 头像
     async img() {
       this.imgShow = true;
-      let data = await AjaxEditImg({avatar:this.userinfo.avatar})
+      let data = await AjaxEditImg({ avatar: this.userinfo.avatar });
       console.log(data);
     },
     // 城市信息
     async city() {
-      let { data } = await AjaxEditSonArea();
+      //省
+      let { data:sheng } = await AjaxEditSonArea();
       this.cityShow = true;
-      this.cityEdit = data;
+      // this.cityEdit = data;
+      // console.log(data);
+      console.log(sheng);
+      this.areaList.province_list = this.zhuanghuan(sheng);
+
+      //市
+      let { data: shi } = await AjaxEditSonArea(
+       this.userinfo.province_id?this.userinfo.province_id:data[0].id
+      );
+      console.log(shi);
+      // this.$set(this.areaList,"city_list",this.zhuanghuan(shi))
+      this.areaList.city_list = this.zhuanghuan(shi);
+       console.log(this.areaList.city_list);
+      // 区
+      let { data: qu } = await AjaxEditSonArea(
+        this.userinfo.city_id?this.userinfo.city_id:shi[0].id);
+      this.areaList.county_list = this.zhuanghuan(qu);
+      // console.log(qu);
     },
-    // 修改信息
-    async userEdit() {
+
+    async onChange(str, data, index) {
+      console.log(data);
+      console.log(index);
+
+      switch (index) {
+        case 0:
+          let { data: shi } = await AjaxEditSonArea(data[index].code);
+          // this.$set(this.areaList,"city_list",this.zhuanghuan(shi))
+          this.areaList.city_list = this.zhuanghuan(shi);
+
+          let { data: qu } = await AjaxEditSonArea(shi[0].id);
+          this.areaList.county_list = this.zhuanghuan(qu);
+          // console.log(this.areaList);
+          break;
+
+        case 1:
+          let { data: shiqu } = await AjaxEditSonArea(data[1].code);
+          this.areaList.county_list = this.zhuanghuan(shiqu);
+          break;
+      }
+    },
+
+    // 转换函数
+    zhuanghuan(arr) {
+      let obj = {};
+      for (let i = 0; i < arr.length; i++) {
+        obj[arr[i].id] = arr[i].area_name;
+      }
+      // console.log(obj);
+      return obj;
+    },
+  
+    async queding(arr) {
+      let obj = {
+        city_id: arr[1].code,
+        district_id: arr[2].code,
+        province_id: arr[0].code,
+      };
+
+      let res = await Ajaxput(obj)
+      if(res.code == 200){
+        this.cityShow = false;
+        this.info();
+      }
+      console.log(res);
+     
+    },
+      // 修改信息 
+     async userEdit(){
+       console.log(arr);
       let data = await AjaxEditUser({ nickname: this.nickname });
       this.user = data.data;
       this.userinfo.nickname = this.nickname;
-      this.nicknameShow = false
+      this.nicknameShow = false;
     }
   },
   /**
@@ -130,7 +219,7 @@ export default {
   created() {},
   mounted() {
     this.info();
-  }
+  },
 };
 </script> 
 
