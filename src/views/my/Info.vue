@@ -165,6 +165,7 @@ export default {
       console.log(this.tag);
       // 头像
       if (tag == "img") {
+        this.show = true  
       }
       // 用户名
       else if (tag == "nickname") {

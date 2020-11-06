@@ -9,9 +9,7 @@
     </app-header>
     <!-- 设置密码 -->
     <ul>
-      <li @click="$router.push('/setPass')" >
-          <!-- ::before -->
-          设置密码</li>
+      <li @click="$router.push('/setPass')" >设置密码</li>
     </ul>
     <div class="bottom-box">
       <div class="btn-exit" @click="clear">
