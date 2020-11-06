@@ -50,6 +50,8 @@ export const GetComment = data => post(`api/app/courseComment`,data); // 获取�
 export const GetOutline = data => post(`api/app/courseChapter`,data); // 获取老师的课程列表
 export const GetCourses = data => get(`api/app/myStudy/course/${data}`); // 获取视频列表
 export const QuertIsSee = (data,data1) => get(`api/app/getPcRoomCode/course_id=${data}/chapter_id=${data1}`); // 查询是否可观看
-// api/app/myStudy/course/287?
+export const Re = data => get(`api/app/myStudy/course/${data}`); // 
+export const Publish = data => post(`api/app/myStudy/comment`,data); // 发布评论
+// 
 
 

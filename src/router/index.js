@@ -51,7 +51,9 @@ const routes = [
   { path: '/Details', name: 'Details', component: () => import('../views/Appointment/Details.vue'), meta: { title: '详情' } },// 详情,
   { path: '/Teacher_Details', name: 'Teacher_Details', component: () => import('../views/Home/Teacher_Details.vue'),meta: { title: '讲师详情' }},// 讲师详情,
   {path: "/MyStudy",name: "MyStudy",component: () => import("../views/Appointment/Study.vue"),meta: {  title: "我的学习",},},//学习
+  {path: "/MyStudyCopy",name: "MyStudyCopy",component: () => import("../views/Appointment/Study copy.vue"),meta: {  title: "我的学习",},},//学习
   {path: "/Search",name: "Search",component: () => import("../views/Appointment/Search.vue"),meta: {  title: "搜索",},},//搜索
+  {path: "/DetailsCopy",name: "DetailsCopy",component: () => import("../views/Appointment/Details copy.vue"),meta: {  title: "详情",},},//主页详情
 
 ]
 const router = new VueRouter({
