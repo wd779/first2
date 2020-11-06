@@ -15,7 +15,7 @@
       <van-tab v-for="(item,index) in list" @click="clkFn(item.type)" :key="index">
         <div slot="title" @click="navToggle(item.type)">{{item.name+`(${item.num})`}}</div>
         <ul class="ul-box" v-if="newList.length>0">
-          <li v-for="item in newList" :key="item.course_id">
+          <li v-for="item in newList" :key="item.course_id" @click="study(item.course_id)">
             <div class="div-box">
               <p>{{item.title}}</p>
               <div class="div-top">
@@ -78,6 +78,14 @@ export default {
     navToggle(type) {
       this.type = type;
       this.clkFn();
+    },
+    study(course_id){
+      this.$router.push({
+        path:'/MyStudy',
+        query:{
+          course_id
+        }
+      })
     }
   },
   /**

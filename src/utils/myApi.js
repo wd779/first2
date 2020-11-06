@@ -54,7 +54,7 @@ export const getUCenterInfoAjax = data => get("/api/app/getUCenterInfo?", data);
 // 个人信息
 export const AjaxInfo = data => get("/api/app/userInfo", data); // 个人信息
 export const AjaxEditUser = data => put("/api/app/user", data); // 修改个人信息
-export const AjaxEditAttribute = data => get("/app/module/attribute/1", data); // 选择年纪和学科得数据
+export const AjaxEditAttribute = data => get("/api/app/module/attribute/1?", data); // 选择年纪和学科得数据
 export const AjaxEditSonArea = data => get("/api/app/sonArea/0", data); // 获取城市列表数据
 export const AjaxEditImg = data => post("/api/app/public/img", data); // 修改头像
 // 关注
@@ -77,6 +77,7 @@ export const payAjax = data => post(`/api/app/pay`,data); // 充值
 export const itemAjax = data => get(`/api/app/coin/item`,data); // 获取余额
 // 我的学习
 export const myStudyAjax = type => get(`/api/app/myStudy/${type}?`); // 我的特色课
+export const courseAjax = course_id => get(`/api/app/myStudy/course/${course_id}?`); // 我的特色课
 // 我的订单
 export const myOrderAjax = data => post(`/api/app/myOrder`,data); // 订单
 export const detailAjax = data => post(`/api/app/myOrder/detail`,data); // 订单详情

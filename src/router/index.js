@@ -30,6 +30,7 @@ const routes = [
   { path: '/setPassword', name: 'SetPassword', component: () => import('../views/login/SetPassword.vue'), meta: { title: '设置密码' } }, // 设置密码
   { path: '/setMessage', name: 'SetMessage', component: () => import('../views/login/SetMessage.vue'), meta: { title: '信息填写' } }, // 信息填写
   { path: '/info', name: 'Info', component: () => import('../views/my/Info.vue'), meta: { title: '个人信息' } }, // 个人信息
+  { path: '/set-info', name: 'Set-info', component: () => import('../views/my/Set-info.vue'), meta: { title: '修改个人信息' } }, // 修改个人信息
   { path: '/orderDetail', name: 'OrderDetail', component: () => import('../views/my/OrderDetail.vue'), meta: { title: '约课订单' } }, // 约课订单
   { path: '/mydetail', name: 'Mydetail', component: () => import('../views/my/Mydetail.vue'), meta: { title: '订单详情' } }, // 订单详情
   { path: '/my-study', name: 'My-study', component: () => import('../views/my/My-study.vue'), meta: { title: '我的特色课 我的学习' } }, // 我的特色课 我的学习

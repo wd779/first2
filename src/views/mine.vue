@@ -32,7 +32,7 @@
                 <span>我的一对一老师辅导</span>
               </li>
               <li @click="$router.push('/my-currency')">
-                <h3>{{personal.integral | fnName}}</h3>
+                <h3>0.00</h3>
                 <p>剩余学习币</p>
                 <span>查看剩余学习币</span>
               </li>
@@ -169,11 +169,6 @@ export default {
       this.flag = true;
     } else {
       this.flag = false;
-    }
-  },
-  filters: {
-    fnName: function(value) {
-      return value.toFixed(2);
     }
   },
   //  路由组件首位
