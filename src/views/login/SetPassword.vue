@@ -5,7 +5,7 @@
     <div class="header">
       <p></p>
       <p>设置密码</p>
-      <p>跳过</p>
+      <p @click="$router.push('/')">跳过</p>
     </div>
     <!-- 找回密码 -->
     <div class="van-form">

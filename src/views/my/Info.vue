@@ -32,13 +32,17 @@
         <span>所在城市</span>
         <span>{{userinfo.province_name}}-{{userinfo.city_name}}-{{userinfo.district_name}}</span>
       </li>
-      <li @click="toggle('subjects')">
+      <li @click="toggle('subjects')" id="attr">
         <span>学科</span>
-        <span v-for="item in userinfo.attr" :key="item.attr_id">
-          <template v-if="item.attr_id==2">
-            <span>{{item.attr_value }}</span>
-          </template>
-        </span>
+        <p>
+          <!-- <template v-if="item.attr_id==2"> -->
+          <span
+            style="margin:0;"
+            v-for="item in userinfo.attr"
+            :key="item.attr_id"
+          >{{item.attr_value }}</span>
+          <!-- </template> -->
+        </p>
       </li>
       <li @click="toggle('grade')">
         <span>年级</span>
@@ -69,8 +73,9 @@
         @change="onChange"
         @confirm="queding"
       />
-      <!-- 年纪 -->
+      <!-- 年级 -->
       <van-area :area-list="arrealist" columns-num="1" @confirm="onConfirm" v-if="tag == 'grade'" />
+      <!-- 出生日期 -->
       <van-datetime-picker
         v-if="tag == 'birthday'"
         v-model="currentDate"
@@ -165,7 +170,7 @@ export default {
       // console.log(this.tag);
       // 头像
       if (tag == "img") {
-        this.show = true  
+        this.show = true;
       }
       // 用户名
       else if (tag == "nickname") {
@@ -387,6 +392,19 @@ export default {
         color: #8c8c8c;
         font-size: 3.73333vw;
         margin-right: 6.66667vw;
+      }
+    }
+    #attr {
+      p {
+        display: flex;
+        width: 100%;
+        width: 2rem;
+        justify-content: space-between;
+        margin-right: 6.66667vw;
+        span {
+          color: #8c8c8c;
+          font-size: 3.73333vw;
+        }
       }
     }
   }

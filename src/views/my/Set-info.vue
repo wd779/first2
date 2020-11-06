@@ -4,9 +4,9 @@
     <app-header>
       <template>
         <div slot="title">修改个人信息</div>
-        <div slot="right" @click="userEdit" v-if="tag=='nickname'">保存姓名</div>
-        <div slot="right" @click="sexEdit" v-if="tag=='sex'">保存性别</div>
-        <div slot="right" @click="subjectsEdit" v-if="tag=='subjects'">保存学科</div>
+        <div slot="right" @click="userEdit" v-if="tag=='nickname'">保存</div>
+        <div slot="right" @click="sexEdit" v-if="tag=='sex'">保存</div>
+        <div slot="right" @click="subjectsEdit" v-if="tag=='subjects'">保存</div>
       </template>
     </app-header>
     <!-- 用户名修改 -->

@@ -6,47 +6,74 @@
       <p></p>
     </div>
     <ul class="ul-box">
-      <li @click="name">
+      <li @click="toggle('nickname')">
         <span>昵称</span>
         <span>{{ userinfo.nickname }}</span>
       </li>
-
       <li>
-        <span>性别</span>
-        <span>{{ userinfo.sex }}</span>
+        <span>手机号</span>
+        <span>{{ userinfo.mobile }}</span>
       </li>
-      <li>
+      <li @click="toggle('sex')">
+        <span>性别</span>
+        <span>{{ userinfo.sex==0?'男':'女' }}</span>
+      </li>
+      <li @click="toggle('birthday')">
         <span>出生日期</span>
         <span>{{ userinfo.birthday }}</span>
       </li>
-      <li @click="city">
+      <li @click="toggle('city')">
         <span>所在城市</span>
-        <span>北京，北京市，西城区</span>
+        <span>{{userinfo.province_name}}-{{userinfo.city_name}}-{{userinfo.district_name}}</span>
       </li>
-      <li>
+      <li @click="toggle('subjects')">
         <span>学科</span>
-        <span>语文</span>
+        <span v-for="item in userinfo.attr" :key="item.attr_id">
+          <template v-if="item.attr_id==2">
+            <span>{{item.attr_value }}</span>
+          </template>
+        </span>
       </li>
-      <li>
+      <li @click="toggle('grade')">
         <span>年级</span>
-        <span>初二</span>
+        <span>{{ t }}</span>
       </li>
     </ul>
-    <!-- 修改用户名 -->
-    <van-popup position="bottom" v-model="nicknameShow" :style="{ height: '30%' }">
-      <input type="text" v-model="nickname" />
-      <button @click="userEdit">保存</button>
+
+    <!-- 弹框 -->
+    <van-popup position="bottom" v-model="show">
+      <!-- 城市信息 -->
+      <van-area
+        v-if="tag == 'city'"
+        :area-list="areaList"
+        :value="userinfo.district_id+''"
+        @change="onChange"
+        @confirm="queding"
+      />
+      <!-- 年纪 -->
+      <van-area :area-list="arrealist" columns-num="1" @confirm="onConfirm" v-if="tag == 'grade'" />
+      <van-datetime-picker
+        v-if="tag == 'birthday'"
+        v-model="currentDate"
+        type="date"
+        :min-date="minDate"
+        :max-date="maxDate"
+        @confirm="onConfirm"
+        @cancel="cancel"
+      />
     </van-popup>
-    <!-- 城市信息 -->
-    <van-popup position="bottom" v-model="cityShow">
-      <p v-for="item in cityEdit" :key="item.id">{{item.area_name}}</p>
-    </van-popup>
-    <button type="button" class="submit-info">提交信息</button>
+    <van-button style="margin-top:0.2rem" @click="$router.push('/')" type="info" block>提交</van-button>
   </div>
 </template>
 
 <script>
-import { AjaxInfo, AjaxEditUser, AjaxEditSonArea } from "../../utils/myApi";
+import {
+  AjaxInfo,
+  AjaxEditUser,
+  AjaxEditSonArea,
+  AjaxEditImg,
+  AjaxEditAttribute
+} from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -57,13 +84,30 @@ export default {
   // 组件状态值
   data() {
     return {
+      id: "",
       cityShow: false,
-      imgShow: false,
-      nicknameShow: false,
+      show: false,
       nickname: "",
       userinfo: [],
+      cityEdit: [],
+      path: "",
+      nianji: [],
+      tag: "",
+      arrealist: {
+        province_list: {}
+      },
+      arr: [],
+      t: "",
+      currentDate: new Date(),
+      minDate: new Date(1890, 0, 1),
+      maxDate: new Date(),
       user: [],
-      cityEdit: []
+      areaList: {
+        city_list: {},
+        province_list: {},
+        county_list: {}
+      }, //城市列表
+      cityEdit: [] //保存data
     };
   },
   // 计算属性
@@ -79,23 +123,173 @@ export default {
     async info() {
       let res = await AjaxInfo();
       this.userinfo = res.data;
-      console.log(res);
+      console.log(this.userinfo);
+      this.t = res.data.attr[0].attr_value;
     },
-    name() {
-      this.nicknameShow = true;
+    // 头像
+    async takePhoto(e) {
+      let formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      let data = await AjaxEditImg(formData);
+      console.log(data);
+      if (data.code == 200) {
+        this.path = data.data.path;
+        await AjaxEditUser({ avatar: this.path });
+        this.info();
+        this.show = false;
+      } else {
+        this.$toast(data.msg);
+        this.show = false;
+      }
+    },
+    toggle(tag) {
+      this.tag = tag;
+      // 用户名
+      if (tag == "nickname") {
+        this.$router.push({
+          path: "/set-info",
+          query: { tag: "nickname", value: this.userinfo.nickname }
+        });
+      }
+      // 性别
+      else if (tag == "sex") {
+        this.$router.push({
+          path: "/set-info",
+          query: { tag: "sex", value: this.userinfo.sex }
+        });
+      }
+      // 生日
+      else if (tag == "birthday") {
+        this.show = true;
+      }
+      // 城市
+      else if (tag == "city") {
+        this.show = true;
+        this.city();
+      }
+      // 学科
+      else if (tag == "subjects") {
+        this.$router.push({
+          path: "/set-info",
+          query: { tag: "subjects", value: this.userinfo.attr }
+        });
+      }
+      // 年级
+      else if (tag == "grade") {
+        this.show = true;
+      }
     },
     // 城市信息
     async city() {
-      let { data } = await AjaxEditSonArea();
+      //省
+      let { data: sheng } = await AjaxEditSonArea();
       this.cityShow = true;
-      this.cityEdit = data;
+      // this.cityEdit = data;
+      // console.log(data);
+      console.log(sheng);
+      this.areaList.province_list = this.zhuanghuan(sheng);
+
+      //市
+      let { data: shi } = await AjaxEditSonArea(
+        this.userinfo.province_id ? this.userinfo.province_id : data[0].id
+      );
+      console.log(shi);
+      // this.$set(this.areaList,"city_list",this.zhuanghuan(shi))
+      this.areaList.city_list = this.zhuanghuan(shi);
+      console.log(this.areaList.city_list);
+      // 区
+      let { data: qu } = await AjaxEditSonArea(
+        this.userinfo.city_id ? this.userinfo.city_id : shi[0].id
+      );
+      this.areaList.county_list = this.zhuanghuan(qu);
+      // console.log(qu);
     },
-    // 修改信息
-    async userEdit() {
-      let data = await AjaxEditUser({ nickname: this.nickname });
-      this.user = data.data;
-      this.userinfo.nickname = this.nickname;
-      this.nicknameShow = false;
+
+    async onChange(str, data, index) {
+      console.log(data);
+      console.log(index);
+
+      switch (index) {
+        case 0:
+          let { data: shi } = await AjaxEditSonArea(data[index].code);
+          // this.$set(this.areaList,"city_list",this.zhuanghuan(shi))
+          this.areaList.city_list = this.zhuanghuan(shi);
+
+          let { data: qu } = await AjaxEditSonArea(shi[0].id);
+          this.areaList.county_list = this.zhuanghuan(qu);
+          // console.log(this.areaList);
+          break;
+
+        case 1:
+          let { data: shiqu } = await AjaxEditSonArea(data[1].code);
+          this.areaList.county_list = this.zhuanghuan(shiqu);
+          break;
+      }
+    },
+    // 年级
+    async attribute() {
+      let { data } = await AjaxEditAttribute();
+      // console.log(data);
+      this.nianji = data[0].value;
+      data[0].value.map(item => {
+        this.$set(this.arrealist.province_list, item.id, item.name);
+      });
+    },
+    // 点击完成触发的函数
+    async onConfirm(val) {
+      if (this.tag == "grade") {
+        this.arr = [];
+        val.map(item => {
+          this.arr.push({ attr_id: 1, attr_val_id: item.code });
+        });
+        let { data: res } = AjaxEditUser({
+          user_attr: JSON.stringify(this.arr)
+        });
+        this.info();
+        this.show = false;
+      } else if (this.tag == "birthday") {
+        // 时间
+        console.log(val);
+        if (val.toLocaleDateString() == this.nowdate) {
+          this.$toast("出生日期最少是当前日期的前一天");
+        } else {
+          this.birthdate = val
+            .toLocaleDateString()
+            .split("/")
+            .join("-");
+          let { data } = await AjaxEditUser({ birthday: this.birthdate });
+          this.show = false;
+          this.info();
+        }
+      }
+    },
+    // 时间取消
+    cancel() {
+      this.show = false;
+    },
+    // 转换函数
+    zhuanghuan(arr) {
+      let obj = {};
+      for (let i = 0; i < arr.length; i++) {
+        obj[arr[i].id] = arr[i].area_name;
+      }
+      // console.log(obj);
+      return obj;
+    },
+
+    async queding(arr) {
+      let obj = {
+        city_id: arr[1].code,
+        district_id: arr[2].code,
+        province_id: arr[0].code
+      };
+
+      let res = await AjaxEditUser(obj);
+      if (res.code == 200) {
+        this.show = false;
+        this.info();
+      }
+      console.log(res);
     }
   },
   /**
@@ -104,6 +298,7 @@ export default {
   created() {},
   mounted() {
     this.info();
+    this.attribute();
   }
 };
 </script> 
@@ -172,59 +367,25 @@ export default {
       }
     }
   }
-  .ul-bom {
+  .photo {
+    width: 100%;
+    height: 1.5rem;
     background: #fff;
-    margin: 2.66667vw 0;
-    padding: 1.33333vw 4vw;
     li {
-      height: 12.26667vw;
-      line-height: 12.26667vw;
-      font-size: 4.53333vw;
-      font-weight: 300;
-      color: #030303;
-      text-align: center;
-      display: block;
-      justify-content: space-between;
       position: relative;
-    }
-    li:after {
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
       width: 100%;
-      height: 1px;
-      background-color: #f5f5f5;
+      display: block;
+      text-align: center;
+      line-height: 0.5rem;
+      color: #030303;
+      font-weight: 300;
+      input {
+        position: absolute;
+        opacity: 0;
+        left: 0;
+        top: 0;
+      }
     }
-  }
-  .submit-info {
-    display: block;
-    width: 92vw;
-    height: 12vw;
-    margin: 24vw auto 0;
-    border: none;
-    border-radius: 1.06667vw;
-    background-color: #eb6100;
-    text-align: center;
-    font-size: 4.53333vw;
-    color: #fff;
-    outline: none;
-    line-height: 12vw;
-  }
-  button {
-    appearance: button;
-    text-rendering: auto;
-    letter-spacing: normal;
-    word-spacing: normal;
-    text-transform: none;
-    text-indent: 0px;
-    text-shadow: none;
-    align-items: flex-start;
-    cursor: default;
-    box-sizing: border-box;
-    padding: 1px 6px;
   }
 }
 </style>
