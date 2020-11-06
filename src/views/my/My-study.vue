@@ -83,7 +83,7 @@ export default {
       this.$router.push({
         path:'/MyStudy',
         query:{
-          course_id
+          vid:course_id
         }
       })
     }
