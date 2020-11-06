@@ -10,17 +10,14 @@
       <h3>预约课程</h3>
     </div>
     <div class="teacher-info">
-      <img
-        alt
-        src="https://msmk2019.oss-cn-shanghai.aliyuncs.com/uploads/image/20191q20gY29bo1566617207.jpg"
-      />
+      <img alt :src="invite.avatar" />
       <div>
         <p>
-          <span>齐钰</span>
+          <span>{{ invite.teacher_name }}</span>
         </p>
-        <p>女 8年教龄</p>
+        <p>{{ invite.sex == 0 ? "男" : "女" }} {{ invite.teach_age }}年教龄</p>
       </div>
-      <a href="/teacher?id=36" class>查看详情</a>
+      <a @click="goDetails(invite.id)">查看详情</a>
     </div>
     <!-- 选择数据 -->
     <div class="op-title">
@@ -39,27 +36,27 @@
         <p class>
           <span>周二</span>
           <span>11/03</span>
-          <i style="display: none;"></i>
+          <i style="display: none"></i>
         </p>
         <p class>
           <span>周三</span>
           <span>11/04</span>
-          <i style="display: none;"></i>
+          <i style="display: none"></i>
         </p>
         <p class>
           <span>周四</span>
           <span>11/05</span>
-          <i style="display: none;"></i>
+          <i style="display: none"></i>
         </p>
         <p class>
           <span>周五</span>
           <span>11/06</span>
-          <i style="display: none;"></i>
+          <i style="display: none"></i>
         </p>
         <p class>
           <span>周六</span>
           <span>11/07</span>
-          <i style="display: none;"></i>
+          <i style="display: none"></i>
         </p>
       </div>
     </div>
@@ -69,13 +66,16 @@
       <p>暂无信息</p>
     </div>
     <!-- 按钮 -->
-    <button class="course-btn van-button van-button--default van-button--normal">
+    <button
+      class="course-btn van-button van-button--default van-button--normal"
+    >
       <span class="van-button__text">立即预约</span>
     </button>
   </div>
 </template>
 
 <script>
+import { GetTeacher, GetInvite } from "../../utils/homeApi";
 export default {
   // 组件名称
   name: "demo",
@@ -85,16 +85,44 @@ export default {
   components: {},
   // 组件状态值
   data() {
-    return {};
+    return {
+      invite: [],
+      id: "",
+    };
   },
   // 计算属性
   computed: {},
   // 侦听器
   watch: {},
   // 组件方法
-  methods: {},
+  methods: {
+    // 讲师 列表 数据
+    async onGetTeacher() {
+      let res = await GetTeacher(this.$route.query.id);
+      this.invite = res.data.teacher;
 
-  mounted() {}
+      console.log(res);
+    },
+
+    // 预约课程 时间数据
+    async onGetInvite() {
+      let res = await GetInvite();
+      console.log(res);
+    },
+
+    // 查看详情  事件
+    goDetails(id) {
+      this.$router.push({
+        path: "/Teacher_Details",
+        query:{id}
+      });
+      console.log();
+    },
+  },
+
+  mounted() {
+    this.onGetTeacher(), this.onGetInvite();
+  },
 };
 </script> 
 
@@ -119,7 +147,7 @@ h3 {
   font-size: 4.8vw;
   text-align: center;
   color: #fff;
-  padding-left: 31vw;;
+  padding-left: 31vw;
 }
 .teacher-info {
   margin: -15.2vw auto 0;

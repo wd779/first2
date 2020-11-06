@@ -58,31 +58,42 @@
 
     <!-- 一对一列表 -->
     <div class="fudao_content">
-      <div class="fudao_content_warpper" v-for="item in 10" :key="item">
+      <div
+        class="fudao_content_warpper"
+        v-for="item in lm_list"
+        :key="item.teacher_id"
+      >
         <!-- 左侧图片盒子 -->
         <div class="fudao_content_left">
           <van-image
             round
             width="10rem"
             height="10rem"
-            src="https://img.yzcdn.cn/vant/cat.jpeg"
+            :src="item.avatar"
             style="width: 40px; height: 40px"
           />
         </div>
         <!-- 描述盒子 -->
         <div class="fudao_content_right">
           <div class="right_title">
-            <p>杨德胜</p>
+            <p>{{ item.real_name }}</p>
             <p class="xinxi">
-              <span>男</span>
-              <span>30年教龄</span>
+              <span>{{ item.sex == 0?'男':'女'}}</span>
+              <span>{{ item.teach_age }}年教龄</span>
             </p>
           </div>
         </div>
 
         <!-- 按钮 -->
         <div class="right_msg">
-          <van-button plain round type="danger" size="mini" @click="$router.push('/yuyue')">预约</van-button>
+          <van-button
+            plain
+            round
+            type="danger"
+            size="mini"
+            @click="$router.push({path:'/yuyue',query:{id:item.teacher_id}})"
+            >预约</van-button
+          >
         </div>
       </div>
     </div>
@@ -90,6 +101,7 @@
 </template>
 
 <script>
+import { GetOtoCourse } from "../../utils/homeApi";
 export default {
   data() {
     return {
@@ -119,6 +131,7 @@ export default {
       ],
       show: false,
       radio: "",
+      lm_list: [],
     };
   },
   methods: {
@@ -132,6 +145,20 @@ export default {
     showPopup() {
       this.show = true;
     },
+    async onGetOtoCourse() {
+      let obj = {
+        page: 1,
+        limit: 10,
+      };
+      let { data } = await GetOtoCourse(obj);
+      this.lm_list = data;
+      console.log(data);
+    },
+
+   
+  },
+  mounted() {
+    this.onGetOtoCourse();
   },
 };
 </script>
@@ -221,20 +248,19 @@ h6 {
   box-sizing: border-box;
   padding: 0px 5px;
 }
-.sex_titile{
+.sex_titile {
   width: 100%;
   height: 1rem;
 }
-.sex_top{
+.sex_top {
   width: 100%;
   height: 0.5rem;
   display: flex;
   justify-content: space-evenly;
   box-sizing: border-box;
   align-items: center;
- 
 }
-.sex_top span{
+.sex_top span {
   width: 0.8rem;
   height: 0.4rem;
   line-height: 0.4rem;

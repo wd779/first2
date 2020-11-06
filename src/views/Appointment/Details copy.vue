@@ -125,8 +125,8 @@ export default {
       });
       if (res.code == 200) {
         this.$toast("报名成功");
-        console.log(id);
-        this.$router.push({ path: "/MyStudy" ,query:{vid:id}});
+        // console.log(id);
+        this.$router.push({ path: "/MyStudyCopy" ,query:{vid:id}});
       } else if (res.code == 201) {
         // console.log(res.msg);
         this.$toast(res.msg);
@@ -138,7 +138,7 @@ export default {
         id: String(this.$route.query.id)
       };
       let { data } = await GetOutline(obj);
-      console.log(data);
+      // console.log(data);
     },
     async getComment() {
       let obj = {
@@ -152,7 +152,7 @@ export default {
     },
     // outline
     ToStudy() {
-      this.$router.push({ path: "/MyStudy",query:{vid:this.$route.query.id} });
+      this.$router.push({ path: "/MyStudyCopy",query:{vid:this.$route.query.id} });
     },
     async getdata() {
       // console.log(this.$route.query);

@@ -30,14 +30,15 @@
       </li>
       <li @click="toggle('city')">
         <span>所在城市</span>
-        <span>北京，北京市，西城区</span>
+        <span>{{userinfo.province_name}}-{{userinfo.city_name}}-{{userinfo.district_name}}</span>
       </li>
       <li @click="toggle('subjects')">
         <span>学科</span>
-        <span>语文</span>
-        <!-- <span v-for="item in userinfo.attr" :key="item.attr_id">
-          <span v-if="item.attr_id==2">{{item.attr_value }}</span>
-        </span>-->
+        <span v-for="item in userinfo.attr" :key="item.attr_id">
+          <template v-if="item.attr_id==2">
+            <span>{{item.attr_value }}</span>
+          </template>
+        </span>
       </li>
       <li @click="toggle('grade')">
         <span>年级</span>
@@ -57,9 +58,17 @@
           从手机相册中选择
           <input type="file" accept="image/*" id="takePhoto" @change="takePhoto" />
         </li>
+
         <li @click="show=false">取消</li>
       </ul>
       <!-- 城市信息 -->
+      <van-area
+        v-if="tag == 'city'"
+        :area-list="areaList"
+        :value="userinfo.district_id+''"
+        @change="onChange"
+        @confirm="queding"
+      />
       <!-- 年纪 -->
       <van-area :area-list="arrealist" columns-num="1" @confirm="onConfirm" v-if="tag == 'grade'" />
       <van-datetime-picker
@@ -93,6 +102,7 @@ export default {
   // 组件状态值
   data() {
     return {
+      id: "",
       cityShow: false,
       show: false,
       nickname: "",
@@ -106,9 +116,16 @@ export default {
       },
       arr: [],
       t: "",
-      currentDate: new Date(),
+      currentDate: new Date(),
       minDate: new Date(1890, 0, 1),
-      maxDate: new Date()
+      maxDate: new Date(),
+      user: [],
+      areaList: {
+        city_list: {},
+        province_list: {},
+        county_list: {}
+      }, //城市列表
+      cityEdit: [] //保存data
     };
   },
   // 计算属性
@@ -169,6 +186,7 @@ export default {
       }
       // 城市
       else if (tag == "city") {
+        this.show = true;
       }
       // 学科
       else if (tag == "subjects") {
@@ -184,9 +202,50 @@ export default {
     },
     // 城市信息
     async city() {
-      let { data } = await AjaxEditSonArea();
+      //省
+      let { data: sheng } = await AjaxEditSonArea();
       this.cityShow = true;
-      this.cityEdit = data;
+      // this.cityEdit = data;
+      // console.log(data);
+      console.log(sheng);
+      this.areaList.province_list = this.zhuanghuan(sheng);
+
+      //市
+      let { data: shi } = await AjaxEditSonArea(
+        this.userinfo.province_id ? this.userinfo.province_id : data[0].id
+      );
+      console.log(shi);
+      // this.$set(this.areaList,"city_list",this.zhuanghuan(shi))
+      this.areaList.city_list = this.zhuanghuan(shi);
+      console.log(this.areaList.city_list);
+      // 区
+      let { data: qu } = await AjaxEditSonArea(
+        this.userinfo.city_id ? this.userinfo.city_id : shi[0].id
+      );
+      this.areaList.county_list = this.zhuanghuan(qu);
+      // console.log(qu);
+    },
+
+    async onChange(str, data, index) {
+      console.log(data);
+      console.log(index);
+
+      switch (index) {
+        case 0:
+          let { data: shi } = await AjaxEditSonArea(data[index].code);
+          // this.$set(this.areaList,"city_list",this.zhuanghuan(shi))
+          this.areaList.city_list = this.zhuanghuan(shi);
+
+          let { data: qu } = await AjaxEditSonArea(shi[0].id);
+          this.areaList.county_list = this.zhuanghuan(qu);
+          // console.log(this.areaList);
+          break;
+
+        case 1:
+          let { data: shiqu } = await AjaxEditSonArea(data[1].code);
+          this.areaList.county_list = this.zhuanghuan(shiqu);
+          break;
+      }
     },
     // 年级
     async attribute() {
@@ -228,6 +287,30 @@ export default {
     // 时间取消
     cancel() {
       this.show = false;
+    },
+    // 转换函数
+    zhuanghuan(arr) {
+      let obj = {};
+      for (let i = 0; i < arr.length; i++) {
+        obj[arr[i].id] = arr[i].area_name;
+      }
+      // console.log(obj);
+      return obj;
+    },
+
+    async queding(arr) {
+      let obj = {
+        city_id: arr[1].code,
+        district_id: arr[2].code,
+        province_id: arr[0].code
+      };
+
+      let res = await AjaxEditUser(obj);
+      if (res.code == 200) {
+        this.show = false;
+        this.info();
+      }
+      console.log(res);
     }
   },
   /**

@@ -3,12 +3,12 @@
     <!-- 顶部 -->
     <van-sticky>
       <div class="hmw-top">
-        <van-nav-bar
+         <van-nav-bar
           :title="infoList.course.title"
           @click-left="onClickLeft"
           @click-right="onClickRight"
         >
-          <!-- 这里分别是nav两侧图标 -->
+        
           <template #right>
             <van-icon color="#595959" name="notes-o" size="22" />
           </template>
@@ -40,7 +40,7 @@
                 ><span class="hmwS2">{{ item.periods_title }}</span>
               </p>
               <p class="hmwP3">
-                <span>{{ item.teachers[0].teacher_name }}</span
+                <span>{{ item.teacher_name }}</span
                 ><span
                   >{{ item.total_end_play }}-{{ item.total_start_play }}</span
                 >
@@ -104,7 +104,7 @@ export default {
     return {
       //    底部导航
       active: 0,
-      infoList: "",
+      infoList: [],
       show: false,
       value: 0,
       tex: "",
@@ -125,13 +125,14 @@ export default {
       this.$router.go(-1);
     },
     onClickRight() {
-      // Toast("按钮");
+      Toast("按钮");
       this.$router.push({path:"/Study"})
     },
+    // 统一点击事件，只是一个效果
     async hmwDian() {
       // alert("你点了一下");
       let res = await Re(this.$route.query.vid);
-      console.log(res);
+      // console.log(res);
       if (res.code == 200) {
         this.$router.go(-1)
       }
@@ -148,13 +149,14 @@ export default {
         this.$toast("正在进入");
         window.location.href = res.data.chapterInfo.web_url;
       } else {
-        console.log(res.msg);
+        // console.log(res.msg);
+        this.$toast(res.msg);
       }
     },
     async onGetCourses() {
       let { data } = await GetCourses(this.$route.query.vid);
       this.infoList = data;
-      console.log(this.infoList);
+      console.log(data);
     },
     async onPublish() {
       let obj = {
