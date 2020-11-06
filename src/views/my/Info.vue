@@ -6,13 +6,13 @@
       <p></p>
     </div>
     <ul class="ul-box">
-      <li @click="img">
+      <li @click="toggle('img')">
         <span>头像</span>
         <span>
           <img :src="userinfo.avatar" alt />
         </span>
       </li>
-      <li @click="name">
+      <li @click="toggle('nickname')">
         <span>昵称</span>
         <span>{{ userinfo.nickname }}</span>
       </li>
@@ -20,53 +20,69 @@
         <span>手机号</span>
         <span>{{ userinfo.mobile }}</span>
       </li>
-      <li>
+      <li @click="toggle('sex')">
         <span>性别</span>
-        <span>{{ userinfo.sex }}</span>
+        <span>{{ userinfo.sex==0?'男':'女' }}</span>
       </li>
-      <li>
+      <li @click="toggle('birthday')">
         <span>出生日期</span>
         <span>{{ userinfo.birthday }}</span>
       </li>
-      <li @click="city">
+      <li @click="toggle('city')">
         <span>所在城市</span>
         <span>北京，北京市，西城区</span>
       </li>
-      <li>
+      <li @click="toggle('subjects')">
         <span>学科</span>
         <span>语文</span>
+        <!-- <span v-for="item in userinfo.attr" :key="item.attr_id">
+          <span v-if="item.attr_id==2">{{item.attr_value }}</span>
+        </span>-->
       </li>
-      <li>
+      <li @click="toggle('grade')">
         <span>年级</span>
-        <span>初二</span>
+        <span>{{ t }}</span>
       </li>
     </ul>
-    <!-- 修改用户名 -->
-    <van-popup position="bottom" v-model="nicknameShow" :style="{ height: '30%' }">
-      <input type="text" v-model="nickname" />
-      <button @click="userEdit">保存</button>
-    </van-popup>
-    <!-- 头像 -->
-    <van-popup position="bottom" v-model="imgShow">
-      <ul class="ul-bom">
+
+    <!-- 弹框 -->
+    <van-popup position="bottom" v-model="show">
+      <!-- 头像 -->
+      <ul class="photo" v-if="tag == 'img'">
         <li>
-          <van-uploader>拍照</van-uploader>
+          拍照
+          <input type="file" accept="image/*" capture="camera" id="takePhoto" @change="takePhoto" />
         </li>
         <li>
-          <van-uploader>从手机相册选择</van-uploader>
+          从手机相册中选择
+          <input type="file" accept="image/*" id="takePhoto" @change="takePhoto" />
         </li>
-        <li @click="imgShow=false">取消</li>
+        <li @click="show=false">取消</li>
       </ul>
-    </van-popup>
-    <!-- 城市信息 -->
-    <van-popup position="bottom" v-model="cityShow">
-      <p v-for="item in cityEdit" :key="item.id">{{item.area_name}}</p>
+      <!-- 城市信息 -->
+      <!-- 年纪 -->
+      <van-area :area-list="arrealist" columns-num="1" @confirm="onConfirm" v-if="tag == 'grade'" />
+      <van-datetime-picker
+        v-if="tag == 'birthday'"
+        v-model="currentDate"
+        type="date"
+        :min-date="minDate"
+        :max-date="maxDate"
+        @confirm="onConfirm"
+        @cancel="cancel"
+      />
     </van-popup>
   </div>
 </template>
 
 <script>
-import { AjaxInfo, AjaxEditUser, AjaxEditSonArea,AjaxEditImg } from "../../utils/myApi";
+import {
+  AjaxInfo,
+  AjaxEditUser,
+  AjaxEditSonArea,
+  AjaxEditImg,
+  AjaxEditAttribute
+} from "../../utils/myApi";
 export default {
   // 组件名称
   name: "",
@@ -78,12 +94,21 @@ export default {
   data() {
     return {
       cityShow: false,
-      imgShow: false,
-      nicknameShow: false,
+      show: false,
       nickname: "",
       userinfo: [],
-      user: [],
-      cityEdit: []
+      cityEdit: [],
+      path: "",
+      nianji: [],
+      tag: "",
+      arrealist: {
+        province_list: {}
+      },
+      arr: [],
+      t: "",
+      currentDate: new Date(),
+      minDate: new Date(1890, 0, 1),
+      maxDate: new Date()
     };
   },
   // 计算属性
@@ -100,15 +125,62 @@ export default {
       let res = await AjaxInfo();
       this.userinfo = res.data;
       console.log(res);
-    },
-    name() {
-      this.nicknameShow = true;
+      this.t = res.data.attr[0].attr_value;
     },
     // 头像
-    async img() {
-      this.imgShow = true;
-      let data = await AjaxEditImg({avatar:this.userinfo.avatar})
+    async takePhoto(e) {
+      let formData = new FormData();
+      formData.append("file", e.target.files[0]);
+      let data = await AjaxEditImg(formData);
       console.log(data);
+      if (data.code == 200) {
+        this.path = data.data.path;
+        await AjaxEditUser({ avatar: this.path });
+        this.info();
+        this.show = false;
+      } else {
+        this.$toast(data.msg);
+        this.show = false;
+      }
+    },
+    toggle(tag) {
+      this.tag = tag;
+      console.log(this.tag);
+      // 头像
+      if (tag == "img") {
+      }
+      // 用户名
+      else if (tag == "nickname") {
+        this.$router.push({
+          path: "/set-info",
+          query: { tag: "nickname", value: this.userinfo.nickname }
+        });
+      }
+      // 性别
+      else if (tag == "sex") {
+        this.$router.push({
+          path: "/set-info",
+          query: { tag: "sex", value: this.userinfo.sex }
+        });
+      }
+      // 生日
+      else if (tag == "birthday") {
+        this.show = true;
+      }
+      // 城市
+      else if (tag == "city") {
+      }
+      // 学科
+      else if (tag == "subjects") {
+        this.$router.push({
+          path: "/set-info",
+          query: { tag: "subjects", value: this.userinfo.attr }
+        });
+      }
+      // 年级
+      else if (tag == "grade") {
+        this.show = true;
+      }
     },
     // 城市信息
     async city() {
@@ -116,12 +188,46 @@ export default {
       this.cityShow = true;
       this.cityEdit = data;
     },
-    // 修改信息
-    async userEdit() {
-      let data = await AjaxEditUser({ nickname: this.nickname });
-      this.user = data.data;
-      this.userinfo.nickname = this.nickname;
-      this.nicknameShow = false
+    // 年级
+    async attribute() {
+      let { data } = await AjaxEditAttribute();
+      console.log(data);
+      this.nianji = data[0].value;
+      data[0].value.map(item => {
+        this.$set(this.arrealist.province_list, item.id, item.name);
+      });
+    },
+    // 点击完成触发的函数
+    async onConfirm(val) {
+      if (this.tag == "grade") {
+        this.arr = [];
+        val.map(item => {
+          this.arr.push({ attr_id: 1, attr_val_id: item.code });
+        });
+        let { data: res } = AjaxEditUser({
+          user_attr: JSON.stringify(this.arr)
+        });
+        this.info();
+        this.show = false;
+      } else if (this.tag == "birthday") {
+        // 时间
+        console.log(val);
+        if (val.toLocaleDateString() == this.nowdate) {
+          this.$toast("出生日期最少是当前日期的前一天");
+        } else {
+          this.birthdate = val
+            .toLocaleDateString()
+            .split("/")
+            .join("-");
+          let { data } = await AjaxEditUser({ birthday: this.birthdate });
+          this.show = false;
+          this.info();
+        }
+      }
+    },
+    // 时间取消
+    cancel() {
+      this.show = false;
     }
   },
   /**
@@ -130,6 +236,7 @@ export default {
   created() {},
   mounted() {
     this.info();
+    this.attribute();
   }
 };
 </script> 
@@ -198,31 +305,24 @@ export default {
       }
     }
   }
-  .ul-bom {
+  .photo {
+    width: 100%;
+    height: 1.5rem;
     background: #fff;
-    margin: 2.66667vw 0;
-    padding: 1.33333vw 4vw;
     li {
-      height: 12.26667vw;
-      line-height: 12.26667vw;
-      font-size: 4.53333vw;
-      font-weight: 300;
-      color: #030303;
-      text-align: center;
-      display: block;
-      justify-content: space-between;
       position: relative;
-    }
-    li:after {
-      content: "";
-      display: block;
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
       width: 100%;
-      height: 1px;
-      background-color: #f5f5f5;
+      display: block;
+      text-align: center;
+      line-height: 0.5rem;
+      color: #030303;
+      font-weight: 300;
+      input {
+        position: absolute;
+        opacity: 0;
+        left: 0;
+        top: 0;
+      }
     }
   }
 }
