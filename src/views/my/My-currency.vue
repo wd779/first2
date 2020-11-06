@@ -42,7 +42,7 @@
           余额明细
           <i @click="flag=false"></i>
         </p>
-        <van-list :finished="finished=true" finished-text="没有更多了" @load="onLoad">
+        <van-list :finished="finished=true" finished-text="没有更多了">
           <van-cell
             v-for="(item,index) in newList"
             :key="index"
@@ -116,7 +116,8 @@ export default {
       let { data } = await itemAjax({ page: this.page });
       console.log(data);
       this.newList = data.list;
-    }
+    },
+    
   },
   /**
    * 组件实例创建完成，属性已绑定，但DOM还未生成，$ el属性还不存在

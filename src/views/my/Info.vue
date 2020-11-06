@@ -141,7 +141,7 @@ export default {
     async info() {
       let res = await AjaxInfo();
       this.userinfo = res.data;
-      console.log(res);
+      console.log(this.userinfo);
       this.t = res.data.attr[0].attr_value;
     },
     // 头像
@@ -162,7 +162,7 @@ export default {
     },
     toggle(tag) {
       this.tag = tag;
-      console.log(this.tag);
+      // console.log(this.tag);
       // 头像
       if (tag == "img") {
         this.show = true  
@@ -188,6 +188,7 @@ export default {
       // 城市
       else if (tag == "city") {
         this.show = true;
+        this.city();
       }
       // 学科
       else if (tag == "subjects") {
@@ -251,7 +252,7 @@ export default {
     // 年级
     async attribute() {
       let { data } = await AjaxEditAttribute();
-      console.log(data);
+      // console.log(data);
       this.nianji = data[0].value;
       data[0].value.map(item => {
         this.$set(this.arrealist.province_list, item.id, item.name);
