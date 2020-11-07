@@ -2,7 +2,6 @@
   <div class="box_container">
     <div class="box_wrapper">
       <h6>{{ datas.title }}</h6>
-      <p>{{ datas.course_statement || "暂无描述" }}</p>
       <div class="user">
         <div>
           <img :src="datas.teachers_list[0].teacher_avatar" />
@@ -84,12 +83,12 @@ export default {
 }
 .box_wrapper {
   margin: 0.2rem;
-  font-size: 0.1rem;
+  font-size: 0.12rem;
   h6 {
     font-weight: normal;
-    height: 0.2rem;
     padding-top: 0.1rem;
-    height: 0.4rem;
+    height: 0.44rem;
+    font-size: 0.15rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -116,6 +115,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 0.2rem;
   img:nth-child(1) {
     width: 0.3rem;
     height: 0.3rem;
