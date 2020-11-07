@@ -109,11 +109,17 @@ export default {
   mounted() {
     // 学科默认渲染调用
     this.subjectsA();
+    console.log(this.attr);
     this.attr.map(item => {
       // 学科默认
-      this.user_attr.push({ attr_id: 2, attr_val_id: item.attr_val_id });
-      this.str += item.attr_val_id;
+      if (item.attr_id == 2) {
+        this.user_attr.push({ attr_id: 2, attr_val_id: item.attr_val_id });
+        this.str += item.attr_val_id;
+      } else {
+        this.user_attr.push({ attr_id: 1, attr_val_id: item.attr_val_id });
+      }
     });
+    console.log(this.user_attr);
   }
 };
 </script> 

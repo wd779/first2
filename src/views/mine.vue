@@ -7,6 +7,7 @@
         <div class="head">
           <section @click="$router.push('/info')">
             <div v-show="flag">
+              <img data-v-77625542 src="https://wap.365msmk.com/img/皇冠-2 拷贝@2x.ca9087bc.png" class="vip-logo" />
               <img :src="personal.avatar" />
               <span>{{personal.nickname}}</span>
               <van-icon name="edit" />
@@ -70,7 +71,7 @@
           </div>
         </li>
 
-        <li  class="icon2">
+        <li class="icon2">
           <p class="menu-title">订单相关</p>
           <div class="menu-box">
             <div @click="$router.push({path:'/orderDetail',query:{order_type:2,title:'课程订单'}})">
@@ -87,7 +88,7 @@
             </div>
           </div>
         </li>
-        <li  class="icon3">
+        <li class="icon3">
           <p class="menu-title">我的账户</p>
           <div class="menu-box">
             <div @click="$router.push('/coupon')">
@@ -104,7 +105,7 @@
             </div>
           </div>
         </li>
-        <li  class="icon4">
+        <li class="icon4">
           <p class="menu-title">自助服务</p>
           <div class="menu-box">
             <div @click="$router.push('/message')">
@@ -211,8 +212,16 @@ export default {
         align-items: center;
         position: relative;
         img {
-          width: 0.62rem;
+          width: 0.5rem;
+          height: 0.5rem;
           border-radius: 50%;
+        }
+        .vip-logo {
+          position: absolute;
+          left: 0.56rem;
+          top: 0.16rem;
+          width: 5.33333vw;
+          height: 5.33333vw;
         }
         span {
           margin-left: 0.1rem;
@@ -335,14 +344,14 @@ export default {
 .icon1 .van-icon {
   color: #ff944b;
 }
-.icon2 .van-icon{
-    color: #fc5500;
+.icon2 .van-icon {
+  color: #fc5500;
 }
-.icon3 .van-icon{
-    color: #ffaf00;
+.icon3 .van-icon {
+  color: #ffaf00;
 }
-.icon4 .van-icon{
-    color: #ff9a2a;
+.icon4 .van-icon {
+  color: #ff9a2a;
 }
 .van-overlay {
   position: fixed;

@@ -35,13 +35,9 @@
       <li @click="toggle('subjects')" id="attr">
         <span>学科</span>
         <p>
-          <template v-if="userinfo.attr[0].attr_id==2">
-          <span
-            style="margin:0;"
-            v-for="item in userinfo.attr"
-            :key="item.attr_id"
-          >{{item.attr_value }}</span>
-          </template>
+          <span style="margin:0;" v-for="item in userinfo.attr" :key="item.attr_id">
+            <template v-if="item.attr_id==2">{{item.attr_value }}</template>
+          </span>
         </p>
       </li>
       <li @click="toggle('grade')">
@@ -131,7 +127,7 @@ export default {
         county_list: {}
       }, //城市列表
       cityEdit: [], //保存data
-      attr:""
+      attr: ""
     };
   },
   // 计算属性
@@ -325,7 +321,6 @@ export default {
    */
   created() {},
   mounted() {
-    
     this.info();
     this.attribute();
   }

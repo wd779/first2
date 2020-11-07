@@ -102,6 +102,7 @@ export default {
   created() {},
   mounted() {
     var Scr = String(window.location.href.split("#")[1]);
+    console.log(Scr)
     if (Scr == "/mine") {
       this.changeRouter(4);
     }
