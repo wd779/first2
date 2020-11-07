@@ -1,18 +1,9 @@
 <template>
   <div id="app">
     <router-view></router-view>
-
     <van-tabbar v-model="active" @change="changeRoute">
       <van-tabbar-item v-for="(item, index) in icons" :key="index">
-        <span>{{item.title}}</span>
-        <template #icon="props">
-          <img :src="props.active ? icons[index].active : icons[index].inactive" />
-        </template>
-      </van-tabbar-item>
-    </van-tabbar>
-    <van-tabbar v-model="active" @change="changeRoute">
-      <van-tabbar-item v-for="(item, index) in icons" :key="index">
-        <span>{{ item.title }}</span>
+        <span :style="{color:active==index?'rgb(235, 97, 0)':''}">{{ item.title }}</span>
         <template #icon="props">
           <img :src="props.active ? icons[index].active : icons[index].inactive" />
         </template>

@@ -24,7 +24,7 @@
                 <span>共{{item.section_num}}课时</span>
               </div>
               <div class="div-bottom">
-                <van-progress pivot-text stroke-width="3" :percentage="0" />
+                <van-progress pivot-text stroke-width="3" :percentage="item.progress_rate" />
                 <span>已学习{{item.progress_rate}}%</span>
               </div>
               <span></span>

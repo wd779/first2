@@ -35,13 +35,13 @@
       <li @click="toggle('subjects')" id="attr">
         <span>学科</span>
         <p>
-          <!-- <template v-if="item.attr_id==2"> -->
+          <template v-if="userinfo.attr[0].attr_id==2">
           <span
             style="margin:0;"
             v-for="item in userinfo.attr"
             :key="item.attr_id"
           >{{item.attr_value }}</span>
-          <!-- </template> -->
+          </template>
         </p>
       </li>
       <li @click="toggle('grade')">
@@ -130,7 +130,8 @@ export default {
         province_list: {},
         county_list: {}
       }, //城市列表
-      cityEdit: [] //保存data
+      cityEdit: [], //保存data
+      attr:""
     };
   },
   // 计算属性
@@ -167,7 +168,6 @@ export default {
     },
     toggle(tag) {
       this.tag = tag;
-      // console.log(this.tag);
       // 头像
       if (tag == "img") {
         this.show = true;
@@ -325,6 +325,7 @@ export default {
    */
   created() {},
   mounted() {
+    
     this.info();
     this.attribute();
   }
@@ -371,6 +372,12 @@ export default {
       width: 100%;
       height: 1px;
       background-color: #f5f5f5;
+    }
+    li:last-child::after {
+      display: none;
+    }
+    li:nth-child(3)::before {
+      display: none;
     }
     li {
       height: 14.66667vw;
