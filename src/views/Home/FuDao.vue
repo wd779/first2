@@ -1,11 +1,6 @@
 <template>
   <div>
-    <van-nav-bar
-      title="一对一辅导"
-      left-arrow
-      @click-left="onClickLeft"
-      @click-right="onClickSearch"
-    >
+    <van-nav-bar title="一对一辅导" left-arrow @click-left="onClickLeft" @click-right="onClickSearch">
       <template #right>
         <van-icon name="search" size="18" />
       </template>
@@ -14,11 +9,7 @@
     <!-- 下拉菜单 -->
     <van-dropdown-menu @click="showPopup">
       <van-dropdown-item title="选择上课时间">
-        <van-calendar
-          :poppable="false"
-          :show-confirm="false"
-          :style="{ height: '300px' }"
-        />
+        <van-calendar :poppable="false" :show-confirm="false" :style="{ height: '300px' }" />
       </van-dropdown-item>
 
       <van-dropdown-item title="选择老师条件">
@@ -58,11 +49,7 @@
 
     <!-- 一对一列表 -->
     <div class="fudao_content">
-      <div
-        class="fudao_content_warpper"
-        v-for="item in lm_list"
-        :key="item.teacher_id"
-      >
+      <div class="fudao_content_warpper" v-for="item in lm_list" :key="item.teacher_id">
         <!-- 左侧图片盒子 -->
         <div class="fudao_content_left">
           <van-image
@@ -83,7 +70,6 @@
             </p>
           </div>
         </div>
-
         <!-- 按钮 -->
         <div class="right_msg">
           <van-button
@@ -92,13 +78,13 @@
             type="danger"
             size="mini"
             @click="$router.push({path:'/yuyue',query:{id:item.teacher_id}})"
-            >预约</van-button
-          >
+          >预约</van-button>
         </div>
       </div>
     </div>
   </div>
 </template>
+
 
 <script>
 import { GetOtoCourse } from "../../utils/homeApi";
@@ -127,11 +113,11 @@ export default {
         "M17",
         "M18",
         "M19",
-        "M20",
+        "M20"
       ],
       show: false,
       radio: "",
-      lm_list: [],
+      lm_list: []
     };
   },
   methods: {
@@ -148,18 +134,16 @@ export default {
     async onGetOtoCourse() {
       let obj = {
         page: 1,
-        limit: 10,
+        limit: 10
       };
       let { data } = await GetOtoCourse(obj);
       this.lm_list = data;
       console.log(data);
-    },
-
-   
+    }
   },
   mounted() {
     this.onGetOtoCourse();
-  },
+  }
 };
 </script>
 
