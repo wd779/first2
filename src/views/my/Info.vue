@@ -1,7 +1,7 @@
 <template>
   <div class="info">
     <div class="header">
-      <van-icon name="arrow-left" @click="$router.go(-1)" />
+      <van-icon name="arrow-left" @click="$router.push('/mine')" />
       <p>个人信息</p>
       <p></p>
     </div>
