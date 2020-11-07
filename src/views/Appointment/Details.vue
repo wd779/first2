@@ -36,16 +36,16 @@
       </div>
       <div class="box">
         <p>课程大纲</p>
-        <div class="li" v-for="item in 10" :key="item" @click="$router.push({path:'/MyStudy',query:{vid:$route.query.id}})">
+        <div class="li" v-for="item in curriculums" :key="item.id" @click="$router.push({path:'/MyStudy',query:{vid:$route.query.id}})">
           <span class="dian">·</span>
           <van-tag type="warning">回放</van-tag>
-          <span class="title">第一讲第一课时</span>
+          <span class="title">{{ item.periods_title }}</span>
           <p>
-            {{ data.address == undefined ? "团队" : data.address }}
+            {{ item.teachers[0].teacher_name }}
             
-            {{ new Date(data.created_at * 1000).toLocaleDateString() }}
+            {{ item.total_end_play }}
              - 
-            {{ new Date(data.created_at * 1000).toLocaleDateString() }}
+            {{ item.total_start_play }}
           </p>
         </div>
       </div>
@@ -106,7 +106,8 @@ export default {
       data: "",
       id: "",
       info: "",
-      list: []
+      list: [],
+      curriculums:[],
     };
   }, // 计算属性
   computed: {
@@ -138,6 +139,7 @@ export default {
         id: String(this.$route.query.id)
       };
       let { data } = await GetOutline(obj);
+      this.curriculums = data
       console.log(data);
     },
     async getComment() {
@@ -292,6 +294,7 @@ export default {
   padding: 2.66667vw 0 0 0;
 }
 .box .li p {
+    padding-top: 0.1rem;
   text-indent: 2em;
   color: #8c8c8c;
   font-size: 3.2vw;
