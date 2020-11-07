@@ -74,9 +74,9 @@ export default {
   display: flex;
 }
 .Renowned_teacher_content_left {
-  width: 10%;
+  width: 15%;
   display: flex;
-  justify-items: center;
+  justify-content: space-around;
   align-items: center;
 }
 .Renowned_teacher_content_left_img {
@@ -86,7 +86,7 @@ export default {
   border: 1px rgb(173, 240, 240);
 }
 .Renowned_teacher_content_right {
-  width: 90%;
+  width: 85%;
   box-sizing: border-box;
   padding: 0.1rem;
 }
