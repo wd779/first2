@@ -148,7 +148,8 @@ export default {
         this.$toast("正在进入");
         window.location.href = res.data.chapterInfo.web_url;
       } else {
-        console.log(res.msg);
+        // console.log(res.msg);
+        this.$toast(res.msg);
       }
     },
     async onGetCourses() {

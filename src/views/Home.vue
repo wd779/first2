@@ -239,8 +239,11 @@ ul li {
   border-radius: 8px 8px 8px 8px;
 }
 ul li img {
-  width: 0.5rem;
-  height: 0.5rem;
+  // width: 0.5rem;
+  // height: 0.5rem;
+  width: 5.6vw;
+  padding: 2vw;
+  height: 5.333333vw;
   align-items: center;
   margin-top: 0.05rem;
 }

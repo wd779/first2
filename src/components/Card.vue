@@ -77,7 +77,7 @@ export default {
   margin: 1vw;
   width: 98vw;
   background: white;
-  box-shadow: 3px 1px 5px #ccc;
+  // box-shadow: 3px 1px 5px #ccc;
   border-radius: 5px;
   box-sizing: border-box;
 }
